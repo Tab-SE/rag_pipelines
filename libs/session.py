@@ -1,10 +1,11 @@
 import jwt
+import json
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 from utils.http import httpPost
 
-def authenticate(params):
-    DOMAIN, API, SITE, CLIENT_ID, SECRET, SECRET_ID, USER = params.values()
+def authenticate(env_vars):
+    DOMAIN, API, SITE, CLIENT_ID, SECRET, SECRET_ID, USER = env_vars.values()
     # Encode the payload and secret key to generate the JWT
     token = jwt.encode(
       {
@@ -48,5 +49,5 @@ def authenticate(params):
     }
 
     response = httpPost(endpoint=endpoint, headers=headers, payload=payload)
-    print('body', response.text)
-    return response
+    body = json.loads(response.text)
+    return body
