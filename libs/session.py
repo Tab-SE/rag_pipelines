@@ -1,8 +1,7 @@
-import requests
 import jwt
-import json
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
+from utils.http import httpPost
 
 def authenticate(params):
     DOMAIN, API, SITE, CLIENT_ID, SECRET, SECRET_ID, USER = params.values()
@@ -32,22 +31,22 @@ def authenticate(params):
     )
 
     # authentication endpoint + request headers & payload
-    url = f"{DOMAIN}/api/{API}/auth/signin" 
+    endpoint = f"{DOMAIN}/api/{API}/auth/signin" 
 
     headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     }
     
-    payload = json.dumps({
+    payload = {
       "credentials": {
         "jwt": token,
         "site": {
           "contentUrl": SITE,
         }
       }
-    })
+    }
 
-    response = requests.request("POST", url, headers=headers, data=payload)
-    print('body', json.dumps(response.text, indent=4))
+    response = httpPost(endpoint=endpoint, headers=headers, payload=payload)
+    print('body', response.text)
     return response
