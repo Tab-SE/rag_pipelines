@@ -20,17 +20,17 @@ PINECONE_ENVIRONMENT = env_vars['PINECONE_ENVIRONMENT']
 PINECONE_INDEX_NAME = env_vars['PINECONE_INDEX_NAME']
 
 def main():
-  insights = query({
-    'DOMAIN': DOMAIN,
-    'API': API,
-    'SITE': SITE,
-    'CLIENT_ID': CLIENT_ID,
-    'SECRET': SECRET,
-    'SECRET_ID': SECRET_ID,
-    'USER': USER
-  })
-  return
+	insights = query({
+		'DOMAIN': DOMAIN,
+		'API': API,
+		'SITE': SITE,
+		'CLIENT_ID': CLIENT_ID,
+		'SECRET': SECRET,
+		'SECRET_ID': SECRET_ID,
+		'USER': USER
+	})
+	return
 
 
 if __name__ == "__main__":
-  main()
+	main()

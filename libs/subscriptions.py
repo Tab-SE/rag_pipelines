@@ -17,7 +17,7 @@ def metrics(domain, credentials):
 
     subscriptions = getSubscriptions(path=path, headers=headers, user=user)
     metrics = getMetrics(path=path, headers=headers, subscriptions=subscriptions)
-    # definitions = getMetricDefinitions(path=path, headers=headers, metrics=metrics)
+    definitions = getMetricDefinitions(path=path, headers=headers, metrics=metrics)
     
     return metrics
 
