@@ -5,14 +5,14 @@ from libs import session, subscriptions, bundles
 def query(env_vars):
   domain = env_vars['DOMAIN']
   credentials = session.authenticate(env_vars)
-  print('credentials', credentials)
+  # print('credentials', credentials)
 
   metrics = subscriptions.metrics(domain=domain, credentials=credentials)
-  print('metrics', metrics)
+  # print('metrics', metrics)
 
   # insights = bundles(credentials, metrics)
   # print('insights', insights)
 
-  insights = credentials
+  insights = metrics
 
   return insights

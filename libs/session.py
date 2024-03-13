@@ -1,5 +1,4 @@
 import jwt
-import json
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 from utils.http import httpPost
@@ -49,5 +48,4 @@ def authenticate(env_vars):
     }
 
     response = httpPost(endpoint=endpoint, headers=headers, payload=payload)
-    body = json.loads(response.text)
-    return body
+    return response['body']

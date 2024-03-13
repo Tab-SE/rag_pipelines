@@ -1,4 +1,5 @@
 import json
+from jsonpath_ng import jsonpath, parse
 
 from utils.http import httpGet
 
@@ -15,11 +16,41 @@ def metrics(domain, credentials):
     }
 
     subscriptions = getSubscriptions(path=path, headers=headers, user=user)
+    metrics = getMetrics(path=path, headers=headers, subscriptions=subscriptions)
+    # definitions = getMetricDefinitions(path=path, headers=headers, metrics=metrics)
     
     return subscriptions
 
 def getSubscriptions(path, headers, user):
     endpoint =  path + f"/subscriptions?user_id={user}"
+    response = httpGet(endpoint=endpoint, headers=headers)
+    body = response['body']
+    return body
+
+def getMetrics(path, headers, subscriptions):
+    
+    print('subscriptions', type(subscriptions))
+
+    # JSONPath expression
+    expression = parse("$.subscriptions.[*].metric_id")
+
+    # applies expression to JSON
+    metric_ids = [match.value for match in expression.find(subscriptions)]
+
+    print('metric_ids', metric_ids)
+
+    endpoint =  path + f"/metrics:batchGet?metric_ids={metric_ids}"
+
+    response = httpGet(endpoint=endpoint, headers=headers)
+
+    body = response['body']
+
+    print(body)
+    return body
+
+def getMetricDefinitions(path, headers, metrics):
+    definition_id = ""
+    endpoint =  path + f"/definitions:batchGet?definition_ids={definition_id}"
     response = httpGet(endpoint=endpoint, headers=headers)
     body = json.loads(response.text)
     return body
