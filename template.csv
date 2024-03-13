@@ -1,0 +1,2 @@
+TYPE,TABLEAU_DOMAIN,TABLEAU_API,TABLEAU_SITE,TABLEAU_JWT_CLIENT_ID,TABLEAU_REST_JWT_SECRET,TABLEAU_REST_JWT_SECRET_ID
+"TEMPLATE","https://domain.com","tableau_rest_api_version","your_site","jwt_client_id","jwt_secret","jwt_secret_id"
