@@ -3,7 +3,15 @@ import json
 
 def httpGet(endpoint, headers):
   response = requests.request("GET", endpoint, headers=headers)
-  return response
+
+  responseHeaders = dict(response.headers)
+  responseBody = response.json()
+
+  responseObject = {
+    "headers": responseHeaders,
+    "body": responseBody
+  }
+  return responseObject
 
 def httpPost(endpoint, headers, payload):
   formattedPayload = json.dumps(payload)
