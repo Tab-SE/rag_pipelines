@@ -131,8 +131,5 @@ dmypy.json
 # .DS_Store
 .DS_Store
 
-# Log File
-log.txt
-
-# temporary output folder
-out/*
+# Tableau Prep inputs with user secrets
+input.csv
