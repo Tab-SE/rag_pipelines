@@ -10,15 +10,15 @@ def metrics(domain, credentials):
     # shared by all Pulse endpoints
     path = f"{domain}/api/-/pulse" 
     headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'X-Tableau-Auth': token
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'X-Tableau-Auth': token
     }
 
     subscriptions = getSubscriptions(path=path, headers=headers, user=user)
     metrics = getMetrics(path=path, headers=headers, subscriptions=subscriptions)
     definitions = getMetricDefinitions(path=path, headers=headers, metrics=metrics)
-    
+
     return metrics
 
 def getSubscriptions(path, headers, user):
