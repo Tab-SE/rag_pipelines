@@ -19,7 +19,7 @@ def metrics(domain, credentials):
     metrics = getMetrics(path=path, headers=headers, subscriptions=subscriptions)
     # definitions = getMetricDefinitions(path=path, headers=headers, metrics=metrics)
     
-    return subscriptions
+    return metrics
 
 def getSubscriptions(path, headers, user):
     endpoint =  path + f"/subscriptions?user_id={user}"
@@ -28,24 +28,17 @@ def getSubscriptions(path, headers, user):
     return body
 
 def getMetrics(path, headers, subscriptions):
-    
-    print('subscriptions', type(subscriptions))
-
     # JSONPath expression
     expression = parse("$.subscriptions.[*].metric_id")
-
-    # applies expression to JSON
-    metric_ids = [match.value for match in expression.find(subscriptions)]
-
-    print('metric_ids', metric_ids)
-
+    # apply JSONPATH expression to JSON
+    metrics_array = [match.value for match in expression.find(subscriptions)]
+    # convert to string without brackets and spaces
+    metric_ids = ','.join(metrics_array)
+    # query parameter is a string of comma separated values with no spaces
     endpoint =  path + f"/metrics:batchGet?metric_ids={metric_ids}"
 
     response = httpGet(endpoint=endpoint, headers=headers)
-
     body = response['body']
-
-    print(body)
     return body
 
 def getMetricDefinitions(path, headers, metrics):
