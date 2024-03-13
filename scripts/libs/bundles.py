@@ -1,0 +1,3 @@
+
+def getInsights():
+    return
