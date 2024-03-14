@@ -1,5 +1,3 @@
-import pandas as pd
-
 from libs import bundles, session, subscriptions
 
 def query(env_vars):
