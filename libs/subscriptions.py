@@ -64,9 +64,10 @@ def getMetricDefinitions(path, headers, metrics):
     representations_expression = parse("$.definitions.[*].representation_options")
     insights_options_expression = parse("$.definitions.[*].insights_options")
 
-    # apply JSONPATH expression to JSON
+    # apply JSONPATH expression to metrics
     metric_ids_array = [match.value for match in metric_ids_expression.find(metrics)]
     specifications_array = [match.value for match in specifications_expression.find(metrics)]
+    # apply JSONPATH expression to metric definitions
     names_array = [match.value for match in names_expression.find(body)]
     descriptions_array = [match.value for match in descriptions_expression.find(body)]
     definitions_array = [match.value for match in definitions_expression.find(body)]
@@ -77,9 +78,9 @@ def getMetricDefinitions(path, headers, metrics):
     definitions = {}
 
     # iterate through arrays and create leaves in the return dictionary
-    # conditionals ensure that if index is out of bounds, the value will be None
-    # preventing index out-of-range errors.
     for index, name in enumerate(metric_ids_array):
+         # conditionals ensure that if index is out of bounds, the value will be None
+        # preventing index out-of-range errors.
         definitions[index] = {
             'id': name,
             'name': names_array[index] if index < len(names_array) else None,
@@ -90,8 +91,12 @@ def getMetricDefinitions(path, headers, metrics):
             'extension_options': extentions_array[index] if index < len(extentions_array) else None,
             'representation_options': representations_array[index] if index < len(representations_array) else None,
             'insights_options': insights_options_array[index] if index < len(insights_options_array) else None,
-        }
-
+        } if index < len(definitions_array) else None
+        
+    # list of keys to remove
+    keys_to_remove = [key for key, value in definitions.items() if value is None]
+    # remove keys from dictionary
+    for key in keys_to_remove:
+        del definitions[key]
+    
     return definitions
-
-

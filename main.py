@@ -5,7 +5,7 @@ from scripts.query import query
 
 load_dotenv()
 env_vars = os.environ
-
+# Tableau Pulse env vars
 DOMAIN = env_vars['TABLEAU_DOMAIN']
 API = env_vars['TABLEAU_API']
 SITE = env_vars['TABLEAU_SITE']
@@ -13,6 +13,7 @@ CLIENT_ID = env_vars['TABLEAU_JWT_CLIENT_ID']
 SECRET = env_vars['TABLEAU_REST_JWT_SECRET']
 SECRET_ID = env_vars['TABLEAU_REST_JWT_SECRET_ID']
 USER = env_vars['TABLEAU_USER']
+# Vectorization env vars
 OPENAI_API_KEY = env_vars['OPENAI_API_KEY']
 MODEL = env_vars['MODEL']
 PINECONE_API_KEY = env_vars['PINECONE_API_KEY']
@@ -29,6 +30,9 @@ def main():
 		'SECRET_ID': SECRET_ID,
 		'USER': USER
 	})
+	
+
+
 	return
 
 
