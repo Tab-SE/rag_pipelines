@@ -16,10 +16,10 @@ def httpGet(endpoint, headers):
 def httpPost(endpoint, headers, payload):
 	formattedPayload = json.dumps(payload)
 	response = requests.request("POST", endpoint, headers=headers, data=formattedPayload)
-
+	
 	responseHeaders = dict(response.headers)
 	responseBody = response.json()
-
+	
 	responseObject = {
 		"headers": responseHeaders,
 		"body": responseBody
