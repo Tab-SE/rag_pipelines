@@ -1,4 +1,5 @@
 import jwt
+import json
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 from utils.http import httpPost
@@ -17,6 +18,7 @@ def authenticate(env_vars):
             "tableau:datasources:read",
             "tableau:workbooks:read",
             "tableau:projects:read",
+            "tableau:insights:read",
             "tableau:insight_definitions_metrics:read", 
             "tableau:insight_metrics:read",
             "tableau:metric_subscriptions:read",
