@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 
 from scripts.query import query
+from scripts.vectorize import vector
 
 load_dotenv()
 env_vars = os.environ
@@ -21,19 +22,19 @@ PINECONE_ENVIRONMENT = env_vars['PINECONE_ENVIRONMENT']
 PINECONE_INDEX_NAME = env_vars['PINECONE_INDEX_NAME']
 
 def main():
-	insights = query({
-		'DOMAIN': DOMAIN,
-		'API': API,
-		'SITE': SITE,
-		'CLIENT_ID': CLIENT_ID,
-		'SECRET': SECRET,
-		'SECRET_ID': SECRET_ID,
-		'USER': USER
-	})
-	
+    insights = query({
+        'DOMAIN': DOMAIN,
+        'API': API,
+        'SITE': SITE,
+        'CLIENT_ID': CLIENT_ID,
+        'SECRET': SECRET,
+        'SECRET_ID': SECRET_ID,
+        'USER': USER
+    })
 
+    vector(insights)
 
-	return
+    return
 
 
 if __name__ == "__main__":
