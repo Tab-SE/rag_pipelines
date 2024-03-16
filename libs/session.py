@@ -1,8 +1,9 @@
 import jwt
-import json
 from datetime import datetime, timedelta, timezone
+
 from uuid import uuid4
-from utils.http import httpPost
+
+from utils import http
 
 def authenticate(env_vars):
     DOMAIN, API, SITE, CLIENT_ID, SECRET, SECRET_ID, USER = env_vars.values()
@@ -19,7 +20,7 @@ def authenticate(env_vars):
             "tableau:workbooks:read",
             "tableau:projects:read",
             "tableau:insights:read",
-            "tableau:insight_definitions_metrics:read", 
+            "tableau:insight_definitions_metrics:read",
             "tableau:insight_metrics:read",
             "tableau:metric_subscriptions:read",
         ]
@@ -33,7 +34,7 @@ def authenticate(env_vars):
     )
 
     # authentication endpoint + request headers & payload
-    endpoint = f"{DOMAIN}/api/{API}/auth/signin" 
+    endpoint = f"{DOMAIN}/api/{API}/auth/signin"
 
     headers = {
         'Content-Type': 'application/json',
@@ -49,5 +50,5 @@ def authenticate(env_vars):
         }
     }
 
-    response = httpPost(endpoint=endpoint, headers=headers, payload=payload)
+    response = http.post(endpoint=endpoint, headers=headers, payload=payload)
     return response['body']

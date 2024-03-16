@@ -1,7 +1,6 @@
-import json
 from jsonpath_ng import jsonpath, parse
 
-from utils.http import httpGet
+from utils import http
 
 def metrics(domain, credentials):
     token = credentials['credentials']['token']
@@ -23,7 +22,7 @@ def metrics(domain, credentials):
 
 def getSubscriptions(path, headers, user):
     endpoint =  path + f"/subscriptions?user_id={user}"
-    response = httpGet(endpoint=endpoint, headers=headers)
+    response = http.get(endpoint=endpoint, headers=headers)
     body = response['body']
     return body
 
@@ -37,7 +36,7 @@ def getMetrics(path, headers, subscriptions):
 
     # query parameter is a string of comma separated values with no spaces
     endpoint =  path + f"/metrics:batchGet?metric_ids={metric_ids}"
-    response = httpGet(endpoint=endpoint, headers=headers)
+    response = http.get(endpoint=endpoint, headers=headers)
     body = response['body']
     return body
 
@@ -51,7 +50,7 @@ def getMetricDefinitions(path, headers, metrics):
 
     # use as query parameter values
     endpoint =  path + f"/definitions:batchGet?definition_ids={definition_ids}"
-    response = httpGet(endpoint=endpoint, headers=headers)
+    response = http.get(endpoint=endpoint, headers=headers)
     body = response['body']
 
     # JSONPath expressions to extract data for requesting Pulse insights and semantic embedding

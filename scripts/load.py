@@ -1,14 +1,19 @@
 import os
 import json
+
 from llama_index.llms.openai import OpenAI
 from llama_index.readers.json import JSONReader
 from llama_index.core.indices.struct_store import JSONQueryEngine
 
-def data(insights):
-    store_response(insights)
-    print('Responses stored to file system')
-    load_data()
-    print('Responses loaded from file system')
+from libs import extract
+
+def data(bundles):
+    print('Extracting semantic features from JSON...')
+    insights = extract.bundles(bundles)
+    print('Storing data to file system...')
+    # store_response(insights)
+    print('Loading data for indexing...')
+    # load_data()
     return insights
 
 def store_response(insights):
@@ -20,7 +25,6 @@ def store_response(insights):
         try:
             # create file path with key as file name
             file_path = os.path.join('data', 'insights', f'{key}.json')
-
             # Write JSON to file
             with open(file_path, 'w') as f:
                 json.dump(value, f)

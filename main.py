@@ -1,8 +1,8 @@
 import os
+
 from dotenv import load_dotenv
 
-from scripts.query import query
-from scripts.load import data
+from scripts import query, load
 
 load_dotenv()
 env_vars = os.environ
@@ -24,7 +24,7 @@ PINECONE_INDEX_NAME = env_vars['PINECONE_INDEX_NAME']
 def main():
     print('Initializing RAG Pipeline...')
     print('Querying Insights...')
-    insights = query({
+    insights = query.get({
         'DOMAIN': DOMAIN,
         'API': API,
         'SITE': SITE,
@@ -35,7 +35,7 @@ def main():
     })
 
     print('Processing Insights...')
-    data(insights)
+    load.data(insights)
 
     print('Terminating RAG Pipeline...')
     return
