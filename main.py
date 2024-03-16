@@ -34,7 +34,6 @@ def main():
         'USER': USER
     })
 
-    print(f'{len(insights)} Insight bundles received!')
     print('Processing Insights...')
     data(insights)
 
