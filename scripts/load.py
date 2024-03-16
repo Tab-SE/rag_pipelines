@@ -6,9 +6,7 @@ from llama_index.core.indices.struct_store import JSONQueryEngine
 
 def data(insights):
     store_response(insights)
-
     read_data()
-
     return insights
 
 def store_response(insights):

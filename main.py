@@ -22,6 +22,8 @@ PINECONE_ENVIRONMENT = env_vars['PINECONE_ENVIRONMENT']
 PINECONE_INDEX_NAME = env_vars['PINECONE_INDEX_NAME']
 
 def main():
+    print('Initializing RAG Pipeline...')
+    print('Querying Insights...')
     insights = query({
         'DOMAIN': DOMAIN,
         'API': API,
@@ -32,8 +34,11 @@ def main():
         'USER': USER
     })
 
+    print(f'{len(insights)} Insight bundles received!')
+    print('Processing Insights...')
     data(insights)
 
+    print('Terminating RAG Pipeline...')
     return
 
 
