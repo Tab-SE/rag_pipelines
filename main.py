@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 from scripts.query import query
-from scripts.vectorize import vector
+from scripts.load import data
 
 load_dotenv()
 env_vars = os.environ
@@ -32,7 +32,7 @@ def main():
         'USER': USER
     })
 
-    vector(insights)
+    data(insights)
 
     return
 
