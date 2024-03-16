@@ -6,7 +6,9 @@ from llama_index.core.indices.struct_store import JSONQueryEngine
 
 def data(insights):
     store_response(insights)
-    read_data()
+    print('Responses stored to file system')
+    load_data()
+    print('Responses loaded from file system')
     return insights
 
 def store_response(insights):
@@ -24,12 +26,20 @@ def store_response(insights):
                 json.dump(value, f)
         except Exception as e:
             print(f"An error occurred while processing key '{key}': {e}")
+    return True
 
-    return insights
 
-
-def read_data():
-    # https://llamahub.ai/l/readers/llama-index-readers-json?from=readers
-    # reader = JSONReader(levels_back=1, collapse_length=100, ensure_ascii=False)
-    # documents = reader.load_data('path_to_your_json_file.json')
-    pass
+def load_data():
+    # directory path
+    directory_path = 'data/insights/'
+    # loop through all files
+    for filename in os.listdir(directory_path):
+        # construct file path
+        file_path = os.path.join(directory_path, filename)
+        # initialize a LlamaIndex reader for JSON and load target file
+        # https://llamahub.ai/l/readers/llama-index-readers-json?from=readers
+        reader = JSONReader(levels_back=1, collapse_length=100, ensure_ascii=False)
+        documents = reader.load_data(file_path)
+        if filename == '0.json':
+            print(documents[0].get_text())
+    return True
