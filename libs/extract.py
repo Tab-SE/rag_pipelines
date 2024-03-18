@@ -14,6 +14,7 @@ def bundles(bundles):
         metadata = extractMetadata(metric=metric, definition=definition, time_options=time_options)
         insights_bundle = bundle.get('insights')
         insights = extractInsights(insights_bundle=insights_bundle, metric=metric, time_options=time_options)
+
         # payload containing document strings for loading
         documents = {
             'metadata': metadata,
@@ -51,9 +52,8 @@ def extractMetadata(metric, definition, time_options):
     return metadata
 
 def extractInsights(insights_bundle, metric, time_options):
-    insights = []
+    metric_insights = {}
     for key, bundle in insights_bundle.items():
-        metric_insights = {}
         insight_groups = bundle.get('result').get('insight_groups')
         for insight_group in insight_groups:
             # extract facts about the metric's current value
@@ -81,9 +81,7 @@ def extractInsights(insights_bundle, metric, time_options):
                 followup = extractOthers(other_bundles=followup_bundles, metric=metric, time_options=time_options)
                 metric_insights['followup'] = followup
 
-        insights.append(metric_insights)
-
-    return insights
+    return metric_insights
 
 def extractBan(result, metric, time_options):
     result_data = result[0].get('result')
@@ -149,14 +147,11 @@ def extractBan(result, metric, time_options):
     This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
     In the {time_options.get('timezone_name')} timezone
     """
-    ban = {
-        'current_metric_value': current_metric_value,
-        'period_over_period_change': period_over_period_change
-    }
+    ban = [current_metric_value, period_over_period_change]
     return ban
 
 def extractAnchor(insights_array, metric, time_options):
-    anchor = {}
+    anchor = []
     for result in insights_array:
         insight_type = result.get('result').get('type')
         if insight_type == 'unusualchange':
@@ -204,7 +199,7 @@ def extractAnchor(insights_array, metric, time_options):
             This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
             In the {time_options.get('timezone_name')} timezone
             """
-            anchor['unusual_change'] = unusual_change
+            anchor.append(unusual_change)
         elif insight_type == 'currenttrend':
             score = result['result'].get('score')
             question = result['result'].get('question')
@@ -222,7 +217,7 @@ def extractAnchor(insights_array, metric, time_options):
             This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
             In the {time_options.get('timezone_name')} timezone
             """
-            anchor['current_trend'] = current_trend
+            anchor.append(current_trend)
         elif insight_type == 'newtrend':
             score = result['result'].get('score')
             question = result['result'].get('question')
@@ -240,12 +235,12 @@ def extractAnchor(insights_array, metric, time_options):
             This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
             In the {time_options.get('timezone_name')} timezone
             """
-            anchor['new_trend'] = new_trend
+            anchor.append(new_trend)
 
     return anchor
 
 def extractOthers(other_bundles, metric, time_options):
-    other_insights = [];
+    other_insights = []
     for bundle in other_bundles:
         result = bundle.get('result')
         type = result.get('type')
