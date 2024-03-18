@@ -4,14 +4,15 @@ def bundles(bundles):
     corpus = {}
     # extract only necessary metadata, Q&A, markup, vizzes, facts & other semantic features
     for key, bundle in bundles.items():
-        metric = bundle['metric']
-        time_options = bundle['time_options']
-        definition = metric['definition']
+        metric = bundle.get('metric')
+        time_options = bundle.get('time_options')
+        definition = metric.get('definition') if metric else None
+
         # remove 'viz_state_specification' if exists
         definition.pop('viz_state_specification', None)
         # creating a metadata string
         metadata = extractMetadata(metric=metric, definition=definition, time_options=time_options)
-        insights_bundle = bundle['insights']
+        insights_bundle = bundle.get('insights')
         insights = extractInsights(insights_bundle=insights_bundle, metric=metric, time_options=time_options)
         # payload containing document strings for loading
         documents = {
@@ -19,7 +20,7 @@ def bundles(bundles):
             'insights': insights,
         }
         # to identify metrics with the same name but different definitions
-        index = f'{key} - {metric['name']}'
+        index = f'{key} - {metric.get('name')}'
         # docs in corpus are indentified by {index}
         corpus[index] = documents
     return corpus
@@ -48,80 +49,269 @@ def extractMetadata(metric, definition, time_options):
     return metadata
 
 def extractInsights(insights_bundle, metric, time_options):
+    insights = []
     for key, bundle in insights_bundle.items():
-        insight_groups = bundle['result']['insight_groups']
+        metric_insights = {
+            'other_insights': []
+        }
+        insight_groups = bundle.get('result').get('insight_groups')
         for insight_group in insight_groups:
             # extract facts about the metric's current value
-            if insight_group['type'] == 'ban':
-                detail = bundle['result']['insight_groups'][0]['insights']
-                insight_type = detail[0]['result']['type']
-                score = detail[0]['result']['score']
-                question = detail[0]['result']['question']
-                answer = detail[0]['result']['markup']
-                sentiment = detail[0]['result']['facts']['sentiment']
-                current_raw_value = detail[0]['result']['facts']['target_period_value']['raw']
-                current_formatted_value = detail[0]['result']['facts']['target_period_value']['formatted']
-                previous_raw_value = detail[0]['result']['facts']['comparison_period_value']['raw']
-                previous_formatted_value = detail[0]['result']['facts']['comparison_period_value']['formatted']
-                current_time_period = detail[0]['result']['facts']['target_time_period']['label']
-                current_time_range = detail[0]['result']['facts']['target_time_period']['range']
-                current_time_granularity = detail[0]['result']['facts']['target_time_period']['granularity']
-                previous_time_period = detail[0]['result']['facts']['comparison_time_period']['label']
-                previous_time_range = detail[0]['result']['facts']['comparison_time_period']['range']
-                previous_time_granularity = detail[0]['result']['facts']['comparison_time_period']['granularity']
-                direction = detail[0]['result']['facts']['difference']['direction']
-                absolute_raw_difference = detail[0]['result']['facts']['difference']['absolute']['raw']
-                absolute_formatted_difference = detail[0]['result']['facts']['difference']['absolute']['formatted']
-                relative_raw_difference = detail[0]['result']['facts']['difference']['relative']['raw']
-                relative_formatted_difference = detail[0]['result']['facts']['difference']['relative']['formatted']
+            if insight_group.get('type') == 'ban':
+                result = insight_groups[0].get('insights')
+                print('ban', len(result))
+                ban = extractBan(result=result, metric=metric, time_options=time_options)
+                metric_insights['ban'] = ban
+            #  extract current trend and unusual change
+            elif insight_group.get('type') == 'anchor':
+                insights_array = insight_group.get('insights')
+                print('anchor', len(insights_array))
+                anchor = extractAnchor(insights_array=insights_array, metric=metric, time_options=time_options)
+                metric_insights['anchor'] = anchor
+            # extract all top down contributors
+            elif insight_group.get('type') == 'breakdown':
+                breakdown_bundles = insight_group.get('insights')
+                print('breakdown', len(breakdown_bundles))
+                breakdown = extractOthers(other_bundles=breakdown_bundles, metric=metric, time_options=time_options)
+                metric_insights['breakdown'] = breakdown
+            # extract all top drivers
+            elif insight_group.get('type') == 'followup':
+                followup_bundles = insight_group.get('insights')
+                print('followup', len(followup_bundles))
+                followup = extractOthers(other_bundles=followup_bundles, metric=metric, time_options=time_options)
+                metric_insights['followup'] = followup
 
-                current_metric_value = f"""
-                The metric {metric['name']} has a value of {current_formatted_value} ({current_raw_value} in raw value)
-                The current value was recorded on {current_time_period} during a time range of {current_time_range} and is
-                measured every {current_time_granularity}
-
-                The previous value for this metric was {previous_formatted_value} ({previous_raw_value} in previous raw value)
-                The previous value was recorded on {previous_time_period} during a time range of {previous_time_range} and is
-                measured every {previous_time_granularity}
-
-                Therefore the metric value is currently trending {direction}. This is considered {sentiment} since the metric
-                is defined as {metric['representation_options']['sentiment_type']}
-
-                This Tableau Pulse AI generated insights was created at {time_options['formatted_time']}
-                In the {time_options['timezone_name']} timezone
-                """
-
-                print('current_metric_value', current_metric_value)
-
-                period_over_period_change = f"""
-                Metric: {metric['name']}
-                Insight Type: {insight_types['popc']['name']}
-                Description: {insight_types['popc']['description']}
-                The insight has a score of: {score}
-
-                Question: {question}
-                Answer: {answer}
-
-                The metric had a relative change of {relative_formatted_difference} ({relative_raw_difference} in raw value)
-                In absolute terms the change was {absolute_formatted_difference} ({absolute_raw_difference} in raw value)
-
-                This Tableau Pulse AI generated insights was created at {time_options['formatted_time']}
-                In the {time_options['timezone_name']} timezone
-                """
-
-                print('period_over_period_change', period_over_period_change)
-
-            # extract facts about the metric's current value
-            if insight_group['type'] == 'anchor':
-                detail = bundle['result']['insight_groups'][0]['insights']
-
-    insights = {
-        'current_metric_value': current_metric_value,
-        'period_over_period_change': period_over_period_change,
-    }
+        insights.append(metric_insights)
 
     return insights
 
+def extractBan(result, metric, time_options):
+    result_data = result[0].get('result')
+
+    score = result_data.get('score')
+    question = result_data.get('question')
+    answer = result_data.get('markup')
+
+    facts = result_data.get('facts', {})
+
+    sentiment = facts.get('sentiment')
+    current_raw_value = facts.get('target_period_value', {}).get('raw')
+    current_formatted_value = facts.get('target_period_value', {}).get('formatted')
+    previous_raw_value = facts.get('comparison_period_value', {}).get('raw')
+    previous_formatted_value = facts.get('comparison_period_value', {}).get('formatted')
+
+    target_time_period = facts.get('target_time_period', {})
+    current_time_period = target_time_period.get('label')
+    current_time_range = target_time_period.get('range')
+    current_time_granularity = target_time_period.get('granularity')
+
+    comparison_time_period = facts.get('comparison_time_period', {})
+    previous_time_period = comparison_time_period.get('label')
+    previous_time_range = comparison_time_period.get('range')
+    previous_time_granularity = comparison_time_period.get('granularity')
+
+    difference = facts.get('difference', {})
+    direction = difference.get('direction')
+    absolute_raw_difference = difference.get('absolute', {}).get('raw')
+    absolute_formatted_difference = difference.get('absolute', {}).get('formatted')
+    relative_raw_difference = difference.get('relative', {}).get('raw')
+    relative_formatted_difference = difference.get('relative', {}).get('formatted')
+
+
+    current_metric_value = f"""
+    The metric {metric.get('name')} has a value of {current_formatted_value} ({current_raw_value} in raw value)
+    The current value was recorded on {current_time_period} during a time range of {current_time_range} and is
+    measured every {current_time_granularity}
+
+    The previous value for this metric was {previous_formatted_value} ({previous_raw_value} in previous raw value)
+    The previous value was recorded on {previous_time_period} during a time range of {previous_time_range} and is
+    measured every {previous_time_granularity}
+
+    Therefore the metric value is currently trending {direction}. This is considered {sentiment} since the metric
+    is defined as {metric.get('representation_options').get('sentiment_type')}
+
+    This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+    In the {time_options.get('timezone_name')} timezone
+    """
+
+    period_over_period_change = f"""
+    Metric: {metric.get('name')}
+    Insight Type: {insight_types.get('popc').get('name')}
+    Description: {insight_types.get('popc').get('description')}
+    The insight has a score of: {score}
+
+    Question: {question}
+    Answer: {answer}
+
+    The metric had a relative change of {relative_formatted_difference} ({relative_raw_difference} in raw value)
+    In absolute terms the change was {absolute_formatted_difference} ({absolute_raw_difference} in raw value)
+
+    This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+    In the {time_options.get('timezone_name')} timezone
+    """
+
+def extractAnchor(insights_array, metric, time_options):
+    unusual_change = ''
+    current_trend = ''
+    for result in insights_array:
+        insight_type = result.get('result').get('type')
+        if insight_type == 'unusualchange':
+            score = result['result'].get('score')
+            question = result['result'].get('question')
+            answer = result['result'].get('markup')
+            characterization = result['result'].get('characterization')
+            facts = result['result'].get('facts')
+            sentiment = facts.get('sentiment')
+            increment_raw_value = facts.get('value', {}).get('raw')
+            increment_formatted_value = facts.get('value', {}).get('formatted')
+            absolute_change_raw_value = facts.get('value_change', {}).get('absolute', {}).get('raw')
+            absolute_change_formatted_value = facts.get('value_change', {}).get('absolute', {}).get('formatted')
+            relative_change_raw_value = facts.get('value_change', {}).get('relative', {}).get('raw')
+            relative_change_formatted_value = facts.get('value_change', {}).get('relative', {}).get('formatted')
+            expected_change_raw_value = facts.get('expected_value_change', {}).get('raw')
+            expected_change_formatted_value = facts.get('expected_value_change', {}).get('formatted')
+            period_range = facts.get('last_complete_period', {}).get('range')
+            period_label = facts.get('last_complete_period', {}).get('label')
+            period_granularity = facts.get('last_complete_period', {}).get('granularity')
+            period_start = facts.get('last_complete_period', {}).get('start_timestamp')
+            period_end = facts.get('last_complete_period', {}).get('end_timestamp')
+            direction = facts.get('difference', {}).get('direction')
+
+            unusual_change = f"""
+            Metric: {metric['name']}
+            Insight Type: {insight_types.get('unusualchange').get('name')}
+            Description: {insight_types.get('unusualchange').get('description')}
+            The insight has a score of: {score}
+            Change Sentiment: {sentiment}
+            Period: {period_label}
+
+            Question: {question}
+            Answer: {answer}
+
+            Short term change was monitored throughout {period_range} which is currently trending {direction}
+            Observation ran between {period_start} and {period_end} with a granularity of {period_granularity}
+            The value during the observation period is {increment_formatted_value} ({increment_raw_value} in raw value)
+
+            The AI model expected a value of {expected_change_formatted_value} ({expected_change_raw_value} in raw value)
+
+            The data displays a relative change of {relative_change_formatted_value} ({relative_change_raw_value} in raw value)
+            In absolute terms the change was {absolute_change_formatted_value} ({absolute_change_raw_value} in raw value)
+
+            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+            In the {time_options.get('timezone_name')} timezone
+            """
+        elif insight_type == 'currenttrend':
+            score = result['result'].get('score')
+            question = result['result'].get('question')
+            answer = result['result'].get('markup')
+
+            current_trend = f"""
+            Metric: {metric['name']}
+            Insight Type: {insight_types.get('unusualchange').get('name')}
+            Description: {insight_types.get('unusualchange').get('description')}
+            The insight has a score of: {score}
+
+            Question: {question}
+            Answer: {answer}
+
+            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+            In the {time_options.get('timezone_name')} timezone
+            """
+
+        anchor = {
+            'unusual_change': unusual_change,
+            'current_trend': current_trend,
+        }
+
+        return anchor
+
+def extractOthers(other_bundles, metric, time_options):
+    other_insights = [];
+    for bundle in other_bundles:
+        type = bundle.get('type')
+        result = bundle.get('result')
+        score = result.get('score')
+        question = result.get('question')
+        answer = result.get('markup')
+        characterization = result.get('characterization')
+        facts = result.get('facts')
+        if facts:
+            dimension = facts.get('dimensions')[0].get('label')
+            direction = facts.get('direction')
+        if type == 'top-contributors':
+            top_contributors = f"""
+            Metric: {metric['name']}
+            Insight Type: {insight_types.get('top-contributors').get('name')}
+            Description: {insight_types.get('top-contributors').get('description')}
+            The insight has a score of: {score}
+            {f"""The dimension is {dimension} and is trending {direction}""" if facts else ''}
+
+            Question: {question}
+            Answer: {answer}
+
+            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+            In the {time_options.get('timezone_name')} timezone
+            """
+            other_insights.append(top_contributors)
+        elif type == 'bottom-contributors':
+            bottom_contributors = f"""
+            Metric: {metric['name']}
+            Insight Type: {insight_types.get('bottom-contributors').get('name')}
+            Description: {insight_types.get('bottom-contributors').get('description')}
+            The insight has a score of: {score}
+            {f"""The dimension is {dimension} and is trending {direction}""" if facts else ''}
+
+            Question: {question}
+            Answer: {answer}
+
+            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+            In the {time_options.get('timezone_name')} timezone
+            """
+            other_insights.append(bottom_contributors)
+        elif type == 'top-detractors':
+            top_detractors = f"""
+            Metric: {metric['name']}
+            Insight Type: {insight_types.get('top-detractors').get('name')}
+            Description: {insight_types.get('top-detractors').get('description')}
+            The insight has a score of: {score}
+
+            Question: {question}
+            Answer: {answer}
+
+            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+            In the {time_options.get('timezone_name')} timezone
+            """
+            other_insights.append(top_detractors)
+        elif type == 'riskmo':
+            riskmo = f"""
+            Metric: {metric['name']}
+            Insight Type: {insight_types.get('riskmo').get('name')}
+            Description: {insight_types.get('riskmo').get('description')}
+            The insight has a score of: {score}
+
+            Question: {question}
+            Answer: {answer}
+
+            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+            In the {time_options.get('timezone_name')} timezone
+            """
+            other_insights.append(riskmo)
+        elif type == 'top-drivers':
+            top_drivers = f"""
+            Metric: {metric['name']}
+            Insight Type: {insight_types.get('top-drivers').get('name')}
+            Description: {insight_types.get('top-drivers').get('description')}
+            The insight has a score of: {score}
+
+            Question: {question}
+            Answer: {answer}
+
+            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+            In the {time_options.get('timezone_name')} timezone
+            """
+            other_insights.append(top_drivers)
+
+    return other_insights
 
 insight_types = {
     'popc': {
