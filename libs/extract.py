@@ -1,7 +1,7 @@
 from jsonpath_ng import jsonpath, parse
 
 def bundles(bundles):
-    corpus = {}
+    metrics_corpus = {}
     # extract only necessary metadata, Q&A, markup, vizzes, facts & other semantic features
     for key, bundle in bundles.items():
         metric = bundle.get('metric')
@@ -19,18 +19,13 @@ def bundles(bundles):
             'metadata': metadata,
             'insights': insights,
         }
-        #
-        #
-        #
-        #
-        # print(documents['metadata'])
-        print(documents['insights'])
         metric_name = metric.get('name')
         # to identify metrics with the same name but different definitions
         index = f'{key}_{metric_name.replace(" ", "_")}'
         # docs in corpus are indentified by {index}
-        corpus[index] = documents
-    return corpus
+        metrics_corpus[index] = documents
+
+    return metrics_corpus
 
 def extractMetadata(metric, definition, time_options):
     metadata = f"""
