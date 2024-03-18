@@ -13,3 +13,4 @@ dependencies:
     - pinecone-client
     - llama-index
     - llama-index-readers-json
+    - llama-index-vector-stores-pinecone
