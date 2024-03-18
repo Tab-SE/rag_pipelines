@@ -19,33 +19,40 @@ def bundles(bundles):
             'metadata': metadata,
             'insights': insights,
         }
+        #
+        #
+        #
+        #
+        # print(documents['metadata'])
+        # print(documents['insights'])
+        metric_name = metric.get('name')
         # to identify metrics with the same name but different definitions
-        index = f'{key} - {metric.get('name')}'
+        index = f'{key}_{metric_name.replace(" ", "_")}'
         # docs in corpus are indentified by {index}
         corpus[index] = documents
     return corpus
 
 def extractMetadata(metric, definition, time_options):
     metadata = f"""
-        The metric name is {metric['name']}
-        It is described as '{metric['description']}'
-        This metric considers change in value as: {metric['representation_options']['sentiment_type']}
+    The metric name is {metric['name']}
+    It is described as '{metric['description']}'
+    This metric considers change in value as: {metric['representation_options']['sentiment_type']}
 
-        It is represented as: {metric['representation_options']['type']}
-        It is measured by these units:
-        Singular: {metric['representation_options']['number_units']['singular_noun']}
-        Plural: {metric['representation_options']['number_units']['plural_noun']}
+    It is represented as: {metric['representation_options']['type']}
+    It is measured by these units:
+    Singular: {metric['representation_options']['number_units']['singular_noun']}
+    Plural: {metric['representation_options']['number_units']['plural_noun']}
 
-        The data driving this metric has these dimensions: {metric['extension_options']['allowed_dimensions']}
-        With these granularities: {metric['extension_options']['allowed_granularities']}
+    The data driving this metric has these dimensions: {metric['extension_options']['allowed_dimensions']}
+    With these granularities: {metric['extension_options']['allowed_granularities']}
 
-        Tableau Pulse's AI generated insights were created at {time_options['formatted_time']}
-        In the {time_options['timezone_name']} timezone
+    Tableau Pulse's AI generated insights were created at {time_options['formatted_time']}
+    In the {time_options['timezone_name']} timezone
 
-        Other Technical Descriptors:
-        Specification: {metric['specification']}
-        Basic Definition: {definition}
-        """
+    Other Technical Descriptors:
+    Specification: {metric['specification']}
+    Basic Definition: {definition}
+    """
     return metadata
 
 def extractInsights(insights_bundle, metric, time_options):
@@ -149,11 +156,16 @@ def extractBan(result, metric, time_options):
     This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
     In the {time_options.get('timezone_name')} timezone
     """
+    ban = {
+        'current_metric_value': current_metric_value,
+        'period_over_period_change': period_over_period_change
+    }
+    return ban
+
 
 def extractAnchor(insights_array, metric, time_options):
-    unusual_change = ''
-    current_trend = ''
     for result in insights_array:
+        anchor = {}
         insight_type = result.get('result').get('type')
         if insight_type == 'unusualchange':
             score = result['result'].get('score')
@@ -200,30 +212,27 @@ def extractAnchor(insights_array, metric, time_options):
             This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
             In the {time_options.get('timezone_name')} timezone
             """
+            anchor['unusual_change'] = unusual_change
         elif insight_type == 'currenttrend':
             score = result['result'].get('score')
             question = result['result'].get('question')
             answer = result['result'].get('markup')
 
             current_trend = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('unusualchange').get('name')}
-            Description: {insight_types.get('unusualchange').get('description')}
-            The insight has a score of: {score}
+Metric: {metric['name']}
+Insight Type: {insight_types.get('unusualchange').get('name')}
+Description: {insight_types.get('unusualchange').get('description')}
+The insight has a score of: {score}
 
-            Question: {question}
-            Answer: {answer}
+Question: {question}
+Answer: {answer}
 
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
-            """
+This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+In the {time_options.get('timezone_name')} timezone
+"""
+            anchor['current_trend'] = current_trend
 
-        anchor = {
-            'unusual_change': unusual_change,
-            'current_trend': current_trend,
-        }
-
-        return anchor
+    return anchor
 
 def extractOthers(other_bundles, metric, time_options):
     other_insights = [];
@@ -240,75 +249,75 @@ def extractOthers(other_bundles, metric, time_options):
             direction = facts.get('direction')
         if type == 'top-contributors':
             top_contributors = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('top-contributors').get('name')}
-            Description: {insight_types.get('top-contributors').get('description')}
-            The insight has a score of: {score}
-            {f"""The dimension is {dimension} and is trending {direction}""" if facts else ''}
+Metric: {metric['name']}
+Insight Type: {insight_types.get('top-contributors').get('name')}
+Description: {insight_types.get('top-contributors').get('description')}
+The insight has a score of: {score}
+{f"""The dimension is {dimension} and is trending {direction}""" if facts else ''}
 
-            Question: {question}
-            Answer: {answer}
+Question: {question}
+Answer: {answer}
 
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
-            """
+This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+In the {time_options.get('timezone_name')} timezone
+"""
             other_insights.append(top_contributors)
         elif type == 'bottom-contributors':
             bottom_contributors = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('bottom-contributors').get('name')}
-            Description: {insight_types.get('bottom-contributors').get('description')}
-            The insight has a score of: {score}
-            {f"""The dimension is {dimension} and is trending {direction}""" if facts else ''}
+Metric: {metric['name']}
+Insight Type: {insight_types.get('bottom-contributors').get('name')}
+Description: {insight_types.get('bottom-contributors').get('description')}
+The insight has a score of: {score}
+{f"""The dimension is {dimension} and is trending {direction}""" if facts else ''}
 
-            Question: {question}
-            Answer: {answer}
+Question: {question}
+Answer: {answer}
 
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
-            """
+This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+In the {time_options.get('timezone_name')} timezone
+"""
             other_insights.append(bottom_contributors)
         elif type == 'top-detractors':
             top_detractors = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('top-detractors').get('name')}
-            Description: {insight_types.get('top-detractors').get('description')}
-            The insight has a score of: {score}
+Metric: {metric['name']}
+Insight Type: {insight_types.get('top-detractors').get('name')}
+Description: {insight_types.get('top-detractors').get('description')}
+The insight has a score of: {score}
 
-            Question: {question}
-            Answer: {answer}
+Question: {question}
+Answer: {answer}
 
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
-            """
+This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+In the {time_options.get('timezone_name')} timezone
+"""
             other_insights.append(top_detractors)
         elif type == 'riskmo':
             riskmo = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('riskmo').get('name')}
-            Description: {insight_types.get('riskmo').get('description')}
-            The insight has a score of: {score}
+Metric: {metric['name']}
+Insight Type: {insight_types.get('riskmo').get('name')}
+Description: {insight_types.get('riskmo').get('description')}
+The insight has a score of: {score}
 
-            Question: {question}
-            Answer: {answer}
+Question: {question}
+Answer: {answer}
 
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
-            """
+This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+In the {time_options.get('timezone_name')} timezone
+"""
             other_insights.append(riskmo)
         elif type == 'top-drivers':
             top_drivers = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('top-drivers').get('name')}
-            Description: {insight_types.get('top-drivers').get('description')}
-            The insight has a score of: {score}
+Metric: {metric['name']}
+Insight Type: {insight_types.get('top-drivers').get('name')}
+Description: {insight_types.get('top-drivers').get('description')}
+The insight has a score of: {score}
 
-            Question: {question}
-            Answer: {answer}
+Question: {question}
+Answer: {answer}
 
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
-            """
+This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
+In the {time_options.get('timezone_name')} timezone
+"""
             other_insights.append(top_drivers)
 
     return other_insights
