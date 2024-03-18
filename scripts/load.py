@@ -11,7 +11,7 @@ def data(bundles):
     print('Extracting semantic features from JSON...')
     insights = extract.bundles(bundles)
     print('Storing data to file system...')
-    store_response(insights)
+    is_stored = store_response(insights)
     print('Loading data for indexing...')
     # load_data()
     return insights
@@ -22,11 +22,6 @@ def store_response(insights):
     # loop through key-value pairs in insights dict
     for key, metric in insights.items():
         try:
-            print('metadata', type(metric['metadata']))
-            print('ban', type(metric['insights']['ban']))
-            print('anchor', type(metric['insights']['anchor']))
-            print('breakdown', type(metric['insights']['breakdown']))
-            print('followup', type(metric['insights']['followup']))
             # create 'data/insights/{key}' folder if it doesn't exist
             folder_path = os.path.join('data', 'insights', key)
             os.makedirs(folder_path, exist_ok=True)
@@ -41,11 +36,25 @@ def store_response(insights):
 
             # write insight summary files
             metric_insights = metric['insights']
-            for key in metric_insights['ban']:
-                print(key)
-                # ban_path = os.path.join(insights_folder_path, f'{key}.txt')
-                # with open(ban_path, 'w') as f:
-                #     f.write(insight)
+            for index, insight in enumerate(metric_insights['ban']):
+                ban_path = os.path.join(insights_folder_path, f'ban_{index}.txt')
+                with open(ban_path, 'w') as f:
+                    f.write(insight)
+
+            for index, insight in enumerate(metric_insights['anchor']):
+                anchor_path = os.path.join(insights_folder_path, f'anchor_{index}.txt')
+                with open(anchor_path, 'w') as f:
+                    f.write(insight)
+
+            for index, insight in enumerate(metric_insights['breakdown']):
+                breakdown_path = os.path.join(insights_folder_path, f'breakdown_{index}.txt')
+                with open(breakdown_path, 'w') as f:
+                    f.write(insight)
+
+            for index, insight in enumerate(metric_insights['followup']):
+                followup_path = os.path.join(insights_folder_path, f'followup_{index}.txt')
+                with open(followup_path, 'w') as f:
+                    f.write(insight)
 
         except Exception as e:
             print(f"An error occurred while processing key '{key}': {e}")
