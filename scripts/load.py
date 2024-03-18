@@ -11,23 +11,42 @@ def data(bundles):
     print('Extracting semantic features from JSON...')
     insights = extract.bundles(bundles)
     print('Storing data to file system...')
-    # store_response(insights)
+    store_response(insights)
     print('Loading data for indexing...')
     # load_data()
     return insights
 
 def store_response(insights):
-    # create 'data/insights' folder if it doesn't exist
     os.makedirs('data/insights', exist_ok=True)
 
     # loop through key-value pairs in insights dict
-    for key, value in insights.items():
+    for key, metric in insights.items():
         try:
-            # create file path with key as file name
-            file_path = os.path.join('data', 'insights', f'{key}.json')
-            # Write JSON to file
-            with open(file_path, 'w') as f:
-                json.dump(value, f)
+            print('metadata', type(metric['metadata']))
+            print('ban', type(metric['insights']['ban']))
+            print('anchor', type(metric['insights']['anchor']))
+            print('breakdown', type(metric['insights']['breakdown']))
+            print('followup', type(metric['insights']['followup']))
+            # create 'data/insights/{key}' folder if it doesn't exist
+            folder_path = os.path.join('data', 'insights', key)
+            os.makedirs(folder_path, exist_ok=True)
+            # write metadata file to parent folder
+            metadata_path = os.path.join(folder_path, f'{key}.txt')
+            with open(metadata_path, 'w') as f:
+                f.write(metric['metadata'])
+
+             # create 'data/insights/{key}/insights' child folder if it doesn't exist
+            insights_folder_path = os.path.join('data', 'insights', key, 'insights')
+            os.makedirs(insights_folder_path, exist_ok=True)
+
+            # write insight summary files
+            metric_insights = metric['insights']
+            for key in metric_insights['ban']:
+                print(key)
+                # ban_path = os.path.join(insights_folder_path, f'{key}.txt')
+                # with open(ban_path, 'w') as f:
+                #     f.write(insight)
+
         except Exception as e:
             print(f"An error occurred while processing key '{key}': {e}")
     return True
