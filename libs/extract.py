@@ -160,12 +160,10 @@ def extractBan(result, metric, time_options):
     }
     return ban
 
-
 def extractAnchor(insights_array, metric, time_options):
     anchor = {}
     for result in insights_array:
         insight_type = result.get('result').get('type')
-        print('insight_type', insight_type)
         if insight_type == 'unusualchange':
             score = result['result'].get('score')
             question = result['result'].get('question')
@@ -254,8 +252,8 @@ def extractAnchor(insights_array, metric, time_options):
 def extractOthers(other_bundles, metric, time_options):
     other_insights = [];
     for bundle in other_bundles:
-        type = bundle.get('type')
         result = bundle.get('result')
+        type = result.get('type')
         score = result.get('score')
         question = result.get('question')
         answer = result.get('markup')
