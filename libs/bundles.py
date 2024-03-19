@@ -1,14 +1,15 @@
 from datetime import datetime
+
 from tzlocal import get_localzone
 
-from utils.http import httpPost
+from utils import http
 
 def insights(domain, credentials, metrics):
     insights_bundles = {}
     # REST API authentication token
     token = credentials['credentials']['token']
     # generates full set of insights from Pulse
-    endpoint = f"{domain}/api/-/pulse/insights/detail" 
+    endpoint = f"{domain}/api/-/pulse/insights/detail"
     # carries authentication token and sets response format
     headers = {
     'Content-Type': 'application/json',
@@ -31,8 +32,12 @@ def insights(domain, credentials, metrics):
 
     for key, metric in metrics.items():
         insights = queryInsights(endpoint=endpoint, headers=headers, metric=metric, time_options=time_options)
-        insights_bundles[key] = insights
-    
+        insights_bundles[key] = {
+            "metric": metric,
+            "insights": insights,
+            "time_options": time_options,
+        }
+
     return insights_bundles
 
 def queryInsights(endpoint, headers, metric, time_options):
@@ -61,7 +66,8 @@ def queryInsights(endpoint, headers, metric, time_options):
             }
         }
     }
-    
-    response = httpPost(endpoint=endpoint, headers=headers, payload=payload)
-    body = response['body']
-    return body
+    # generate /detail insights from Tableau Pulse
+    # https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_pulse.htm#PulseInsightsService_GenerateInsightBundleDetail
+    response = http.post(endpoint=endpoint, headers=headers, payload=payload)
+    bundles = response['body']
+    return bundles

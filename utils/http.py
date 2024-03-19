@@ -1,7 +1,7 @@
 import requests
 import json
 
-def httpGet(endpoint, headers):
+def get(endpoint, headers):
 	response = requests.request("GET", endpoint, headers=headers)
 
 	responseHeaders = dict(response.headers)
@@ -13,13 +13,13 @@ def httpGet(endpoint, headers):
 	}
 	return responseObject
 
-def httpPost(endpoint, headers, payload):
+def post(endpoint, headers, payload):
 	formattedPayload = json.dumps(payload)
 	response = requests.request("POST", endpoint, headers=headers, data=formattedPayload)
-	
+
 	responseHeaders = dict(response.headers)
 	responseBody = response.json()
-	
+
 	responseObject = {
 		"headers": responseHeaders,
 		"body": responseBody

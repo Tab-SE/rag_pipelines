@@ -1,14 +1,13 @@
-import json
 from jsonpath_ng import jsonpath, parse
 
-from utils.http import httpGet
+from utils import http
 
 def metrics(domain, credentials):
     token = credentials['credentials']['token']
     user = credentials['credentials']['user']['id']
 
     # shared by all Pulse endpoints
-    path = f"{domain}/api/-/pulse" 
+    path = f"{domain}/api/-/pulse"
     headers = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -23,7 +22,7 @@ def metrics(domain, credentials):
 
 def getSubscriptions(path, headers, user):
     endpoint =  path + f"/subscriptions?user_id={user}"
-    response = httpGet(endpoint=endpoint, headers=headers)
+    response = http.get(endpoint=endpoint, headers=headers)
     body = response['body']
     return body
 
@@ -37,7 +36,7 @@ def getMetrics(path, headers, subscriptions):
 
     # query parameter is a string of comma separated values with no spaces
     endpoint =  path + f"/metrics:batchGet?metric_ids={metric_ids}"
-    response = httpGet(endpoint=endpoint, headers=headers)
+    response = http.get(endpoint=endpoint, headers=headers)
     body = response['body']
     return body
 
@@ -51,7 +50,7 @@ def getMetricDefinitions(path, headers, metrics):
 
     # use as query parameter values
     endpoint =  path + f"/definitions:batchGet?definition_ids={definition_ids}"
-    response = httpGet(endpoint=endpoint, headers=headers)
+    response = http.get(endpoint=endpoint, headers=headers)
     body = response['body']
 
     # JSONPath expressions to extract data for requesting Pulse insights and semantic embedding
@@ -60,7 +59,7 @@ def getMetricDefinitions(path, headers, metrics):
     names_expression = parse("$.definitions.[*].metadata.name")
     descriptions_expression = parse("$.definitions.[*].metadata.description")
     definitions_expression = parse("$.definitions.[*].specification")
-    extentions_expression = parse("$.definitions.[*].extension_options")
+    extensions_expression = parse("$.definitions.[*].extension_options")
     representations_expression = parse("$.definitions.[*].representation_options")
     insights_options_expression = parse("$.definitions.[*].insights_options")
 
@@ -71,7 +70,7 @@ def getMetricDefinitions(path, headers, metrics):
     names_array = [match.value for match in names_expression.find(body)]
     descriptions_array = [match.value for match in descriptions_expression.find(body)]
     definitions_array = [match.value for match in definitions_expression.find(body)]
-    extentions_array = [match.value for match in extentions_expression.find(body)]
+    extensions_array = [match.value for match in extensions_expression.find(body)]
     representations_array = [match.value for match in representations_expression.find(body)]
     insights_options_array = [match.value for match in insights_options_expression.find(body)]
 
@@ -88,15 +87,15 @@ def getMetricDefinitions(path, headers, metrics):
             'specification': specifications_array[index] if index < len(specifications_array) else None,
             'definition_id': definition_ids_array[index] if index < len(definition_ids_array) else None,
             'definition': definitions_array[index] if index < len(definitions_array) else None,
-            'extension_options': extentions_array[index] if index < len(extentions_array) else None,
+            'extension_options': extensions_array[index] if index < len(extensions_array) else None,
             'representation_options': representations_array[index] if index < len(representations_array) else None,
             'insights_options': insights_options_array[index] if index < len(insights_options_array) else None,
         } if index < len(definitions_array) else None
-        
+
     # list of keys to remove
     keys_to_remove = [key for key, value in definitions.items() if value is None]
     # remove keys from dictionary
     for key in keys_to_remove:
         del definitions[key]
-    
+
     return definitions
