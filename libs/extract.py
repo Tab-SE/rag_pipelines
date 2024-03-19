@@ -339,74 +339,95 @@ def extractOthers(other_bundles, metric, time_options):
             direction = facts.get('direction')
         if type == 'top-contributors':
             top_contributors = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('top-contributors').get('name')}
-            Description: {insight_types.get('top-contributors').get('description')}
+            # {question}
+            _Answer_: {answer}
+
+            # {insight_types.get('top-contributors').get('name')} for {metric.get('name')}
+
+            ## What is {insight_types.get('top-contributors').get('name')}?
+            _Description_: {insight_types.get('top-contributors').get('description')}
+
+            ## What is the {insight_types.get('top-contributors').get('name')} for {metric.get('name')}?
+
+            ## What is the score for {insight_types.get('top-contributors').get('name')} calculated for {metric.get('name')}?
             The insight has a score of: {score}
-            {f"""The dimension is {dimension} and is trending {direction}""" if facts else ''}
 
-            Question: {question}
-            Answer: {answer}
 
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
+            {f"""## What is dimension?
+            ## How is the dimension trending?
+            The dimension is {dimension} and is trending {direction}
+            """
+             if facts else ''}
             """
             other_insights.append(top_contributors)
         elif type == 'bottom-contributors':
             bottom_contributors = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('bottom-contributors').get('name')}
-            Description: {insight_types.get('bottom-contributors').get('description')}
+            # {question}
+            _Answer_: {answer}
+
+            # {insight_types.get('bottom-contributors').get('name')} for {metric.get('name')}
+
+            ## What is {insight_types.get('bottom-contributors').get('name')}?
+            _Description_: {insight_types.get('bottom-contributors').get('description')}
+
+            ## What is the {insight_types.get('bottom-contributors').get('name')} for {metric.get('name')}?
+
+            ## What is the score for {insight_types.get('bottom-contributors').get('name')} calculated for {metric.get('name')}?
             The insight has a score of: {score}
-            {f"""The dimension is {dimension} and is trending {direction}""" if facts else ''}
 
-            Question: {question}
-            Answer: {answer}
-
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
+            {f"""## What is dimension?
+            ## How is the dimension trending?
+            The dimension is {dimension} and is trending {direction}
+            """
+            if facts else ''}
             """
             other_insights.append(bottom_contributors)
         elif type == 'top-detractors':
             top_detractors = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('top-detractors').get('name')}
-            Description: {insight_types.get('top-detractors').get('description')}
+            # {question}
+            _Answer_: {answer}
+
+            # {insight_types.get('top-detractors').get('name')} for {metric.get('name')}
+
+            ## What is {insight_types.get('top-detractors').get('name')}?
+            _Description_: {insight_types.get('top-detractors').get('description')}
+
+            ## What is the {insight_types.get('top-detractors').get('name')} for {metric.get('name')}?
+
+            ## What is the score for {insight_types.get('top-detractors').get('name')} calculated for {metric.get('name')}?
             The insight has a score of: {score}
-
-            Question: {question}
-            Answer: {answer}
-
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
             """
             other_insights.append(top_detractors)
         elif type == 'riskmo':
             riskmo = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('riskmo').get('name')}
-            Description: {insight_types.get('riskmo').get('description')}
+            # {question}
+            _Answer_: {answer}
+
+            # {insight_types.get('riskmo').get('name')} for {metric.get('name')}
+
+            ## What is {insight_types.get('riskmo').get('name')}?
+            _Description_: {insight_types.get('riskmo').get('description')}
+
+            ## What is the {insight_types.get('riskmo').get('name')} for {metric.get('name')}?
+
+            ## What is the score for {insight_types.get('riskmo').get('name')} calculated for {metric.get('name')}?
             The insight has a score of: {score}
-
-            Question: {question}
-            Answer: {answer}
-
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
             """
             other_insights.append(riskmo)
         elif type == 'top-drivers':
             top_drivers = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('top-drivers').get('name')}
-            Description: {insight_types.get('top-drivers').get('description')}
+            # {question}
+            _Answer_: {answer}
+
+            # {insight_types.get('top-drivers').get('name')} for {metric.get('name')}
+
+            ## What is {insight_types.get('top-drivers').get('name')}?
+            _Description_: {insight_types.get('top-drivers').get('description')}
+
+            ## What is the {insight_types.get('top-drivers').get('name')} for {metric.get('name')}?
+
+            ## What is the score for {insight_types.get('top-drivers').get('name')} calculated for {metric.get('name')}?
             The insight has a score of: {score}
-
-            Question: {question}
-            Answer: {answer}
-
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
             """
             other_insights.append(top_drivers)
 
