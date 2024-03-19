@@ -3,7 +3,8 @@ from jsonpath_ng import jsonpath, parse
 def bundles(bundles):
     # full corpus of metrics data
     metrics_corpus = {
-        'corpus_metadata': ''
+        'corpus_metadata': '',
+        'corpus': {}
     }
     # extract only necessary metadata, Q&A, markup, vizzes, facts & other semantic features
     for key, bundle in bundles.items():
@@ -26,7 +27,7 @@ def bundles(bundles):
         # metrics index to distinguish metrics with the same name
         index = f'{key}_{metric_name.replace(" ", "_")}'
         # docs in corpus are indentified by {index}
-        metrics_corpus[index] = documents
+        metrics_corpus['corpus'][index] = documents
 
     # contains high level information about all metrics and metrics in general
     corpus_metadata = extractCorpusMetadata(bundles=bundles, time_options=time_options)

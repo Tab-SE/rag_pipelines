@@ -15,15 +15,22 @@ def data(bundles):
     is_stored = store_response(insights)
     print('Loading data for indexing...')
     load_insights()
+    print('Data upserted to vector index successfully!')
     return insights
 
 def store_response(insights):
-    os.makedirs('data/insights', exist_ok=True)
+    # create 'data/insights/' folder if it doesn't exist
+    corpus_path = os.path.join('data', 'insights')
+    os.makedirs(corpus_path, exist_ok=True)
+    #
+    corpus_metadata_path = os.path.join('data', 'insights', 'insights_metadata.txt')
+    # metadata file in root of insights/
+    with open(corpus_metadata_path, 'w') as f:
+        f.write(insights['corpus_metadata'])
 
     # loop through key-value pairs in insights dict
-    for key, metric in insights.items():
+    for key, metric in insights['corpus'].items():
         try:
-            # create 'data/insights/{key}' folder if it doesn't exist
             folder_path = os.path.join('data', 'insights', key)
             os.makedirs(folder_path, exist_ok=True)
             # write metadata file to parent folder
