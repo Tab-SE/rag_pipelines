@@ -1,32 +1,85 @@
 from jsonpath_ng import jsonpath, parse
 
 def bundles(bundles):
-    metrics_corpus = {}
+    # full corpus of metrics data
+    metrics_corpus = {
+        'corpus_metadata': ''
+    }
     # extract only necessary metadata, Q&A, markup, vizzes, facts & other semantic features
     for key, bundle in bundles.items():
         metric = bundle.get('metric')
         time_options = bundle.get('time_options')
         definition = metric.get('definition') if metric else None
-
         # remove 'viz_state_specification' if exists
         definition.pop('viz_state_specification', None)
-        # creating a metadata string
+        # creating a metadata string to describe each metric
         metadata = extractMetadata(metric=metric, definition=definition, time_options=time_options)
+        # extract semantic data from metric insights
         insights_bundle = bundle.get('insights')
         insights = extractInsights(insights_bundle=insights_bundle, metric=metric, time_options=time_options)
-
-        # payload containing document strings for loading
+        # set of documents for each metric
         documents = {
             'metadata': metadata,
             'insights': insights,
         }
         metric_name = metric.get('name')
-        # to identify metrics with the same name but different definitions
+        # metrics index to distinguish metrics with the same name
         index = f'{key}_{metric_name.replace(" ", "_")}'
         # docs in corpus are indentified by {index}
         metrics_corpus[index] = documents
 
+    # contains high level information about all metrics and metrics in general
+    corpus_metadata = extractCorpusMetadata(bundles=bundles, time_options=time_options)
+    metrics_corpus['corpus_metadata'] = corpus_metadata
     return metrics_corpus
+
+def extractCorpusMetadata(bundles, time_options):
+    metrics_count = 0
+    insights_count = 0
+    # extract only necessary metadata, Q&A, markup, vizzes, facts & other semantic features
+    for key, bundle in bundles.items():
+        metrics_count = metrics_count + 1
+        insights_groups = bundle.get('insights')['bundle_response']['result']['insight_groups']
+        for insight_group in insights_groups:
+            insights_list = insight_group['insights']
+            insights_count = insights_count + len(insights_list)
+
+    # describe all insight types
+    types_list = '\n'.join(
+        f'{index}. {insight_types[type]['name']}: {insight_types[type]['description']} \n'
+        for index, type in enumerate(insight_types)
+    )
+    # high level details for all metrics
+    metrics_list = '\n'.join(
+        f"""{index}. {bundles[bundle]['metric']['name']}: {bundles[bundle]['metric']['description']} \n
+        """
+        for index, bundle in enumerate(bundles)
+    )
+
+    corpus_metadata = f"""
+    The user is subscribed to {metrics_count} metrics
+    and receives {insights_count} AI insights from Tableau Pulse from this data
+
+    This is the list of user subscribed metrics:
+    {metrics_list}
+
+    The user is subscribed to metrics on Tableau Pulse which uses it's AI driven insights layer
+    to provide users with objective and reliable information regarding their metrics, KPIs and other
+    valuable data. Insights are generated automatically as often as data sources are updated with
+    new information
+
+    Tableau Pulse is securely hosted on Tableau Cloud, a SaaS solution for analytics owned by Tableau Software
+    (a Salesforce company). Tableau Cloud hosts data sources, analytics, ETL flows and AI driven insights to help
+    people see and understand data so they can make better decisions
+
+    Tableau Pulse is able to generate the following kinds of insights:
+    {types_list}
+
+    All current Tableau Pulse AI insights were generated at {time_options.get('formatted_time')}
+    In the {time_options.get('timezone_name')} timezone
+    """
+
+    return corpus_metadata
 
 def extractMetadata(metric, definition, time_options):
     metadata = f"""
