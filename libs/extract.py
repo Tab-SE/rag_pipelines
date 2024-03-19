@@ -251,27 +251,34 @@ def extractAnchor(insights_array, metric, time_options):
             direction = facts.get('difference', {}).get('direction')
 
             unusual_change = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('unusualchange').get('name')}
-            Description: {insight_types.get('unusualchange').get('description')}
+            # {question}
+            _Answer_: {answer}
+
+            # {insight_types.get('unusualchange').get('name')} for {metric.get('name')}
+
+            ## What is {insight_types.get('unusualchange').get('name')}?
+            _Description_: {insight_types.get('unusualchange').get('description')}
+
+            ## Any {insight_types.get('unusualchange').get('name')} for {metric.get('name')}?
+
+            ## What is the score for {insight_types.get('unusualchange').get('name')} calculated for {metric.get('name')}?
             The insight has a score of: {score}
-            Change Sentiment: {sentiment}
-            Period: {period_label}
 
-            Question: {question}
-            Answer: {answer}
-
-            Short term change was monitored throughout {period_range} which is currently trending {direction}
-            Observation ran between {period_start} and {period_end} with a granularity of {period_granularity}
-            The value during the observation period is {increment_formatted_value} ({increment_raw_value} in raw value)
-
+            ## Why is {metric.get('name')} unusual?
+            ## Is there anything unusual about {metric.get('name')}?
+            {sentiment}
             The AI model expected a value of {expected_change_formatted_value} ({expected_change_raw_value} in raw value)
-
             The data displays a relative change of {relative_change_formatted_value} ({relative_change_raw_value} in raw value)
             In absolute terms the change was {absolute_change_formatted_value} ({absolute_change_raw_value} in raw value)
 
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
+            ## What is the period for unusual change?
+            ## When was unusual change detected?
+            {period_label}. Short term change was monitored throughout {period_range} which is currently trending {direction}
+            Observation ran between {period_start} and {period_end} with a granularity of {period_granularity}
+            The value during the observation period is {increment_formatted_value} ({increment_raw_value} in raw value)
+
+            ## What is the score for {insight_types.get('unusualchange').get('name')} calculated for {metric.get('name')}?
+            The insight has a score of: {score}
             """
             anchor.append(unusual_change)
         elif insight_type == 'currenttrend':
@@ -280,16 +287,18 @@ def extractAnchor(insights_array, metric, time_options):
             answer = result['result'].get('markup')
 
             current_trend = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('currenttrend').get('name')}
-            Description: {insight_types.get('currenttrend').get('description')}
+            # {question}
+            _Answer_: {answer}
+
+            # {insight_types.get('currenttrend').get('name')} for {metric.get('name')}
+
+            ## What is {insight_types.get('currenttrend').get('name')}?
+            _Description_: {insight_types.get('currenttrend').get('description')}
+
+            ## What is the {insight_types.get('currenttrend').get('name')} for {metric.get('name')}?
+
+            ## What is the score for {insight_types.get('currenttrend').get('name')} calculated for {metric.get('name')}?
             The insight has a score of: {score}
-
-            Question: {question}
-            Answer: {answer}
-
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
             """
             anchor.append(current_trend)
         elif insight_type == 'newtrend':
@@ -298,16 +307,18 @@ def extractAnchor(insights_array, metric, time_options):
             answer = result['result'].get('markup')
 
             new_trend = f"""
-            Metric: {metric['name']}
-            Insight Type: {insight_types.get('newtrend').get('name')}
-            Description: {insight_types.get('newtrend').get('description')}
+            # {question}
+            _Answer_: {answer}
+
+            # {insight_types.get('new_trend').get('name')} for {metric.get('name')}
+
+            ## What is {insight_types.get('new_trend').get('name')}?
+            _Description_: {insight_types.get('new_trend').get('description')}
+
+            ## What is the {insight_types.get('new_trend').get('name')} for {metric.get('name')}?
+
+            ## What is the score for {insight_types.get('new_trend').get('name')} calculated for {metric.get('name')}?
             The insight has a score of: {score}
-
-            Question: {question}
-            Answer: {answer}
-
-            This Tableau Pulse AI generated insight was created at {time_options.get('formatted_time')}
-            In the {time_options.get('timezone_name')} timezone
             """
             anchor.append(new_trend)
 
