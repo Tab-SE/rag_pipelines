@@ -15,7 +15,7 @@ def data(bundles):
     is_stored = store_response(insights)
     print('Loading data for indexing...')
     load_insights()
-    print('Data upserted to vector index successfully!')
+    is_loaded = print('Data upserted to vector index successfully!')
     return insights
 
 def store_response(insights):
@@ -23,7 +23,7 @@ def store_response(insights):
     corpus_path = os.path.join('data', 'insights')
     os.makedirs(corpus_path, exist_ok=True)
     #
-    corpus_metadata_path = os.path.join('data', 'insights', 'insights_metadata.txt')
+    corpus_metadata_path = os.path.join('data', 'insights', 'insights_metadata.md')
     # metadata file in root of insights/
     with open(corpus_metadata_path, 'w') as f:
         f.write(insights['corpus_metadata'])
@@ -34,7 +34,7 @@ def store_response(insights):
             folder_path = os.path.join('data', 'insights', key)
             os.makedirs(folder_path, exist_ok=True)
             # write metadata file to parent folder
-            metadata_path = os.path.join(folder_path, f'{key}.txt')
+            metadata_path = os.path.join(folder_path, f'{key}.md')
             with open(metadata_path, 'w') as f:
                 f.write(metric['metadata'])
 
@@ -45,22 +45,22 @@ def store_response(insights):
             # write insight summary files
             metric_insights = metric['insights']
             for index, insight in enumerate(metric_insights['ban']):
-                ban_path = os.path.join(insights_folder_path, f'ban_{index}.txt')
+                ban_path = os.path.join(insights_folder_path, f'ban_{index}.md')
                 with open(ban_path, 'w') as f:
                     f.write(insight)
 
             for index, insight in enumerate(metric_insights['anchor']):
-                anchor_path = os.path.join(insights_folder_path, f'anchor_{index}.txt')
+                anchor_path = os.path.join(insights_folder_path, f'anchor_{index}.md')
                 with open(anchor_path, 'w') as f:
                     f.write(insight)
 
             for index, insight in enumerate(metric_insights['breakdown']):
-                breakdown_path = os.path.join(insights_folder_path, f'breakdown_{index}.txt')
+                breakdown_path = os.path.join(insights_folder_path, f'breakdown_{index}.md')
                 with open(breakdown_path, 'w') as f:
                     f.write(insight)
 
             for index, insight in enumerate(metric_insights['followup']):
-                followup_path = os.path.join(insights_folder_path, f'followup_{index}.txt')
+                followup_path = os.path.join(insights_folder_path, f'followup_{index}.md')
                 with open(followup_path, 'w') as f:
                     f.write(insight)
 
