@@ -310,14 +310,14 @@ def extractAnchor(insights_array, metric, time_options):
             # {question}
             _Answer_: {answer}
 
-            # {insight_types.get('new_trend').get('name')} for {metric.get('name')}
+            # {insight_types.get('newtrend').get('name')} for {metric.get('name')}
 
-            ## What is {insight_types.get('new_trend').get('name')}?
-            _Description_: {insight_types.get('new_trend').get('description')}
+            ## What is {insight_types.get('newtrend').get('name')}?
+            _Description_: {insight_types.get('newtrend').get('description')}
 
-            ## What is the {insight_types.get('new_trend').get('name')} for {metric.get('name')}?
+            ## What is the {insight_types.get('newtrend').get('name')} for {metric.get('name')}?
 
-            ## What is the score for {insight_types.get('new_trend').get('name')} calculated for {metric.get('name')}?
+            ## What is the score for {insight_types.get('newtrend').get('name')} calculated for {metric.get('name')}?
             The insight has a score of: {score}
             """
             anchor.append(new_trend)
