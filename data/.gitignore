@@ -1,6 +1,6 @@
-# Ignore everything
+# Content in dynamic folders is not pushed to git
 insights/*
 
-# But keep .gitkeep
+# But keep .gitkeep & .gitignore
 !.gitkeep
 !.gitignore
