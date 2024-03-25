@@ -184,22 +184,22 @@ def extractBan(result, metric, time_options):
 
     ## What is the current value of {metric.get('name')}?
     ## What is the value of {metric.get('name')}?
-    The metric {metric.get('name')} has a value of {current_formatted_value} ({current_raw_value} in raw value)
+    The metric {metric.get('name')} has a value of {current_formatted_value} or {current_raw_value} in raw numbers
     ## When was the current value of {metric.get('name')} generated?
     The current value was recorded on {current_time_period} during a time range of {current_time_range} and is
     measured every {current_time_granularity}
 
     ## What was the previous value of {metric.get('name')}?
-    The previous value for this metric was {previous_formatted_value} ({previous_raw_value} in previous raw value)
+    The previous value for this metric was {previous_formatted_value} or {previous_raw_value} in raw numbers
     ## When was the previous value of {metric.get('name')} generated?
     The previous value was recorded on {previous_time_period} during a time range of {previous_time_range} and is
     measured every {previous_time_granularity}
 
     ## How are {metric.get('name')} doing?
     ## How do you feel about {metric.get('name')}?
-    ## What is the news about {metric.get('name')}?
-    This is considered {sentiment} since the metric
-    is defined as {metric.get('representation_options').get('sentiment_type')}
+    ## How do I know if {metric.get('name')} is doing well or doing poorly?
+    This is considered {sentiment} since the metric is defined as
+    {metric.get('representation_options').get('sentiment_type')}
     ## What is the trend of {metric.get('name')}?
     The metric value is currently trending {direction}.
     """
@@ -265,11 +265,12 @@ def extractAnchor(insights_array, metric, time_options):
             The insight has a score of: {score}
 
             ## Why is {metric.get('name')} unusual?
-            ## Is there anything unusual about {metric.get('name')}?
-            {sentiment}
-            The AI model expected a value of {expected_change_formatted_value} ({expected_change_raw_value} in raw value)
-            The data displays a relative change of {relative_change_formatted_value} ({relative_change_raw_value} in raw value)
-            In absolute terms the change was {absolute_change_formatted_value} ({absolute_change_raw_value} in raw value)
+            ## Is there anything unusual or interesting about {metric.get('name')}?
+            ## Any news about {metric.get('name')}?
+            The metric is doing {sentiment} and the direction is {direction}
+            The AI model expected a value of {expected_change_formatted_value} or {expected_change_raw_value} in raw numbers
+            The data displays a relative change of {relative_change_formatted_value} or {relative_change_raw_value} in raw numbers
+            In absolute terms the change was {absolute_change_formatted_value} or {absolute_change_raw_value} in raw numbers
 
             ## What is the period for unusual change?
             ## When was unusual change detected?
