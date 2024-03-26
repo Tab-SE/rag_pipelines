@@ -55,20 +55,16 @@ def load_writer():
 
 def gather_documents(path):
     print('path', path)
+    exclude = ''
+    # monolith must exclude literature data used to generate the corpus
+    if path == 'data/':
+        exclude='data/literature/'
     # Create an instance of SimpleDirectoryReader
     reader = SimpleDirectoryReader(
         input_dir=path,
         recursive=True,
         exclude_hidden=True
     )
-    # monolith must exclude literature data used to generate the corpus
-    if path == 'data/':
-        reader = SimpleDirectoryReader(
-            input_dir=path,
-            recursive=True,
-            exclude_hidden=True,
-            exclude='data/literature/'
-        )
     # Load the documents from the directory
     documents = reader.load_data()
     # remove emaining \n characters and broken, hyphenated words
@@ -93,6 +89,14 @@ def build_index(pinecone_index):
     # client instance targets declared index
     index = pc.Index(pinecone_index)
     return index
+
+def delete_vectors(index):
+    # get all identifiers from the index
+    all_ids = index.describe()['num_vectors']
+    print("Total number of previous vectors in the index to be deleted:", all_ids)
+    # Delete all identifiers
+    index.delete(range(all_ids))
+    pass
 
 def vectorize(index, documents):
     # construct vector store
