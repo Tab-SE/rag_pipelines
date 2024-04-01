@@ -4,7 +4,7 @@ from tzlocal import get_localzone
 
 from utils import http
 
-def insights(domain, credentials, metrics):
+async def insights(domain, credentials, metrics):
     insights_bundles = {}
     # REST API authentication token
     token = credentials['credentials']['token']
@@ -31,7 +31,7 @@ def insights(domain, credentials, metrics):
     }
 
     for key, metric in metrics.items():
-        insights = queryInsights(endpoint=endpoint, headers=headers, metric=metric, time_options=time_options)
+        insights = await queryInsights(endpoint=endpoint, headers=headers, metric=metric, time_options=time_options)
         insights_bundles[key] = {
             "metric": metric,
             "insights": insights,
@@ -40,7 +40,7 @@ def insights(domain, credentials, metrics):
 
     return insights_bundles
 
-def queryInsights(endpoint, headers, metric, time_options):
+async def queryInsights(endpoint, headers, metric, time_options):
     # request body needed to generate insights
     payload = {
         "bundle_request": {
@@ -68,6 +68,6 @@ def queryInsights(endpoint, headers, metric, time_options):
     }
     # generate /detail insights from Tableau Pulse
     # https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_pulse.htm#PulseInsightsService_GenerateInsightBundleDetail
-    response = http.post(endpoint=endpoint, headers=headers, payload=payload)
+    response = await http.post(endpoint=endpoint, headers=headers, payload=payload)
     bundles = response['body']
     return bundles
