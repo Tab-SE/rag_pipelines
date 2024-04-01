@@ -1,57 +1,22 @@
 import os
 
-from llama_index.llms.openai import OpenAI
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, StorageContext
 from llama_index.vector_stores.pinecone import PineconeVectorStore
 from pinecone import Pinecone, ServerlessSpec
 
 from libs import clean
 
-
-def load_monolith():
-    directory_path = 'data/'
-    documents = gather_documents(directory_path)
-    # construct pinecone client for target index
-    index = initialize_index('PINECONE_INDEX_NAME')
-    # build vector store, index and upsert to Pinecone
-    vectorize(index=index, documents=documents)
-    return True
-
-def load_corpus():
-    directory_path = 'data/' + 'corpus/'
-    documents = gather_documents(directory_path)
-    # construct pinecone client for target index
-    index = initialize_index('CORPUS_INDEX')
-    # build vector store, index and upsert to Pinecone
-    vectorize(index=index, documents=documents)
-    return True
-
-def load_insights():
-    directory_path = 'data/' + 'insights/'
-    documents = gather_documents(directory_path)
-    # construct pinecone client for target index
-    index = initialize_index('INSIGHTS_INDEX')
-    # build vector store, index and upsert to Pinecone
-    vectorize(index=index, documents=documents)
-    return True
-
-def load_headlessbi():
-    directory_path = 'data/' + 'headlessbi/'
-    documents = gather_documents(directory_path)
-    # construct pinecone client for target index
-    index = initialize_index('HEADLESS_BI_INDEX')
-    # build vector store, index and upsert to Pinecone
-    vectorize(index=index, documents=documents)
-    return True
-
-def load_writer():
-    directory_path = 'data/' + 'literature/'
-    documents = gather_documents(directory_path)
-    # construct pinecone client for target index
-    index = initialize_index('WRITING_INDEX')
-    # build vector store, index and upsert to Pinecone
-    vectorize(index=index, documents=documents)
-    return True
+def load_index(directory_path, index_name):
+    try:
+        documents = gather_documents(directory_path)
+        # construct pinecone client for target index
+        index = initialize_index(index_name)
+        # build vector store, index and upsert to Pinecone
+        vectorize(index=index, documents=documents)
+        return True
+    except Exception as e:
+        print(f"Error loading data from {directory_path}:", e)
+        return False
 
 def gather_documents(path):
     print(f'Gathering documents from {path}')
