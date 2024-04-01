@@ -21,10 +21,10 @@ PINECONE_API_KEY = env_vars['PINECONE_API_KEY']
 PINECONE_ENVIRONMENT = env_vars['PINECONE_ENVIRONMENT']
 PINECONE_INDEX_NAME = env_vars['PINECONE_INDEX_NAME']
 
-def main():
+async def main():
     print('Initializing RAG Pipeline...')
     print('Querying Insights...')
-    insights = query.get({
+    insights = await query.get({
         'DOMAIN': DOMAIN,
         'API': API,
         'SITE': SITE,
@@ -42,4 +42,6 @@ def main():
 
 
 if __name__ == "__main__":
-	main()
+    import asyncio
+
+    asyncio.run(main())

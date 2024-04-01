@@ -5,6 +5,8 @@ dependencies:
   - python=3.12.2
   - python-dotenv
   - requests
+  - aiohttp
+  - asyncio
   - pandas
   - tzlocal
   - pip=23.3.1
