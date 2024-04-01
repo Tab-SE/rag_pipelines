@@ -1,4 +1,11 @@
 {
+    "name": "Sales by Quarter and Year 2022-2024",
+    "description": "This dataset provides the total sales by quarter and year in US dollars.",
+    "synonyms": [
+        "sales by quarter",
+        "sales by year",
+        "sales 2022, 2023, 2024"
+    ],
     "data": [
       {
         "YEAR(Order Date)": 2022,

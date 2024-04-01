@@ -1,4 +1,12 @@
 {
+    "name": "Top 10 States by Profit",
+    "description": "This dataset provides the total profit for the top 10 states.",
+    "synonyms": [
+        "top 10 states",
+        "profit by state",
+        "states by profit",
+        "most profitable states"
+    ],
     "data": [
       {
         "State/Province": "Delaware",
