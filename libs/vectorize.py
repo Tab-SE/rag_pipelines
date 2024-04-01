@@ -54,7 +54,7 @@ def load_writer():
     return True
 
 def gather_documents(path):
-    print('path', path)
+    print(f'Gathering documents from {path}')
     exclude = ''
     # monolith must exclude literature data used to generate the corpus
     if path == 'data/':

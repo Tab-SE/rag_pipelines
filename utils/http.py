@@ -1,6 +1,4 @@
-import requests
 import aiohttp
-import asyncio
 import json
 
 async def get(endpoint, headers):
@@ -27,17 +25,3 @@ async def post(endpoint, headers, payload):
                 "body": responseBody
             }
             return responseObject
-
-# def post(endpoint, headers, payload):
-# 	formattedPayload = json.dumps(payload)
-# 	response = requests.request("POST", endpoint, headers=headers, data=formattedPayload)
-
-# 	responseHeaders = dict(response.headers)
-# 	responseBody = response.json()
-
-# 	responseObject = {
-# 		"headers": responseHeaders,
-# 		"body": responseBody
-# 	}
-
-# 	return responseObject
