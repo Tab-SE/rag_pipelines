@@ -59,7 +59,7 @@ def initialize_index(pinecone_index):
             if index.get('name') == index_name:
                 # Remove index to be replaced with updated data
                 pc.delete_index(index_name)
-                print(f"Previous vector state found! Deleting state data at: {index_name}")
+                print(f"Previous vector state found! Deleting stale index: {index_name}")
     # create a new index to store updated data
     pc.create_index(
         name=index_name,
