@@ -6,7 +6,7 @@ def data(bundles):
     vector_index()
 
 def get_semantics(bundles):
-    print('Extracting semantic features from external HTTP...')
+    print('Extracting semantic features from external HTTP data sources...')
     insights = extract.bundles(bundles)
     return insights
 
