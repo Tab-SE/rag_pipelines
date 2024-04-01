@@ -3,7 +3,7 @@ import os
 from llama_index.llms.openai import OpenAI
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, StorageContext
 from llama_index.vector_stores.pinecone import PineconeVectorStore
-from pinecone import Pinecone
+from pinecone import Pinecone, ServerlessSpec
 
 from libs import clean
 
@@ -12,7 +12,7 @@ def load_monolith():
     directory_path = 'data/'
     documents = gather_documents(directory_path)
     # construct pinecone client for target index
-    index = build_index('PINECONE_INDEX_NAME')
+    index = initialize_index('PINECONE_INDEX_NAME')
     # build vector store, index and upsert to Pinecone
     vectorize(index=index, documents=documents)
     return True
@@ -21,7 +21,7 @@ def load_corpus():
     directory_path = 'data/' + 'corpus/'
     documents = gather_documents(directory_path)
     # construct pinecone client for target index
-    index = build_index('CORPUS_INDEX')
+    index = initialize_index('CORPUS_INDEX')
     # build vector store, index and upsert to Pinecone
     vectorize(index=index, documents=documents)
     return True
@@ -30,7 +30,7 @@ def load_insights():
     directory_path = 'data/' + 'insights/'
     documents = gather_documents(directory_path)
     # construct pinecone client for target index
-    index = build_index('INSIGHTS_INDEX')
+    index = initialize_index('INSIGHTS_INDEX')
     # build vector store, index and upsert to Pinecone
     vectorize(index=index, documents=documents)
     return True
@@ -39,7 +39,7 @@ def load_headlessbi():
     directory_path = 'data/' + 'headlessbi/'
     documents = gather_documents(directory_path)
     # construct pinecone client for target index
-    index = build_index('HEADLESS_BI_INDEX')
+    index = initialize_index('HEADLESS_BI_INDEX')
     # build vector store, index and upsert to Pinecone
     vectorize(index=index, documents=documents)
     return True
@@ -48,7 +48,7 @@ def load_writer():
     directory_path = 'data/' + 'literature/'
     documents = gather_documents(directory_path)
     # construct pinecone client for target index
-    index = build_index('WRITING_INDEX')
+    index = initialize_index('WRITING_INDEX')
     # build vector store, index and upsert to Pinecone
     vectorize(index=index, documents=documents)
     return True
@@ -80,23 +80,34 @@ def clean_docs(documents):
         cleaned_docs.append(d)
     return cleaned_docs
 
-def build_index(pinecone_index):
+def initialize_index(pinecone_index):
     pinecone_api = os.environ['PINECONE_API_KEY']
     pinecone_environment = os.environ['PINECONE_ENVIRONMENT']
-    pinecone_index = os.environ[pinecone_index]
+    index_name = os.environ[pinecone_index]
     # initialize pinecone client
     pc = Pinecone(api_key=pinecone_api, environment=pinecone_environment)
-    # client instance targets declared index
-    index = pc.Index(pinecone_index)
-    return index
 
-def delete_vectors(index):
-    # get all identifiers from the index
-    all_ids = index.describe()['num_vectors']
-    print("Total number of previous vectors in the index to be deleted:", all_ids)
-    # Delete all identifiers
-    index.delete(range(all_ids))
-    pass
+    # check if index exists
+    existing_indexes = pc.list_indexes()
+    if existing_indexes:
+        for index in existing_indexes:
+            if index.get('name') == index_name:
+                # Remove index to be replaced with updated data
+                pc.delete_index(index_name)
+                print(f"Previous vector state found! Deleting state data at: {index_name}")
+    # create a new index to store updated data
+    pc.create_index(
+        name=index_name,
+        dimension=1536,
+        metric="cosine",
+        spec=ServerlessSpec(
+            cloud="aws",
+            region="us-west-2"
+        )
+    )
+    # client instance targets newly created index
+    index = pc.Index(index_name)
+    return index
 
 def vectorize(index, documents):
     # construct vector store
