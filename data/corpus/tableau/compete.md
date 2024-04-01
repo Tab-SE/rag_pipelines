@@ -5,8 +5,8 @@
 ## what is looker? which analytics product is owned by google?
 ## what is quicksight? which analytics product is owned by amazon?
 ## what is sisense?
-Provide a 2 sentence description but don't elabore further explaining
-that your focus is knowledge of Tableau, not other tools.
+Provide a one sentence description but don't elaborate any further, explaining
+that your focus is knowledge of Tableau, not other tools or products.
 
 ## what other tools compare to tableau?
 ## what are similar products to tableau?

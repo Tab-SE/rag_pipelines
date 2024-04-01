@@ -2,7 +2,7 @@ from jsonpath_ng import jsonpath, parse
 
 from utils import http
 
-def metrics(domain, credentials):
+async def metrics(domain, credentials):
     token = credentials['credentials']['token']
     user = credentials['credentials']['user']['id']
 
@@ -14,19 +14,19 @@ def metrics(domain, credentials):
     'X-Tableau-Auth': token
     }
 
-    subscriptions = getSubscriptions(path=path, headers=headers, user=user)
-    metrics = getMetrics(path=path, headers=headers, subscriptions=subscriptions)
-    definitions = getMetricDefinitions(path=path, headers=headers, metrics=metrics)
+    subscriptions = await getSubscriptions(path=path, headers=headers, user=user)
+    metrics = await getMetrics(path=path, headers=headers, subscriptions=subscriptions)
+    definitions = await getMetricDefinitions(path=path, headers=headers, metrics=metrics)
 
     return definitions
 
-def getSubscriptions(path, headers, user):
+async def getSubscriptions(path, headers, user):
     endpoint =  path + f"/subscriptions?user_id={user}"
-    response = http.get(endpoint=endpoint, headers=headers)
+    response = await http.get(endpoint=endpoint, headers=headers)
     body = response['body']
     return body
 
-def getMetrics(path, headers, subscriptions):
+async def getMetrics(path, headers, subscriptions):
     # JSONPath expressions
     expression = parse("$.subscriptions.[*].metric_id")
     # apply JSONPATH expression to JSON
@@ -36,11 +36,11 @@ def getMetrics(path, headers, subscriptions):
 
     # query parameter is a string of comma separated values with no spaces
     endpoint =  path + f"/metrics:batchGet?metric_ids={metric_ids}"
-    response = http.get(endpoint=endpoint, headers=headers)
+    response = await http.get(endpoint=endpoint, headers=headers)
     body = response['body']
     return body
 
-def getMetricDefinitions(path, headers, metrics):
+async def getMetricDefinitions(path, headers, metrics):
     # JSONPath expression for query parameter values
     definition_ids_expression = parse("$.metrics.[*].definition_id")
     # apply JSONPATH expression to JSON
@@ -50,7 +50,7 @@ def getMetricDefinitions(path, headers, metrics):
 
     # use as query parameter values
     endpoint =  path + f"/definitions:batchGet?definition_ids={definition_ids}"
-    response = http.get(endpoint=endpoint, headers=headers)
+    response = await http.get(endpoint=endpoint, headers=headers)
     body = response['body']
 
     # JSONPath expressions to extract data for requesting Pulse insights and semantic embedding

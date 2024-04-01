@@ -5,7 +5,7 @@ from uuid import uuid4
 
 from utils import http
 
-def authenticate(env_vars):
+async def authenticate(env_vars):
     DOMAIN, API, SITE, CLIENT_ID, SECRET, SECRET_ID, USER = env_vars.values()
     # Encode the payload and secret key to generate the JWT
     token = jwt.encode(
@@ -50,5 +50,5 @@ def authenticate(env_vars):
         }
     }
 
-    response = http.post(endpoint=endpoint, headers=headers, payload=payload)
+    response = await http.post(endpoint=endpoint, headers=headers, payload=payload)
     return response['body']
