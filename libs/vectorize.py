@@ -20,15 +20,11 @@ def load_index(directory_path, index_name):
 
 def gather_documents(path):
     print(f'Gathering documents from {path}')
-    exclude = ''
-    # monolith must exclude literature data used to generate the corpus
-    if path == 'data/':
-        exclude='data/literature/'
     # Create an instance of SimpleDirectoryReader
     reader = SimpleDirectoryReader(
         input_dir=path,
         recursive=True,
-        exclude_hidden=True
+        exclude_hidden=True,
     )
     # Load the documents from the directory
     documents = reader.load_data()
