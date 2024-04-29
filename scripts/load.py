@@ -28,7 +28,6 @@ def vector_index():
         'monolith_loaded':  monolith_loaded,
         'corpus_loaded':  corpus_loaded,
         'insights_loaded':  insights_loaded,
-        'headlessbi_loaded':  headlessbi_loaded,
         'catalog_loaded': catalog_loaded,
         'writer_loaded':  writer_loaded
     }
