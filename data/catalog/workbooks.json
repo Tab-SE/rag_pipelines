@@ -1,1 +1,129 @@
-{"data":{"workbooks":[{"id":"04224ba8-be7d-eea3-c70b-6698c4daa9eb","luid":"6beb5214-ca1a-41c5-9e97-ae26cb8ff295","name":"McDonalds Store Level Demo-Dec2023","description":"","createdAt":"2023-12-04T16:47:11Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"McDonald's (MCD)","projectVizportalUrlId":"210977","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/217658","upstreamDatasources":[]},{"id":"16e44e84-97c4-a010-4008-d11bedba76f9","luid":"e7f3febd-ebe8-4e26-b540-047aedd3aba3","name":"Raising Canes Store Level Demo_Flow","description":"","createdAt":"2024-03-27T18:02:36Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Raising Canes","projectVizportalUrlId":"284921","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/310268","upstreamDatasources":[{"id":"072bffc1-ebb1-cf12-839f-cb87e06c2767","luid":"c34808ec-d52d-44d1-a990-d2179fd64798","name":"Employee Data"},{"id":"209a6c2f-ba5f-62a8-be4c-590a0e200c24","luid":"743f0af9-469d-44e1-93af-2498656458fa","name":"Sales Data"},{"id":"cb1787b7-bed5-1e54-e591-bdd726f2af92","luid":"5d076748-032b-437d-80d3-e1a2f229bf04","name":"Sustainability Data"}]},{"id":"22a14c0d-14c1-ef4f-a3bd-10c08df3aed7","luid":"0b7e8af5-6b37-404f-b7ce-4d2cbeaa941a","name":"Inspire Regional Operations","description":"","createdAt":"2024-01-18T21:01:39Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Inspire Brands","projectVizportalUrlId":"248225","owner":{"id":"30889d3f-d19c-0502-ef64-eedddc9424dc"},"uri":"sites/23049/workbooks/247258","upstreamDatasources":[{"id":"88d98f7b-b0c1-4c6a-60ff-752a873c2429","luid":"1fa52b67-9f1c-4c2e-8735-ccda1c5cc6ec","name":"ScottsRestaurantFinal Extract"}]},{"id":"2ffea898-3171-de16-8e09-50fdfc4003de","luid":"0913544c-997e-498e-897c-d7007acf35c7","name":"Dunkin","description":"","createdAt":"2024-01-18T21:28:15Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Dunkin","projectVizportalUrlId":"248223","owner":{"id":"30889d3f-d19c-0502-ef64-eedddc9424dc"},"uri":"sites/23049/workbooks/247273","upstreamDatasources":[]},{"id":"34e4ab57-b3f1-b7a4-855f-9d44ff67a279","luid":"7b077820-84f1-4a7a-bd42-bcd35857b2a7","name":"DG test","description":"","createdAt":"2023-12-01T18:49:22Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"default","projectVizportalUrlId":"190724","owner":{"id":"69b5c78e-2202-259c-8690-68ad694becaa"},"uri":"sites/23049/workbooks/215827","upstreamDatasources":[]},{"id":"350fc465-db44-651d-81ea-327144406e42","luid":"45a28cf5-c252-4d62-8de3-af30bc2cc410","name":"E-Bike LLC Sales Analysis","description":"","createdAt":"2024-01-31T14:53:10Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"eBikes","projectVizportalUrlId":"251894","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/256373","upstreamDatasources":[{"id":"2bf54782-4d4f-3379-b6a5-882423ddc2df","luid":"86c5f662-dda1-47c5-bbf7-4e8bccac3936","name":"eBikes Inventory and Sales Data"}]},{"id":"3e797a74-86a3-e1c6-6316-4af06b601bea","luid":"d772cc61-5cbe-4c71-b2f1-1cefed58b39a","name":"McD Landing","description":"","createdAt":"2023-12-05T03:56:12Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"McDonald's (MCD)","projectVizportalUrlId":"210977","owner":{"id":"30889d3f-d19c-0502-ef64-eedddc9424dc"},"uri":"sites/23049/workbooks/217973","upstreamDatasources":[]},{"id":"44d4898b-6d1d-fa5c-a3e7-986ae0cc295e","luid":"dca1f8c0-1d73-417a-abcc-e5c66e70a24b","name":"Store 2418 Chapel Hill NC","description":"","createdAt":"2024-03-27T20:11:57Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Raising Canes","projectVizportalUrlId":"284921","owner":{"id":"bc307816-7772-a645-6d38-c2a059884b14"},"uri":"sites/23049/workbooks/310381","upstreamDatasources":[{"id":"072bffc1-ebb1-cf12-839f-cb87e06c2767","luid":"c34808ec-d52d-44d1-a990-d2179fd64798","name":"Employee Data"},{"id":"209a6c2f-ba5f-62a8-be4c-590a0e200c24","luid":"743f0af9-469d-44e1-93af-2498656458fa","name":"Sales Data"},{"id":"cb1787b7-bed5-1e54-e591-bdd726f2af92","luid":"5d076748-032b-437d-80d3-e1a2f229bf04","name":"Sustainability Data"}]},{"id":"4a933895-ccf9-08e3-2474-da27ef5fa251","luid":"f02a7890-d868-4f29-adb1-bcceb901ea18","name":"Viz Performance","description":"","createdAt":"2024-01-29T16:26:58Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Admin Insights","projectVizportalUrlId":"191222","owner":{"id":"30889d3f-d19c-0502-ef64-eedddc9424dc"},"uri":"sites/23049/workbooks/254861","upstreamDatasources":[{"id":"839e0a24-9fb7-aef7-8668-f46a9e77627d","luid":"585039be-b564-423c-b461-8fe8535a929e","name":"Viz Load Times"}]},{"id":"5426d9cb-40b1-ccc1-0fe6-4a5b7f47d1f8","luid":"6d9d0f42-073b-46c3-939d-3da8577216f5","name":"Paid Media Analysis","description":"","createdAt":"2024-03-04T18:29:11Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Digital Media Performance","projectVizportalUrlId":"248820","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/281353","upstreamDatasources":[{"id":"e859b5c0-8803-a859-e396-7c4363263377","luid":"29f0c792-8f3b-429e-9f7b-9f0279106c9c","name":"Digital Media Data"}]},{"id":"5b92e51c-c6c6-09be-e80d-0d62c52767b1","luid":"70b00c27-4455-4f35-90d9-7e2ad0d7c567","name":"Diversity and Equity Payroll Report","description":"","createdAt":"2024-03-22T04:07:38Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Superstore Embed","projectVizportalUrlId":"255562","owner":{"id":"481191c6-00ec-b457-3812-973f702a54b9"},"uri":"sites/23049/workbooks/303436","upstreamDatasources":[]},{"id":"5fe286a9-f9a7-9cc9-bfc8-d9f839c116eb","luid":"94cce98a-893f-4e61-9980-37b0548c19be","name":"Signet - Sales Analysis","description":"","createdAt":"2023-12-14T18:23:56Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Signet","projectVizportalUrlId":"224481","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/224347","upstreamDatasources":[{"id":"14351284-eef8-af55-9c17-bb577c12e204","luid":"b71ef978-217b-4a78-9191-e6feafaae511","name":"Jeweler Retail Data"}]},{"id":"617e2dcb-2624-b41f-d7cb-80d7227a3852","luid":"2ee7b6e3-b599-4021-85d2-064f99c8d6aa","name":"Bloedron Spatial Analysis","description":"","createdAt":"2024-01-25T13:44:38Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Bloedorn","projectVizportalUrlId":"248708","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/252022","upstreamDatasources":[]},{"id":"669a6de5-b550-4c85-6383-d812e8feffe0","luid":"f6f8b7da-8460-454b-bb26-f41f21617ae1","name":"Dates","description":"","createdAt":"2023-11-27T17:53:25Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"McDonald's (MCD)","projectVizportalUrlId":"210977","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/212564","upstreamDatasources":[]},{"id":"6b4223f7-972b-df87-b0ac-6a85db7c4c7e","luid":"36f1c6c1-5be9-46c5-ba52-e14993cd566f","name":"Store Manager","description":"","createdAt":"2024-01-29T15:46:30Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Helzberg Diamonds","projectVizportalUrlId":"240376","owner":{"id":"30889d3f-d19c-0502-ef64-eedddc9424dc"},"uri":"sites/23049/workbooks/254836","upstreamDatasources":[]},{"id":"6bf65e60-beb8-c683-2b1c-81186622439b","luid":"489adbb5-965d-47c7-8052-57ba0f80f905","name":"Store Manager","description":"","createdAt":"2024-01-12T20:26:13Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Signet","projectVizportalUrlId":"224481","owner":{"id":"30889d3f-d19c-0502-ef64-eedddc9424dc"},"uri":"sites/23049/workbooks/243003","upstreamDatasources":[]},{"id":"73ac340f-8e73-629f-ef5e-acc3d6d5559e","luid":"e7a541be-650f-4c50-b148-6f62c71739b9","name":"superstore_embed","description":"","createdAt":"2024-02-06T00:18:46Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Superstore Embed","projectVizportalUrlId":"255562","owner":{"id":"481191c6-00ec-b457-3812-973f702a54b9"},"uri":"sites/23049/workbooks/259999","upstreamDatasources":[]},{"id":"7abae313-0188-df4f-f88a-ff71512490aa","luid":"a02e0b60-6cce-43c3-8124-a6cfe41e138c","name":"Test","description":"","createdAt":"2024-02-29T15:30:50Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Admin Insights","projectVizportalUrlId":"191222","owner":{"id":"30889d3f-d19c-0502-ef64-eedddc9424dc"},"uri":"sites/23049/workbooks/277627","upstreamDatasources":[]},{"id":"80b50807-78cb-defd-c074-712f2ad36b57","luid":"ce3e6260-0969-498a-8471-a12653219adb","name":"Medical Device Sales Pulse","description":"","createdAt":"2024-03-25T16:48:33Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Healthcare & Life Sciences","projectVizportalUrlId":"284222","owner":{"id":"65536bf3-4125-bdca-d863-d4ac4a5b6228"},"uri":"sites/23049/workbooks/307310","upstreamDatasources":[]},{"id":"82c03dfe-0686-6700-8a0d-29c8254ca38e","luid":"84bafa6a-7bd8-4f54-b983-e77bbc1d8d9f","name":"superstore","description":"","createdAt":"2024-02-15T23:04:43Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Superstore Embed","projectVizportalUrlId":"255562","owner":{"id":"481191c6-00ec-b457-3812-973f702a54b9"},"uri":"sites/23049/workbooks/266924","upstreamDatasources":[]},{"id":"896d8d16-5099-b860-a0f6-a6e47a1d8d1e","luid":"08e706c3-ec53-46c9-ad2c-f5499792c09a","name":"Carter's Sales Analysis","description":"","createdAt":"2024-01-04T22:35:16Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Carters (Cinc)","projectVizportalUrlId":"236554","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/237845","upstreamDatasources":[{"id":"61334955-0585-44b6-ab68-4e225c8b5eb3","luid":"407ffce4-c9c2-4ab2-a232-4088f668788f","name":"Cinc Retail Data"}]},{"id":"8971935b-6f46-4fd8-80a4-03015369c392","luid":"4e5f951a-7e4f-446a-9764-c35b4011840d","name":"Jewelry Consultant","description":"","createdAt":"2024-01-12T20:25:40Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Signet","projectVizportalUrlId":"224481","owner":{"id":"30889d3f-d19c-0502-ef64-eedddc9424dc"},"uri":"sites/23049/workbooks/243002","upstreamDatasources":[]},{"id":"8cb2ce62-ec40-4786-021a-7ab49ddb643d","luid":"63ad46c5-23ca-4805-a7f0-b22c4e6dea6f","name":"Inventory Stockouts","description":"","createdAt":"2024-02-13T01:00:20Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Admin Insights","projectVizportalUrlId":"191222","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/264770","upstreamDatasources":[{"id":"6126d444-fccb-67ee-6a0e-dae61466b90e","luid":"36f057c0-f4cc-4cf6-81bd-0e5ff12e18c7","name":"eBike Stock"}]},{"id":"9474a1ac-3e9e-9a2c-35bb-b0da8156a69c","luid":"0f463fa5-c3da-4ebc-9011-b2a06539c19c","name":"Jewelry Consultant","description":"","createdAt":"2024-01-11T16:47:45Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Helzberg Diamonds","projectVizportalUrlId":"240376","owner":{"id":"30889d3f-d19c-0502-ef64-eedddc9424dc"},"uri":"sites/23049/workbooks/242187","upstreamDatasources":[]},{"id":"9f233992-3aad-2cb1-15e6-503c56c471bf","luid":"603c6e4c-e06d-4fee-80bc-d64a31b809d6","name":"World Indicators","description":"","createdAt":"2023-10-16T17:56:49Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Samples","projectVizportalUrlId":"190725","owner":{"id":"345f4fe6-7672-1fdc-8530-6304010ae17b"},"uri":"sites/23049/workbooks/184092","upstreamDatasources":[]},{"id":"a7e635c7-97ba-cf4c-e747-fe5f7ee40085","luid":"c4a6d838-0f08-4bdb-af6e-8f5377e04cb2","name":"Admin Insights Starter","description":"","createdAt":"2023-10-17T14:50:37Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Admin Insights","projectVizportalUrlId":"191222","owner":{"id":"e75311e4-30bf-8fb1-d5a5-14caeb3b5a5e"},"uri":"sites/23049/workbooks/184688","upstreamDatasources":[{"id":"bc3695aa-4e55-fffb-de58-a440af66b274","luid":"651f2ccd-5813-4154-ae3b-01b5627d6515","name":"Site Content"},{"id":"edf2bd0b-9385-b8f0-9b59-5da147975f6f","luid":"b3936792-253e-4b5e-8e7d-ae429b0a8e8c","name":"Groups"},{"id":"efa2a289-ff94-5032-49c8-1e5bac3d0e0a","luid":"d1b07cb2-f853-4dd3-b387-3d7db33d1b0f","name":"TS Users"},{"id":"fc72dc6b-080f-f7ab-b8e4-66200cecb3da","luid":"292087cb-2364-4898-90c6-a96ec47d7b86","name":"TS Events"}]},{"id":"b59c009d-b7eb-c44e-8db1-f326ae902248","luid":"548805be-cc90-4366-8f73-f75ba6748712","name":"Kohl's Sales Analysis","description":"","createdAt":"2024-01-03T22:53:49Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Kohls (KCorp)","projectVizportalUrlId":"236034","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/237196","upstreamDatasources":[{"id":"fa7cfc33-4835-b4b4-2f2e-4ca230f53cca","luid":"b1a18cb1-611c-428c-aae2-3fb22199a73f","name":"KCorp Retail Data"}]},{"id":"b7e80e17-d42f-4060-26ea-67e532eed219","luid":"ea3da999-d121-46e9-bb7b-74d063c3bbe6","name":"Molson Coors National Performance","description":"","createdAt":"2024-02-07T15:54:09Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Coors","projectVizportalUrlId":"256047","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/261145","upstreamDatasources":[{"id":"3b676507-d8d5-e62f-7094-07a6617e0fb0","luid":"1d9348d3-ab92-4273-84c3-7f822026f42f","name":"CoorsDataLongPlus"},{"id":"4f6e1e2e-91fd-823b-a2b0-7778ec41b040","luid":"d358c02e-6fed-4117-8856-cf3a643d0acc","name":"CoorsDataLong"}]},{"id":"ba87e007-c2f5-131b-31f9-3b2b8d98b55c","luid":"32fecc39-ab00-400e-9ea1-9ee6cda2a2c0","name":"Regional Operations","description":"","createdAt":"2023-12-04T20:10:20Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"McDonald's (MCD)","projectVizportalUrlId":"210977","owner":{"id":"30889d3f-d19c-0502-ef64-eedddc9424dc"},"uri":"sites/23049/workbooks/217754","upstreamDatasources":[]},{"id":"bf2d98a2-396f-01de-e6d8-03ad4b00f9e5","luid":"36ba2fb8-49d3-44c6-8f99-fa94ccb5426a","name":"NRF Loss Prevention - Return Tracking","description":"","createdAt":"2023-12-19T21:24:30Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"NRF 2024","projectVizportalUrlId":"227038","owner":{"id":"37077c2a-31c1-dc4e-0b36-54650c68e149"},"uri":"sites/23049/workbooks/227613","upstreamDatasources":[{"id":"bc31b47d-27f2-3ce5-24ef-7a204763e4fc","luid":"ca8879e1-1e20-4055-8416-a577c7c2dafe","name":"Loss Prevention in Store Sales and Returns"}]},{"id":"c0a96533-2db5-eb7c-7771-6d174853f704","luid":"c7e8f383-b819-494a-8eb2-3c6fd8505704","name":"Huck's Market Sales Analysis","description":"","createdAt":"2024-01-09T20:29:25Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Huck's (HCS)","projectVizportalUrlId":"239318","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/240942","upstreamDatasources":[]},{"id":"c720ea1f-5ce9-cf14-86bd-485ce8f6fb26","luid":"6e320109-cea9-4c6e-844e-9ffff71b30d6","name":"Northern Trail Outfitters - Sales Analysis - Embed (800x1200)","description":"","createdAt":"2024-02-09T17:41:33Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"NTO","projectVizportalUrlId":"203718","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/262615","upstreamDatasources":[{"id":"cd783368-d450-75ee-636f-5e1b0ed742c6","luid":"85c9485e-107b-4785-9a2f-c5fee4720d32","name":"NTO Sales Data"}]},{"id":"cb74aa65-87cc-8aa3-459d-5622923c214a","luid":"ea3966b8-55d8-4b6d-a8c0-4cb7fa1f3be2","name":"Retail Sales Analysis","description":"","createdAt":"2023-12-11T17:41:07Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"BOC","projectVizportalUrlId":"223140","owner":{"id":"649971c6-d989-cc6a-ab3a-0fa7a8f18184"},"uri":"sites/23049/workbooks/222291","upstreamDatasources":[]},{"id":"d015e41a-7d59-fd02-d7f8-0416c4d7ef6b","luid":"61160deb-d011-483e-92db-b2cf47fdc7a7","name":"Northern Trail Outfitters - Sales Analysis","description":"","createdAt":"2024-01-10T22:06:08Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"NTO","projectVizportalUrlId":"203718","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/241680","upstreamDatasources":[{"id":"cd783368-d450-75ee-636f-5e1b0ed742c6","luid":"85c9485e-107b-4785-9a2f-c5fee4720d32","name":"NTO Sales Data"}]},{"id":"e1c91f45-4c1f-e939-3353-6512a8cdda69","luid":"a595be91-4042-4de4-90f0-d1fbd37ebad8","name":"Superstore","description":"","createdAt":"2023-10-16T17:56:46Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Samples","projectVizportalUrlId":"190725","owner":{"id":"345f4fe6-7672-1fdc-8530-6304010ae17b"},"uri":"sites/23049/workbooks/184091","upstreamDatasources":[]},{"id":"e41682d3-3e9b-60cc-7f58-547aefa66b2c","luid":"1eaa66e4-8864-4310-9f6d-8960b0070bff","name":"Home Depot Example","description":"","createdAt":"2024-01-25T13:40:41Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"Bloedorn","projectVizportalUrlId":"248708","owner":{"id":"b79de43e-cb45-c2f2-6a9d-2c602615b1e7"},"uri":"sites/23049/workbooks/252021","upstreamDatasources":[]},{"id":"f0929961-e1be-36af-2fc8-ccb697b9033f","luid":"535b4e62-0f53-489b-a327-4b740863585a","name":"NRF Demo Dashboard","description":"","createdAt":"2023-12-20T13:27:20Z","site":{"luid":"d09e78d6-0a39-46ed-8448-1c479c35bda3"},"projectName":"NRF 2024","projectVizportalUrlId":"227038","owner":{"id":"e9ff9e5b-d641-0d6a-9fdb-afabfcca8b6b"},"uri":"sites/23049/workbooks/228045","upstreamDatasources":[]}]}}
+{
+    "data": {
+        "workbooks": [
+            {
+                "id": "735489fe-40e8-2c65-6fdc-c4d867c5cfdf",
+                "luid": "f495db95-3e95-4462-a116-f692e796781d",
+                "name": "Compensation Dashboard",
+                "description": "",
+                "createdAt": "2024-04-18T16:47:13Z",
+                "site": {
+                    "luid": "959ed77c-9270-4d54-9505-2a21e9c5a5b1"
+                },
+                "projectName": "Human Resources",
+                "projectVizportalUrlId": "593730",
+                "owner": {
+                    "id": "bfea471b-f964-fa51-c919-03df6d6d0876"
+                },
+                "uri": "sites/3469/workbooks/4635686",
+                "upstreamDatasources": []
+            },
+            {
+                "id": "8820af0c-5eeb-ce4d-fb51-f1337f7cf165",
+                "luid": "eb33160b-5c29-49ab-9ec3-fb04c571fa1c",
+                "name": "Admin Insights Starter",
+                "description": "",
+                "createdAt": "2024-04-17T16:06:03Z",
+                "site": {
+                    "luid": "959ed77c-9270-4d54-9505-2a21e9c5a5b1"
+                },
+                "projectName": "Admin Insights",
+                "projectVizportalUrlId": "591368",
+                "owner": {
+                    "id": "ea79e50a-aba0-4acf-f51f-2a7fc001920c"
+                },
+                "uri": "sites/3469/workbooks/4633563",
+                "upstreamDatasources": [
+                    {
+                        "id": "58369c00-736e-70f8-408d-f34af0610a55",
+                        "luid": "7754aefa-9f74-4b89-b7ae-af6cf42adbdc",
+                        "name": "TS Users"
+                    },
+                    {
+                        "id": "953e9c41-669f-b13a-8668-95e6e9b4cf39",
+                        "luid": "1915d105-272b-4ea7-b9ef-f6bca531c074",
+                        "name": "Groups"
+                    },
+                    {
+                        "id": "be5ef4e3-a8c7-ec1e-4a2b-0cfddfc6bc85",
+                        "luid": "53ee3dfa-3674-4d94-baee-be915c870e66",
+                        "name": "Site Content"
+                    },
+                    {
+                        "id": "fbd6551c-4418-73ba-674b-9574a50f95e9",
+                        "luid": "398435b7-87f9-4ee6-8252-14f5b031e534",
+                        "name": "TS Events"
+                    }
+                ]
+            },
+            {
+                "id": "96366e93-f040-6a9b-c857-2a5076a12957",
+                "luid": "a443c990-469e-42e3-803d-34bf767f711e",
+                "name": "Diversity and Equity Payroll Report",
+                "description": "",
+                "createdAt": "2024-04-18T17:05:39Z",
+                "site": {
+                    "luid": "959ed77c-9270-4d54-9505-2a21e9c5a5b1"
+                },
+                "projectName": "Human Resources",
+                "projectVizportalUrlId": "593730",
+                "owner": {
+                    "id": "bfea471b-f964-fa51-c919-03df6d6d0876"
+                },
+                "uri": "sites/3469/workbooks/4635719",
+                "upstreamDatasources": []
+            },
+            {
+                "id": "9bec027c-049c-cb71-a378-4c4ba28bb232",
+                "luid": "4cb14ccd-2b62-466c-9c14-b31ea46b32fc",
+                "name": "Superstore",
+                "description": "",
+                "createdAt": "2024-04-16T23:58:10Z",
+                "site": {
+                    "luid": "959ed77c-9270-4d54-9505-2a21e9c5a5b1"
+                },
+                "projectName": "Samples",
+                "projectVizportalUrlId": "590933",
+                "owner": {
+                    "id": "bfea471b-f964-fa51-c919-03df6d6d0876"
+                },
+                "uri": "sites/3469/workbooks/4632269",
+                "upstreamDatasources": []
+            },
+            {
+                "id": "baa64586-2ce8-58a5-11a2-21b4aa0cd82f",
+                "luid": "ffdd85eb-c9e1-4956-b05f-620bd7917fcd",
+                "name": "World Indicators",
+                "description": "",
+                "createdAt": "2024-04-16T23:58:13Z",
+                "site": {
+                    "luid": "959ed77c-9270-4d54-9505-2a21e9c5a5b1"
+                },
+                "projectName": "Samples",
+                "projectVizportalUrlId": "590933",
+                "owner": {
+                    "id": "bfea471b-f964-fa51-c919-03df6d6d0876"
+                },
+                "uri": "sites/3469/workbooks/4632270",
+                "upstreamDatasources": []
+            },
+            {
+                "id": "e0631136-8314-5fd2-9aea-041c4a0f2dfe",
+                "luid": "e1264abc-1ee7-4ac7-aec0-cbb56be6137d",
+                "name": "superstore",
+                "description": "An intricate view of sales activities and customer engagements. Within this dataset lies a plethora of products, spanning office supplies, furniture, and cutting-edge technology, all meticulously tracked across various regions and customer demographics. Every entry in this dataset reflects a tangible transaction, detailing vital information such as product categories, quantities sold, revenue generated, shipping logistics, and customer profiles. Leveraging the inherent capabilities of the dataset, analysts can seamlessly delve into this wealth of information to uncover actionable insights, ranging from sales patterns to profitability metrics and customer purchasing behaviors. This authentic portrayal of a company's day-to-day operations serves as an invaluable resource for professionals seeking to refine their analytical prowess and harness the power of data-driven decision-making in a real-world business context.",
+                "createdAt": "2024-04-17T01:57:44Z",
+                "site": {
+                    "luid": "959ed77c-9270-4d54-9505-2a21e9c5a5b1"
+                },
+                "projectName": "superstore",
+                "projectVizportalUrlId": "590934",
+                "owner": {
+                    "id": "bfea471b-f964-fa51-c919-03df6d6d0876"
+                },
+                "uri": "sites/3469/workbooks/4632436",
+                "upstreamDatasources": []
+            }
+        ]
+    }
+}

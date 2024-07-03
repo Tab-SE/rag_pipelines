@@ -118,6 +118,7 @@ def extractInsights(insights_bundle, metric, time_options):
     metric_insights = {}
     for key, bundle in insights_bundle.items():
         insight_groups = bundle.get('result').get('insight_groups')
+        print('Metric: ', metric.get('name'))
         for insight_group in insight_groups:
             # extract facts about the metric's current value
             if insight_group.get('type') == 'ban':
@@ -227,101 +228,105 @@ def extractBan(result, metric, time_options):
 def extractAnchor(insights_array, metric, time_options):
     anchor = []
     for result in insights_array:
-        insight_type = result.get('result').get('type')
-        if insight_type == 'unusualchange':
-            score = result['result'].get('score')
-            question = result['result'].get('question')
-            answer = result['result'].get('markup')
-            characterization = result['result'].get('characterization')
-            facts = result['result'].get('facts')
-            sentiment = facts.get('sentiment')
-            increment_raw_value = facts.get('value', {}).get('raw')
-            increment_formatted_value = facts.get('value', {}).get('formatted')
-            absolute_change_raw_value = facts.get('value_change', {}).get('absolute', {}).get('raw')
-            absolute_change_formatted_value = facts.get('value_change', {}).get('absolute', {}).get('formatted')
-            relative_change_raw_value = facts.get('value_change', {}).get('relative', {}).get('raw')
-            relative_change_formatted_value = facts.get('value_change', {}).get('relative', {}).get('formatted')
-            expected_change_raw_value = facts.get('expected_value_change', {}).get('raw')
-            expected_change_formatted_value = facts.get('expected_value_change', {}).get('formatted')
-            period_range = facts.get('last_complete_period', {}).get('range')
-            period_label = facts.get('last_complete_period', {}).get('label')
-            period_granularity = facts.get('last_complete_period', {}).get('granularity')
-            period_start = facts.get('last_complete_period', {}).get('start_timestamp')
-            period_end = facts.get('last_complete_period', {}).get('end_timestamp')
-            direction = facts.get('difference', {}).get('direction')
+        if result.get('error'):
+            print(result.get('error'))
+            continue
+        else:
+            insight_type = result.get('result').get('type')
+            if insight_type == 'unusualchange':
+                score = result['result'].get('score')
+                question = result['result'].get('question')
+                answer = result['result'].get('markup')
+                characterization = result['result'].get('characterization')
+                facts = result['result'].get('facts')
+                sentiment = facts.get('sentiment')
+                increment_raw_value = facts.get('value', {}).get('raw')
+                increment_formatted_value = facts.get('value', {}).get('formatted')
+                absolute_change_raw_value = facts.get('value_change', {}).get('absolute', {}).get('raw')
+                absolute_change_formatted_value = facts.get('value_change', {}).get('absolute', {}).get('formatted')
+                relative_change_raw_value = facts.get('value_change', {}).get('relative', {}).get('raw')
+                relative_change_formatted_value = facts.get('value_change', {}).get('relative', {}).get('formatted')
+                expected_change_raw_value = facts.get('expected_value_change', {}).get('raw')
+                expected_change_formatted_value = facts.get('expected_value_change', {}).get('formatted')
+                period_range = facts.get('last_complete_period', {}).get('range')
+                period_label = facts.get('last_complete_period', {}).get('label')
+                period_granularity = facts.get('last_complete_period', {}).get('granularity')
+                period_start = facts.get('last_complete_period', {}).get('start_timestamp')
+                period_end = facts.get('last_complete_period', {}).get('end_timestamp')
+                direction = facts.get('difference', {}).get('direction')
 
-            unusual_change = f"""
-            # {question}
-            _Answer_: {answer}
+                unusual_change = f"""
+                # {question}
+                _Answer_: {answer}
 
-            # {insight_types.get('unusualchange').get('name')} for {metric.get('name')}
+                # {insight_types.get('unusualchange').get('name')} for {metric.get('name')}
 
-            ## What is {insight_types.get('unusualchange').get('name')}?
-            _Description_: {insight_types.get('unusualchange').get('description')}
+                ## What is {insight_types.get('unusualchange').get('name')}?
+                _Description_: {insight_types.get('unusualchange').get('description')}
 
-            ## Any {insight_types.get('unusualchange').get('name')} for {metric.get('name')}?
+                ## Any {insight_types.get('unusualchange').get('name')} for {metric.get('name')}?
 
-            ## What is the score for {insight_types.get('unusualchange').get('name')} calculated for {metric.get('name')}?
-            The insight has a score of: {score}
+                ## What is the score for {insight_types.get('unusualchange').get('name')} calculated for {metric.get('name')}?
+                The insight has a score of: {score}
 
-            ## Why is {metric.get('name')} unusual?
-            ## Is there anything unusual or interesting about {metric.get('name')}?
-            ## Any news about {metric.get('name')}?
-            The metric is doing {sentiment} and the direction is {direction}
-            The AI model expected a value of {expected_change_formatted_value} or {expected_change_raw_value} in raw numbers
-            The data displays a relative change of {relative_change_formatted_value} or {relative_change_raw_value} in raw numbers
-            In absolute terms the change was {absolute_change_formatted_value} or {absolute_change_raw_value} in raw numbers
+                ## Why is {metric.get('name')} unusual?
+                ## Is there anything unusual or interesting about {metric.get('name')}?
+                ## Any news about {metric.get('name')}?
+                The metric is doing {sentiment} and the direction is {direction}
+                The AI model expected a value of {expected_change_formatted_value} or {expected_change_raw_value} in raw numbers
+                The data displays a relative change of {relative_change_formatted_value} or {relative_change_raw_value} in raw numbers
+                In absolute terms the change was {absolute_change_formatted_value} or {absolute_change_raw_value} in raw numbers
 
-            ## What is the period for unusual change?
-            ## When was unusual change detected?
-            {period_label}. Short term change was monitored throughout {period_range} which is currently trending {direction}
-            Observation ran between {period_start} and {period_end} with a granularity of {period_granularity}
-            The value during the observation period is {increment_formatted_value} ({increment_raw_value} in raw value)
+                ## What is the period for unusual change?
+                ## When was unusual change detected?
+                {period_label}. Short term change was monitored throughout {period_range} which is currently trending {direction}
+                Observation ran between {period_start} and {period_end} with a granularity of {period_granularity}
+                The value during the observation period is {increment_formatted_value} ({increment_raw_value} in raw value)
 
-            ## What is the score for {insight_types.get('unusualchange').get('name')} calculated for {metric.get('name')}?
-            The insight has a score of: {score}
-            """
-            anchor.append(unusual_change)
-        elif insight_type == 'currenttrend':
-            score = result['result'].get('score')
-            question = result['result'].get('question')
-            answer = result['result'].get('markup')
+                ## What is the score for {insight_types.get('unusualchange').get('name')} calculated for {metric.get('name')}?
+                The insight has a score of: {score}
+                """
+                anchor.append(unusual_change)
+            elif insight_type == 'currenttrend':
+                score = result['result'].get('score')
+                question = result['result'].get('question')
+                answer = result['result'].get('markup')
 
-            current_trend = f"""
-            # {question}
-            _Answer_: {answer}
+                current_trend = f"""
+                # {question}
+                _Answer_: {answer}
 
-            # {insight_types.get('currenttrend').get('name')} for {metric.get('name')}
+                # {insight_types.get('currenttrend').get('name')} for {metric.get('name')}
 
-            ## What is {insight_types.get('currenttrend').get('name')}?
-            _Description_: {insight_types.get('currenttrend').get('description')}
+                ## What is {insight_types.get('currenttrend').get('name')}?
+                _Description_: {insight_types.get('currenttrend').get('description')}
 
-            ## What is the {insight_types.get('currenttrend').get('name')} for {metric.get('name')}?
+                ## What is the {insight_types.get('currenttrend').get('name')} for {metric.get('name')}?
 
-            ## What is the score for {insight_types.get('currenttrend').get('name')} calculated for {metric.get('name')}?
-            The insight has a score of: {score}
-            """
-            anchor.append(current_trend)
-        elif insight_type == 'newtrend':
-            score = result['result'].get('score')
-            question = result['result'].get('question')
-            answer = result['result'].get('markup')
+                ## What is the score for {insight_types.get('currenttrend').get('name')} calculated for {metric.get('name')}?
+                The insight has a score of: {score}
+                """
+                anchor.append(current_trend)
+            elif insight_type == 'newtrend':
+                score = result['result'].get('score')
+                question = result['result'].get('question')
+                answer = result['result'].get('markup')
 
-            new_trend = f"""
-            # {question}
-            _Answer_: {answer}
+                new_trend = f"""
+                # {question}
+                _Answer_: {answer}
 
-            # {insight_types.get('newtrend').get('name')} for {metric.get('name')}
+                # {insight_types.get('newtrend').get('name')} for {metric.get('name')}
 
-            ## What is {insight_types.get('newtrend').get('name')}?
-            _Description_: {insight_types.get('newtrend').get('description')}
+                ## What is {insight_types.get('newtrend').get('name')}?
+                _Description_: {insight_types.get('newtrend').get('description')}
 
-            ## What is the {insight_types.get('newtrend').get('name')} for {metric.get('name')}?
+                ## What is the {insight_types.get('newtrend').get('name')} for {metric.get('name')}?
 
-            ## What is the score for {insight_types.get('newtrend').get('name')} calculated for {metric.get('name')}?
-            The insight has a score of: {score}
-            """
-            anchor.append(new_trend)
+                ## What is the score for {insight_types.get('newtrend').get('name')} calculated for {metric.get('name')}?
+                The insight has a score of: {score}
+                """
+                anchor.append(new_trend)
 
     return anchor
 
@@ -329,110 +334,112 @@ def extractOthers(other_bundles, metric, time_options):
     other_insights = []
     for bundle in other_bundles:
         result = bundle.get('result')
-        type = result.get('type')
-        score = result.get('score')
-        question = result.get('question')
-        answer = result.get('markup')
-        characterization = result.get('characterization')
-        facts = result.get('facts')
-        if facts:
-            dimension = facts.get('dimensions')[0].get('label')
-            direction = facts.get('direction')
-        if type == 'top-contributors':
-            top_contributors = f"""
-            # {question}
-            _Answer_: {answer}
 
-            # {insight_types.get('top-contributors').get('name')} for {metric.get('name')}
+        if result:
+            type = result.get('type')
+            score = result.get('score')
+            question = result.get('question')
+            answer = result.get('markup')
+            characterization = result.get('characterization')
+            facts = result.get('facts')
+            if facts:
+                dimension = facts.get('dimensions')[0].get('label')
+                direction = facts.get('direction')
+            if type == 'top-contributors':
+                top_contributors = f"""
+                # {question}
+                _Answer_: {answer}
 
-            ## What is {insight_types.get('top-contributors').get('name')}?
-            _Description_: {insight_types.get('top-contributors').get('description')}
+                # {insight_types.get('top-contributors').get('name')} for {metric.get('name')}
 
-            ## What is the {insight_types.get('top-contributors').get('name')} for {metric.get('name')}?
+                ## What is {insight_types.get('top-contributors').get('name')}?
+                _Description_: {insight_types.get('top-contributors').get('description')}
 
-            ## What is the score for {insight_types.get('top-contributors').get('name')} calculated for {metric.get('name')}?
-            The insight has a score of: {score}
+                ## What is the {insight_types.get('top-contributors').get('name')} for {metric.get('name')}?
+
+                ## What is the score for {insight_types.get('top-contributors').get('name')} calculated for {metric.get('name')}?
+                The insight has a score of: {score}
 
 
-            {f"""## What is dimension?
-            ## How is the dimension trending?
-            The dimension is {dimension} and is trending {direction}
-            """
-             if facts else ''}
-            """
-            other_insights.append(top_contributors)
-        elif type == 'bottom-contributors':
-            bottom_contributors = f"""
-            # {question}
-            _Answer_: {answer}
+                {f"""## What is dimension?
+                ## How is the dimension trending?
+                The dimension is {dimension} and is trending {direction}
+                """
+                if facts else ''}
+                """
+                other_insights.append(top_contributors)
+            elif type == 'bottom-contributors':
+                bottom_contributors = f"""
+                # {question}
+                _Answer_: {answer}
 
-            # {insight_types.get('bottom-contributors').get('name')} for {metric.get('name')}
+                # {insight_types.get('bottom-contributors').get('name')} for {metric.get('name')}
 
-            ## What is {insight_types.get('bottom-contributors').get('name')}?
-            _Description_: {insight_types.get('bottom-contributors').get('description')}
+                ## What is {insight_types.get('bottom-contributors').get('name')}?
+                _Description_: {insight_types.get('bottom-contributors').get('description')}
 
-            ## What is the {insight_types.get('bottom-contributors').get('name')} for {metric.get('name')}?
+                ## What is the {insight_types.get('bottom-contributors').get('name')} for {metric.get('name')}?
 
-            ## What is the score for {insight_types.get('bottom-contributors').get('name')} calculated for {metric.get('name')}?
-            The insight has a score of: {score}
+                ## What is the score for {insight_types.get('bottom-contributors').get('name')} calculated for {metric.get('name')}?
+                The insight has a score of: {score}
 
-            {f"""## What is dimension?
-            ## How is the dimension trending?
-            The dimension is {dimension} and is trending {direction}
-            """
-            if facts else ''}
-            """
-            other_insights.append(bottom_contributors)
-        elif type == 'top-detractors':
-            top_detractors = f"""
-            # {question}
-            _Answer_: {answer}
+                {f"""## What is dimension?
+                ## How is the dimension trending?
+                The dimension is {dimension} and is trending {direction}
+                """
+                if facts else ''}
+                """
+                other_insights.append(bottom_contributors)
+            elif type == 'top-detractors':
+                top_detractors = f"""
+                # {question}
+                _Answer_: {answer}
 
-            # {insight_types.get('top-detractors').get('name')} for {metric.get('name')}
+                # {insight_types.get('top-detractors').get('name')} for {metric.get('name')}
 
-            ## What is {insight_types.get('top-detractors').get('name')}?
-            _Description_: {insight_types.get('top-detractors').get('description')}
+                ## What is {insight_types.get('top-detractors').get('name')}?
+                _Description_: {insight_types.get('top-detractors').get('description')}
 
-            ## What is the {insight_types.get('top-detractors').get('name')} for {metric.get('name')}?
+                ## What is the {insight_types.get('top-detractors').get('name')} for {metric.get('name')}?
 
-            ## What is the score for {insight_types.get('top-detractors').get('name')} calculated for {metric.get('name')}?
-            The insight has a score of: {score}
-            """
-            other_insights.append(top_detractors)
-        elif type == 'riskmo':
-            riskmo = f"""
-            # {question}
-            _Answer_: {answer}
+                ## What is the score for {insight_types.get('top-detractors').get('name')} calculated for {metric.get('name')}?
+                The insight has a score of: {score}
+                """
+                other_insights.append(top_detractors)
+            elif type == 'riskmo':
+                riskmo = f"""
+                # {question}
+                _Answer_: {answer}
 
-            # {insight_types.get('riskmo').get('name')} for {metric.get('name')}
+                # {insight_types.get('riskmo').get('name')} for {metric.get('name')}
 
-            ## What is {insight_types.get('riskmo').get('name')}?
-            _Description_: {insight_types.get('riskmo').get('description')}
+                ## What is {insight_types.get('riskmo').get('name')}?
+                _Description_: {insight_types.get('riskmo').get('description')}
 
-            ## What is the {insight_types.get('riskmo').get('name')} for {metric.get('name')}?
+                ## What is the {insight_types.get('riskmo').get('name')} for {metric.get('name')}?
 
-            ## What is the score for {insight_types.get('riskmo').get('name')} calculated for {metric.get('name')}?
-            The insight has a score of: {score}
-            """
-            other_insights.append(riskmo)
-        elif type == 'top-drivers':
-            top_drivers = f"""
-            # {question}
-            _Answer_: {answer}
+                ## What is the score for {insight_types.get('riskmo').get('name')} calculated for {metric.get('name')}?
+                The insight has a score of: {score}
+                """
+                other_insights.append(riskmo)
+            elif type == 'top-drivers':
+                top_drivers = f"""
+                # {question}
+                _Answer_: {answer}
 
-            # {insight_types.get('top-drivers').get('name')} for {metric.get('name')}
+                # {insight_types.get('top-drivers').get('name')} for {metric.get('name')}
 
-            ## What is {insight_types.get('top-drivers').get('name')}?
-            _Description_: {insight_types.get('top-drivers').get('description')}
+                ## What is {insight_types.get('top-drivers').get('name')}?
+                _Description_: {insight_types.get('top-drivers').get('description')}
 
-            ## What is the {insight_types.get('top-drivers').get('name')} for {metric.get('name')}?
+                ## What is the {insight_types.get('top-drivers').get('name')} for {metric.get('name')}?
 
-            ## What is the score for {insight_types.get('top-drivers').get('name')} calculated for {metric.get('name')}?
-            The insight has a score of: {score}
-            """
-            other_insights.append(top_drivers)
+                ## What is the score for {insight_types.get('top-drivers').get('name')} calculated for {metric.get('name')}?
+                The insight has a score of: {score}
+                """
+                other_insights.append(top_drivers)
 
-    return other_insights
+        return other_insights
 
 insight_types = {
     'popc': {
