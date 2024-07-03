@@ -1,3 +1,5 @@
+import json
+
 async def main():
     print('Initializing RAG Pipeline...')
     print('Querying Insights...')
@@ -12,6 +14,10 @@ async def main():
     })
 
     print('Processing Insights...')
+    #  writes insights dictionary to project root
+    # json_string = json.dumps(insights, indent=4)
+    # with open("output.json", "w") as json_file:
+    #     json_file.write(json_string)
     load.data(insights)
 
     print('Terminating RAG Pipeline...')
