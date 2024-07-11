@@ -18,7 +18,7 @@ def load_bucket(env_vars):
           # Construct S3 file path by joining a name with the relative path of each file
           local_file_path = os.path.join(root, file)
           relative_path = os.path.relpath(local_file_path, local_directory)
-          s3_file_path = os.path.join(relative_path)
+          s3_file_path = os.path.join('insights', relative_path)
           
           try:
               # pushes to S3 and can handle large file sizes
