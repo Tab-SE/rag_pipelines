@@ -1,5 +1,3 @@
-import json
-
 async def main():
     print('Initializing RAG Pipeline...')
     print('Querying Insights...')
@@ -14,7 +12,15 @@ async def main():
     })
 
     print('Processing Insights...')
-    load.data(insights, { 'vector': True, 's3': True })
+    load.data({
+        'bundles': insights, 
+        'options': { 'vector': True, 's3': True },
+        'env_vars': {
+            'AWS_ACCESS_KEY_ID': AWS_ACCESS_KEY_ID,
+            'AWS_SECRET_ACCESS_KEY': AWS_SECRET_ACCESS_KEY,
+            'AWS_DEFAULT_REGION': AWS_DEFAULT_REGION,
+        }
+    })
 
     print('Terminating RAG Pipeline...')
     return
@@ -44,5 +50,9 @@ if __name__ == "__main__":
     PINECONE_API_KEY = env_vars['PINECONE_API_KEY']
     PINECONE_ENVIRONMENT = env_vars['PINECONE_ENVIRONMENT']
     PINECONE_INDEX_NAME = env_vars['PINECONE_INDEX_NAME']
+    # AWS S3 env vars
+    AWS_ACCESS_KEY_ID = env_vars['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = env_vars['AWS_SECRET_ACCESS_KEY']
+    AWS_DEFAULT_REGION = env_vars['AWS_DEFAULT_REGION']
 
     asyncio.run(main())
