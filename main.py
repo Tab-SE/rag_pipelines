@@ -19,6 +19,7 @@ async def main():
             'AWS_ACCESS_KEY_ID': AWS_ACCESS_KEY_ID,
             'AWS_SECRET_ACCESS_KEY': AWS_SECRET_ACCESS_KEY,
             'AWS_DEFAULT_REGION': AWS_DEFAULT_REGION,
+            'AWS_S3_BUCKET': AWS_S3_BUCKET
         }
     })
 
@@ -54,5 +55,6 @@ if __name__ == "__main__":
     AWS_ACCESS_KEY_ID = env_vars['AWS_ACCESS_KEY_ID']
     AWS_SECRET_ACCESS_KEY = env_vars['AWS_SECRET_ACCESS_KEY']
     AWS_DEFAULT_REGION = env_vars['AWS_DEFAULT_REGION']
+    AWS_S3_BUCKET = env_vars['AWS_S3_BUCKET']
 
     asyncio.run(main())

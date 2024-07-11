@@ -10,7 +10,7 @@ def load_bucket(env_vars):
   )
 
   local_directory = './data/insights'
-  bucket_name = 'bragsteinplus'
+  bucket_name = env_vars['AWS_S3_BUCKET']
 
   # os.walk recursively iterates through files and directories  
   for root, dirs, files in os.walk(local_directory):
