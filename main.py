@@ -1,3 +1,5 @@
+import json
+
 async def main():
     print('Initializing RAG Pipeline...')
     print('Querying Insights...')

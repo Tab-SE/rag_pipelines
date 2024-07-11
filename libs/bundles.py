@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from zoneinfo import ZoneInfo
 from tzlocal import get_localzone
 
 from utils import http
@@ -17,14 +17,14 @@ async def insights(domain, credentials, metrics):
     'X-Tableau-Auth': token
     }
 
-    # provide common time definitions for all insights requests
-    current_datetime = datetime.now()
-    # formatted as "YYYY-MM-DD HH:mm:ss"
-    formatted_time = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
-    # Get the local timezone object
+    # obtain timezone such as "America/New_York"
     local_timezone = get_localzone()
-    # Get the IANA timezone name
-    timezone_name = current_datetime.astimezone(local_timezone).tzinfo.zone
+    timezone_name = str(local_timezone)
+
+    # get current time and format it as "YYYY-MM-DD HH:mm:ss"
+    current_datetime = datetime.now(ZoneInfo(timezone_name))
+    formatted_time = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+
     time_options = {
         'formatted_time': formatted_time,
         'timezone_name': timezone_name
