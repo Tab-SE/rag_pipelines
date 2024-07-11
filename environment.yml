@@ -1,13 +1,13 @@
-name: tableau_brag
+name: pipelines
 channels:
   - defaults
 dependencies:
   - python=3.12.2
   - python-dotenv
   - aiohttp
-  - asyncio
   - tzlocal
   - boto3
+  - PyJWT
   - pip=23.3.1
   - pip:
     - jsonpath-ng
