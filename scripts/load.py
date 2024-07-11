@@ -1,9 +1,12 @@
 from libs import extract, store, vectorize
 
-def data(bundles):
+def data(bundles, options):
     semantics = get_semantics(bundles)
     corpus(semantics)
-    vector_index()
+    if options.get('vector') == True:
+        vector_index()
+    if options.get('s3') == True:
+        push_s3()
 
 def get_semantics(bundles):
     print('Extracting semantic features from external HTTP data sources...')
@@ -31,3 +34,7 @@ def vector_index():
         'catalog_loaded': catalog_loaded,
         'writer_loaded':  writer_loaded
     }
+
+def push_s3():
+    print('Pushing data to S3 bucket...')
+    
