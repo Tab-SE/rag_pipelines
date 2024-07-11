@@ -12,7 +12,7 @@ async def main():
     })
 
     print('Processing Insights...')
-    load.data(insights)
+    load.data(insights, { 'vector': True, 's3': True })
 
     print('Terminating RAG Pipeline...')
     return
