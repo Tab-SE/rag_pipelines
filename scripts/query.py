@@ -25,9 +25,10 @@ async def get_insights(credentials):
 
 # returns metadata on Tableau files relevant to users
 async def get_catalog(credentials):
-    workbooks = await metadata.query_workbooks(credentials)
-    views = await metadata.query_views(credentials)
-    datasources = await metadata.query_datasources(credentials)
+    token = credentials['credentials']['token']
+    workbooks = await metadata.query_workbooks(token)
+    views = await metadata.query_views(token)
+    datasources = await metadata.query_datasources(token)
 
     catalog = {
         'workbooks': workbooks,
