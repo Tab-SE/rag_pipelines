@@ -8,7 +8,6 @@ dependencies:
   - aiohttp
   - tzlocal
   - boto3
-  - PyJWT
   - pip=23.3.1
   - pip:
     - jsonpath-ng
