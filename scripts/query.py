@@ -1,9 +1,11 @@
+import os
+
 from libs import bundles, session, subscriptions
 
-async def get(env_vars):
-    domain = env_vars['DOMAIN']
+async def get():
+    domain = os.environ['TABLEAU_DOMAIN']
 
-    credentials = await session.authenticate(env_vars)
+    credentials = await session.authenticate()
     print(f'Tableau authentication successful: {credentials['credentials']['token']}')
 
     metrics = await subscriptions.metrics(domain=domain, credentials=credentials)

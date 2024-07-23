@@ -1,20 +1,19 @@
-import jwt
+import os, jwt
 from datetime import datetime, timedelta, timezone
 
 from uuid import uuid4
 
 from utils import http
 
-async def authenticate(env_vars):
-    DOMAIN, API, SITE, CLIENT_ID, SECRET, SECRET_ID, USER = env_vars.values()
+async def authenticate():
     # Encode the payload and secret key to generate the JWT
     token = jwt.encode(
         {
-        "iss": CLIENT_ID,
+        "iss": os.environ['TABLEAU_JWT_CLIENT_ID'],
         "exp": datetime.now(timezone.utc) + timedelta(minutes=5),
         "jti": str(uuid4()),
         "aud": "tableau",
-        "sub": USER,
+        "sub": os.environ['TABLEAU_USER'],
         "scp": [
             "tableau:datasources:read",
             "tableau:workbooks:read",
@@ -25,16 +24,16 @@ async def authenticate(env_vars):
             "tableau:metric_subscriptions:read",
         ]
         },
-        SECRET,
+        os.environ['TABLEAU_REST_JWT_SECRET'],
         algorithm = "HS256",
         headers = {
-        'kid': SECRET_ID,
-        'iss': CLIENT_ID
+        'kid': os.environ['TABLEAU_REST_JWT_SECRET_ID'],
+        'iss': os.environ['TABLEAU_JWT_CLIENT_ID']
         }
     )
 
     # authentication endpoint + request headers & payload
-    endpoint = f"{DOMAIN}/api/{API}/auth/signin"
+    endpoint = f"{os.environ['TABLEAU_DOMAIN']}/api/{os.environ['TABLEAU_API']}/auth/signin"
 
     headers = {
         'Content-Type': 'application/json',
@@ -45,7 +44,7 @@ async def authenticate(env_vars):
         "credentials": {
         "jwt": token,
         "site": {
-            "contentUrl": SITE,
+            "contentUrl": os.environ['TABLEAU_SITE'],
         }
         }
     }
