@@ -1,4 +1,4 @@
-from libs import bundles, session, subscriptions
+from libs import bundles, session, subscriptions, metadata
 
 # returns a session with metadata about the user and site
 async def get_user_session():
@@ -15,7 +15,7 @@ async def get_user_session():
 
 # returns data on user metrics and their Pulse insights
 async def get_insights(credentials):
-    metrics = await subscriptions.metrics(credentials=credentials)
+    metrics = await subscriptions.metrics(credentials)
     print(f'{len(metrics)} Metrics received')
 
     insights = await bundles.insights(credentials=credentials, metrics=metrics)
@@ -25,7 +25,14 @@ async def get_insights(credentials):
 
 # returns metadata on Tableau files relevant to users
 async def get_catalog(credentials):
-    catalog = await subscriptions.metrics(credentials=credentials)
-    print(f'Catalog metadata received')
+    workbooks = await metadata.query_workbooks(credentials)
+    print(f'Workbook metadata received')
 
+    catalog = {
+        'workbooks': workbooks,
+        'views': '',
+        'datasources': '',
+    }
+
+    print(f'Catalog metadata received')
     return catalog
