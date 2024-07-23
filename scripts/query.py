@@ -19,19 +19,20 @@ async def get_insights(credentials):
     print(f'{len(metrics)} Metrics received')
 
     insights = await bundles.insights(credentials=credentials, metrics=metrics)
-    print(f'{len(insights)} Insight bundles received')
 
+    print(f'{len(insights)} Insight bundles received')
     return insights
 
 # returns metadata on Tableau files relevant to users
 async def get_catalog(credentials):
     workbooks = await metadata.query_workbooks(credentials)
-    print(f'Workbook metadata received')
+    views = await metadata.query_views(credentials)
+    datasources = await metadata.query_datasources(credentials)
 
     catalog = {
         'workbooks': workbooks,
-        'views': '',
-        'datasources': '',
+        'views': views,
+        'datasources': datasources
     }
 
     print(f'Catalog metadata received')
