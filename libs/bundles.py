@@ -1,10 +1,12 @@
+import os
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from tzlocal import get_localzone
 
 from utils import http
 
-async def insights(domain, credentials, metrics):
+async def insights(credentials, metrics):
+    domain = os.environ['TABLEAU_DOMAIN']
     insights_bundles = {}
     # REST API authentication token
     token = credentials['credentials']['token']

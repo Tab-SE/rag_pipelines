@@ -1,17 +1,31 @@
-import os
-
 from libs import bundles, session, subscriptions
 
-async def get():
-    domain = os.environ['TABLEAU_DOMAIN']
-
+# returns a session with metadata about the user and site
+async def get_user_session():
     credentials = await session.authenticate()
-    print(f'Tableau authentication successful: {credentials['credentials']['token']}')
+    # high level user and site metadata for the RAG system
+    user_session = {
+        'credentials': credentials,
+        'user_data': '',
+        'site_data': '',
+        'projects': ''
+    }
 
-    metrics = await subscriptions.metrics(domain=domain, credentials=credentials)
+    return user_session
+
+# returns data on user metrics and their Pulse insights
+async def get_insights(credentials):
+    metrics = await subscriptions.metrics(credentials=credentials)
     print(f'{len(metrics)} Metrics received')
 
-    insights = await bundles.insights(domain=domain, credentials=credentials, metrics=metrics)
+    insights = await bundles.insights(credentials=credentials, metrics=metrics)
     print(f'{len(insights)} Insight bundles received')
 
     return insights
+
+# returns metadata on Tableau files relevant to users
+async def get_catalog(credentials):
+    catalog = await subscriptions.metrics(credentials=credentials)
+    print(f'Catalog metadata received')
+
+    return catalog
