@@ -2,7 +2,7 @@ from utils import gql
 
 async def query_workbooks(token):
     print(f'Workbooks metadata received')
-    workbooks = await gql.query(query=workbooks_query, token=token)
+    workbooks = await gql.query(query=workbooks_filter_query, token=token)
     return workbooks
 
 async def query_views(token):
@@ -42,7 +42,7 @@ workbooks_query = """query Workbooks {
 }"""
 
 workbooks_filter_query = """query Workbooks {
-    workbooks(filter: { projectName: "Comcast" }) {
+    workbooks(filter: { projectName: ["Comcast","ebikes","superstore"] }) {
         name
         description
         createdAt
@@ -218,7 +218,7 @@ datasources_query = """query datasources {
 }"""
 
 datasources_filter_query = """query datasources {
-  publishedDatasources (filter: { projectName: "ebikes" }) {
+  publishedDatasources (filter: { projectName: ["Comcast","ebikes","superstore"] }) {
     name
     description
     hasExtracts
