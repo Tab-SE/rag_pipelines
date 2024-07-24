@@ -12,4 +12,4 @@ def extract_views(views):
     pass
 
 def extract_datasources(datasources):
-    pass
+    print('******   DATA SOURCES   ******', datasources)
