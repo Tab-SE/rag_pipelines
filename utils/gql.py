@@ -1,7 +1,7 @@
 import os, json, aiohttp
 
 async def query(query, token):
-    domain = os.environ('TABLEAU_DOMAIN')
+    domain = os.environ['TABLEAU_DOMAIN']
     url = f"{domain}/api/metadata/graphql"
 
     payload = json.dumps({
