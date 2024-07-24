@@ -16,29 +16,59 @@ async def query_datasources(token):
     return datasources
 
 workbooks_query = """query Workbooks {
-  workbooks {
-    id
-    luid
-    name
-    description
-    createdAt
-    projectName
-    projectVizportalUrlId
-    projectLuid
-    uri
-    tags {
-      id
-      name
+    workbooks {
+        id
+        luid
+        name
+        description
+        createdAt
+        projectName
+        projectVizportalUrlId
+        projectLuid
+        uri
+        tags {
+            id
+            name
+        }
+        dashboards {
+            id
+            luid
+        }
+        sheets {
+            id
+            luid
+        }
     }
-    dashboards {
-      id
-      luid
+}"""
+
+workbooks_filter_query = """query Workbooks {
+    workbooks(filter: { projectName: "Comcast" }) {
+        name
+        description
+        createdAt
+        projectName
+        tags {
+            name
+        }
+        dashboards {
+            name
+            path
+            createdAt
+            updatedAt
+            tags {
+                name
+            }
+        }
+        sheets {
+            name
+            path
+            createdAt
+            updatedAt
+            tags {
+                name
+            }
+        }
     }
-    sheets {
-      id
-      luid
-    }
-  }
 }"""
 
 views_query = """query Views {
@@ -86,35 +116,40 @@ views_query = """query Views {
 
 datasources_query = """query datasources {
   publishedDatasources {
-    id
-    luid
     name
     description
-    hasUserReference
     hasExtracts
     extractLastRefreshTime
     extractLastIncrementalUpdateTime
     extractLastUpdateTime
     projectName
-    projectVizportalUrlId
     isCertified
     certificationNote
     certifierDisplayName
-    containsUnsupportedCustomSql
+    fields {
+      name
+      description
+      isHidden
+      folderName
+    }
     datasourceFilters {
-      id
       field {
         id
+        name
+        fullyQualifiedName
+        description
+        descriptionInherited {
+          assetId
+        }
+        folderName
       }
     }
     parameters {
-      id
       name
+      parentName
     }
     hasActiveWarning
     dataQualityWarnings {
-      id
-      luid
       isActive
       isElevated
       value
@@ -123,14 +158,20 @@ datasources_query = """query datasources {
       createdAt
       updatedAt
       asset {
-        id
-        luid
         name
+        labels {
+          author {
+            id
+          }
+          authorDisplayName
+          value
+          category
+          isActive
+          isElevated
+        }
       }
     }
     dataQualityCertifications {
-      id
-      luid
       isActive
       isElevated
       value
@@ -139,14 +180,20 @@ datasources_query = """query datasources {
       createdAt
       updatedAt
       asset {
-        id
-        luid
         name
+        labels {
+          author {
+            id
+          }
+          authorDisplayName
+          value
+          category
+          isActive
+          isElevated
+        }
       }
     }
     labels {
-      id
-      luid
       isActive
       isElevated
       value
@@ -155,13 +202,113 @@ datasources_query = """query datasources {
       createdAt
       updatedAt
       asset {
-        id
-        luid
         name
       }
     }
     tags {
+      name
+    }
+    createdAt
+    updatedAt
+    downstreamWorkbooks {
       id
+      luid
+    }
+  }
+}"""
+
+datasources_filter_query = """query datasources {
+  publishedDatasources (filter: { projectName: "ebikes" }) {
+    name
+    description
+    hasExtracts
+    extractLastRefreshTime
+    extractLastIncrementalUpdateTime
+    extractLastUpdateTime
+    projectName
+    isCertified
+    certificationNote
+    certifierDisplayName
+    fields {
+      name
+      description
+      isHidden
+      folderName
+    }
+    datasourceFilters {
+      field {
+        id
+        name
+        fullyQualifiedName
+        description
+        descriptionInherited {
+          assetId
+        }
+        folderName
+      }
+    }
+    parameters {
+      name
+      parentName
+    }
+    hasActiveWarning
+    dataQualityWarnings {
+      isActive
+      isElevated
+      value
+      category
+      message
+      createdAt
+      updatedAt
+      asset {
+        name
+        labels {
+          author {
+            id
+          }
+          authorDisplayName
+          value
+          category
+          isActive
+          isElevated
+        }
+      }
+    }
+    dataQualityCertifications {
+      isActive
+      isElevated
+      value
+      category
+      message
+      createdAt
+      updatedAt
+      asset {
+        name
+        labels {
+          author {
+            id
+          }
+          authorDisplayName
+          value
+          category
+          isActive
+          isElevated
+        }
+      }
+    }
+    labels {
+      isActive
+      isElevated
+      value
+      category
+      message
+      createdAt
+      updatedAt
+      asset {
+        name
+      }
+    }
+    tags {
       name
     }
     createdAt

@@ -36,5 +36,5 @@ async def get_catalog(credentials):
         'datasources': datasources
     }
 
-    print(f'Catalog metadata received')
+    print(f'Full data catalog metadata received')
     return catalog
