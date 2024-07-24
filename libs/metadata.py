@@ -1,23 +1,18 @@
-from jsonpath_ng import jsonpath, parse
-
 from utils import gql
 
 async def query_workbooks(token):
     print(f'Workbooks metadata received')
     workbooks = await gql.query(query=workbooks_query, token=token)
-    print('workbooks', workbooks)
     return workbooks
 
 async def query_views(token):
     print(f'Views metadata received')
     views = await gql.query(query=views_query, token=token)
-    print('views', views)
     return views
 
 async def query_datasources(token):
     print(f'Datasources metadata received')
     datasources = await gql.query(query=datasources_query, token=token)
-    print('datasources', datasources)
     return datasources
 
 workbooks_query = """query Workbooks {
