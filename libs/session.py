@@ -15,9 +15,7 @@ async def authenticate():
         "aud": "tableau",
         "sub": os.environ['TABLEAU_USER'],
         "scp": [
-            "tableau:datasources:read",
-            "tableau:workbooks:read",
-            "tableau:projects:read",
+            "tableau:content:read",
             "tableau:insights:read",
             "tableau:insight_definitions_metrics:read",
             "tableau:insight_metrics:read",
