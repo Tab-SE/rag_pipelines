@@ -1,5 +1,3 @@
-from jsonpath_ng import jsonpath, parse
-
 def bundles(bundles):
     # full corpus of metrics data
     metrics_corpus = {
