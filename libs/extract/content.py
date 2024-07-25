@@ -1,7 +1,8 @@
 import json
 
 def resources(catalog):
-    extract_workbooks(catalog['workbooks'])
+    workbooks = extract_workbooks(catalog['workbooks'])
+    return workbooks
 
 def extract_workbooks(input):
     formatted_input = json.loads(input)
@@ -73,9 +74,6 @@ def extract_workbooks(input):
         else:
             summary += "No upstream datasources\n"
 
-        print('***** WORKBOOK SUMMARY ******')
-        print(summary)
-        print('***** END SUMMARY ******')
         workbook_summaries.append({name: summary})
 
     print('Total Workbooks: ', len(workbook_summaries))
@@ -112,7 +110,4 @@ def extract_datasources(input):
         else:
             summary += "No downstream metric definitions\n"
 
-        print('***** DATASOURCE SUMMARY ******')
-        print(summary)
-        print('***** END SUMMARY ******')
         return summary
