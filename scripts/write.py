@@ -22,7 +22,6 @@ def catalog(input):
     else:
         print('No new catalog data received, skipping write step...')
 
-
 def delete_contents(path):
     try:
         # Check if the directory exists

@@ -64,3 +64,19 @@ def insights_corpus(insights):
         except Exception as e:
             print(f"An error occurred while processing 'followup' for key '{key}': {e}")
     return True
+
+def catalog_corpus(catalog):
+    output_dir='data/catalog'
+    # Ensure the output directory exists
+    os.makedirs(output_dir, exist_ok=True)
+
+    for summary in catalog:
+        for key, markdown_content in summary.items():
+            # Define the file path
+            file_path = os.path.join(output_dir, f"{key}.md")
+
+            # Write the markdown content to the file
+            with open(file_path, 'w', encoding='utf-8') as file:
+                file.write(markdown_content)
+
+            print(f"Markdown file written: {file_path}")
