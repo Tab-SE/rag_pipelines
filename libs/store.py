@@ -1,5 +1,4 @@
 import os
-import json
 
 def insights_corpus(insights):
     try:

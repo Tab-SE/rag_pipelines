@@ -40,10 +40,9 @@ query Workbooks {{
             extractLastRefreshTime
             extractLastIncrementalUpdateTime
             extractLastUpdateTime
-            fields {{
+            fields(filter: {{ isHidden: false }}) {{
                 name
                 description
-                isHidden
                 folderName
             }}
             datasourceFilters {{
@@ -54,17 +53,8 @@ query Workbooks {{
             parameters {{
                 name
             }}
-            owner {{
-                username
-                name
-                email
-            }}
             hasActiveWarning
             labels {{
-                author {{
-                    id
-                }}
-                authorDisplayName
                 value
                 category
                 message

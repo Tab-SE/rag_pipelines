@@ -23,7 +23,7 @@ async def main():
     print('Natural language summaries or raw data written to file system...')
 
     # 3. Load corpus to vector store and s3 bucket
-    load.data({ 'vector': True, 's3': True })
+    load.data({ 'vector': False, 's3': False })
     print('Data uploaded to targets...')
 
     print('Terminating RAG Pipeline...')
