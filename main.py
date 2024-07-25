@@ -1,7 +1,7 @@
 import asyncio
 from dotenv import load_dotenv
 
-from scripts import query, load
+from scripts import query, write, load
 
 async def main():
     print('Initializing RAG Pipeline...')
@@ -11,20 +11,19 @@ async def main():
     credentials = user_session['credentials']
 
     print('Querying for Pulse Metric Insights...')
-    insights = await query.get_insights(credentials)
+    metrics = await query.get_insights(credentials)
 
     print('Querying the Data Catalog...')
     catalog = await query.get_catalog(credentials)
+
     # 2. Write natural language summaries
     print('Processing remote data...')
+    write.metric_insights(metrics)
+    write.catalog(catalog)
+    print('Natural language summaries or raw data written to file system...')
 
-    print('Natural language summaries written to file system...')
     # 3. Load corpus to vector store and s3 bucket
-    load.data({
-        'bundles': insights,
-        'catalog': catalog,
-        'options': { 'vector': True, 's3': True },
-    })
+    load.data({ 'vector': False, 's3': False })
     print('Data uploaded to targets...')
 
     print('Terminating RAG Pipeline...')
