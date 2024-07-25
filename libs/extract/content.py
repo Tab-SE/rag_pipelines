@@ -1,8 +1,14 @@
 import json
+from datetime import datetime
 
 def resources(catalog):
-    workbooks = extract_workbooks(catalog['workbooks'])
+    workbooks = {
+        'files': extract_workbooks(catalog['workbooks']),
+        'meta': extract_workbooks_meta(catalog['workbooks'])
+    }
+
     return workbooks
+
 
 def extract_workbooks(input):
     formatted_input = json.loads(input)
@@ -111,3 +117,25 @@ def extract_datasources(input):
             summary += "No downstream metric definitions\n"
 
         return summary
+
+
+def extract_workbooks_meta(workbook_summaries_json):
+    workbook_summaries = json.loads(workbook_summaries_json)
+
+    markdown_content = """# Workbook Summary
+###### What dashboards, charts or analysis do I follow?
+###### What assets do I have access to?
+###### What workbooks, dashboards or charts can I see?
+###### What or where are my reports?
+
+| Name | Description |
+|------|-------------|
+"""
+
+    for workbook in workbook_summaries['data']['workbooks']:
+        name = workbook['name']
+        description = workbook.get('description', 'N/A')
+
+        markdown_content += f"| {name} | {description} |\n"
+
+    return markdown_content

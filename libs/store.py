@@ -1,4 +1,5 @@
 import os
+import json
 
 def insights_corpus(insights):
     try:
@@ -66,17 +67,25 @@ def insights_corpus(insights):
     return True
 
 def catalog_corpus(catalog):
-    output_dir='data/catalog'
+    output_dir='data/catalog/workbooks'
     # Ensure the output directory exists
     os.makedirs(output_dir, exist_ok=True)
 
-    for summary in catalog:
+    # Define the file path for workbooks metadata file
+    meta_path = os.path.join(output_dir, 'workbooks.md')
+    # Write the markdown content to the file
+    with open(meta_path, 'w', encoding='utf-8') as file:
+        file.write(catalog['meta'])
+
+    print(f"Markdown metadata file written: {meta_path}")
+
+    # similar logic but loops through summaries in list
+    for summary in catalog['files']:
         for key, markdown_content in summary.items():
-            # Define the file path
-            file_path = os.path.join(output_dir, f"{key}.md")
+            files_path = os.path.join(output_dir, f"{key}.md")
 
             # Write the markdown content to the file
-            with open(file_path, 'w', encoding='utf-8') as file:
+            with open(files_path, 'w', encoding='utf-8') as file:
                 file.write(markdown_content)
 
-            print(f"Markdown file written: {file_path}")
+            print(f"Markdown file written: {files_path}")
