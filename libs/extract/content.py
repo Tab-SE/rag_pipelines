@@ -20,10 +20,12 @@ def extract_workbooks(input):
         name = workbook['name']
         summary = f"""
 # WORKBOOK NAME: {name}
-### DESCRIPTION: {workbook.get('description')}
-### CREATED_AT: {workbook.get('createdAt')}
-### UPDATED_AT: {workbook.get('updatedAt')}
-### PROJECT: {workbook.get('projectName')}
+### DESCRIPTION:
+
+{workbook.get('description')}
+Date Created: {workbook.get('createdAt')}
+Date Last Updated: {workbook.get('updatedAt')}
+Project Folder: {workbook.get('projectName')}
 
 ## FAQ
 - Show me {name}
@@ -144,6 +146,10 @@ workbooks, charts, dashboards, analysis, analytics, visualizations, tableau, tab
     for workbook in workbook_summaries['data']['workbooks']:
         name = workbook['name']
         description = workbook.get('description', 'N/A')
+
+        # Replace newline characters with spaces in the description
+        if description != 'N/A':
+            description = description.replace('\n', ' ')
 
         markdown_content += f"| {name} | {description} |\n"
 
