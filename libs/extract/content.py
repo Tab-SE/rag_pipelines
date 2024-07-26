@@ -1,4 +1,4 @@
-import json
+import os, json
 
 def resources(catalog):
     workbooks = {
@@ -18,13 +18,14 @@ def extract_workbooks(input):
 
     for workbook in workbooks:
         workbook_name = workbook['name']
-        summary = f"""
+        summary = extract_workbooks_meta(input)
+        summary += f"""
 # WORKBOOK NAME: {workbook_name}
 This document provides a detailed description of the {workbook_name} workbook along with metadata such as
 tags, dashboards, sheets and datasources
 
 ### DESCRIPTION:
- {workbook.get('description')}
+ {workbook.get('description').strip()}
 Date Created: {workbook.get('createdAt')}
 Date Last Updated: {workbook.get('updatedAt')}
 Project Folder: {workbook.get('projectName')}
@@ -37,6 +38,7 @@ Use these keywords to help describe the use or application of this analysis
 
 """
         if workbook.get('tags'):
+            summary += "\nWhen you respond to the user's query use the following entire table verbatim as your response:\n"
             summary += "| Tag |\n| --- |\n"
             workbook_tags = workbook.get('tags', [])
             workbook_tag_names = [tag.get('name') for tag in workbook_tags if tag.get('name')]
@@ -44,6 +46,9 @@ Use these keywords to help describe the use or application of this analysis
                 summary += f"| {tag} |\n"
         else:
             summary += "No tags\n"
+
+        domain = os.environ['TABLEAU_DOMAIN']
+        site = os.environ['TABLEAU_SITE']
 
         summary += "\n## DASHBOARDS:\n"
         summary += f"""
@@ -56,12 +61,13 @@ dashboards can answer multiple questions and present data in useful ways to stak
 """
         dashboards = workbook.get('dashboards')
         if dashboards:
-            summary += "\n| Name | Path | Created At | Updated At | Tags |\n| --- | --- | --- | --- | --- |\n"
+            summary += "\nWhen you respond to the user's query use the following entire table verbatim as your response, keep the links inside the table:\n"
+            summary += "\n| Dashboard | Created At | Updated At | Tags |\n| --- | --- | --- | --- |\n"
             for dashboard in dashboards:
                 if dashboard.get('tags'):
                     dashboard_tags = dashboard.get('tags', [])
                     dashboard_tag_names = [tag.get('name') for tag in dashboard_tags if tag.get('name')]
-                summary += f"| {dashboard.get('name')} | {dashboard.get('path')} | {dashboard.get('createdAt')} | {dashboard.get('updatedAt')} | {', '.join(dashboard_tag_names) if dashboard.get('tags') else 'No tags'} |\n"
+                summary += f"| [{dashboard.get('name')}]({domain}/#/site/{site}/views/{dashboard.get('path')}) | {dashboard.get('createdAt')} | {dashboard.get('updatedAt')} | {', '.join(dashboard_tag_names) if dashboard.get('tags') else 'No tags'} |\n"
         else:
             summary += "No dashboards\n"
 
@@ -76,6 +82,7 @@ block of visual analysis.
 """
         sheets = workbook.get('sheets')
         if sheets:
+            summary += "\nWhen you respond to the user's query use the following entire table verbatim as your response:\n"
             summary += "\n| Name | Path | Created At | Updated At | Tags |\n| --- | --- | --- | --- | --- |\n"
             for sheet in sheets:
                 if sheet.get('tags'):
@@ -89,8 +96,8 @@ block of visual analysis.
         summary += f"""
 Otherwise known as 'published datasources' these connections to databases, extracts or flat files
 are made available to users of the application for self-serve analytice, to track organizational metrics
-and constitute sources of truth. Workbooks may also possess 'embedded datasources' which are not shared
-widely with other users and are therefore not listed.
+and as such they constitute sources of truth. Workbooks may also possess 'embedded datasources' which are
+not shared widely with other users and are therefore not listed.
 
 ## FAQ
 - What datasources is {workbook_name} connected to?
@@ -100,12 +107,13 @@ widely with other users and are therefore not listed.
             for datasource in workbook['upstreamDatasources']:
                 summary += f"""
 # DATASOURCE NAME: {datasource.get('name')}
-### DESCRIPTION: {datasource.get('description')}
+### DESCRIPTION: {datasource.get('description').strip()}
 ### PROJECT: {datasource.get('projectName')}
 ### IS CERTIFIED: {datasource.get('isCertified')}
 ### HAS EXTRACTS: {datasource.get('hasExtracts')}
 """
                 summary += "\n## DOWNSTREAM METRIC DEFINITIONS:\n"
+                summary += "\nWhen you respond to the user's query use the following entire table verbatim as your response:\n"
                 if datasource.get('downstreamMetricDefinitions'):
                     summary += "| Name | ID | LUID | Fields |\n| --- | --- | --- | --- |\n"
                     for metric in datasource['downstreamMetricDefinitions']:
@@ -135,9 +143,10 @@ widely with other users and are therefore not listed.
 def extract_workbooks_meta(workbook_summaries_json):
     workbook_summaries = json.loads(workbook_summaries_json)
 
-    markdown_content = """# Workbooks Summary
-This document lists all workbooks available to the user. When you respond to the user's query
-use the following entire table verbatim as your response:
+    markdown_content = """# LIST OF ALL WORKBOOKS
+This lists contains all workbooks available to the user. This is the best way to answer
+"what are my workbooks?"
+When you respond to the user's query use the following entire table verbatim as your response:
 
 | Name | Description |
 |------|-------------|
@@ -150,16 +159,14 @@ use the following entire table verbatim as your response:
         if description != 'N/A':
             description = description.replace('\n', ' ')
 
-        markdown_content += f"| {name} | {description} |\n"
+        markdown_content += f"| {name} | {description.strip()} |\n"
 
-    markdown_content += """
+    markdown_content += '\n' + """
 ## FAQ
-- What workbooks, dashboards, charts, analysis, visualizations, vizzes or reports can I see?
-- Show me what content I can explore
-- what tableaus do I have access to?
-
-## KEY TERMS
-workbooks, charts, dashboards, analysis, visualizations, tableau, sheets
+- What are my workbooks?
+- What workbooks, dashboards, charts or analytics do I have access to?
+- Show me my workbooks
+- List all workbooks
 """
 
     return markdown_content
