@@ -95,14 +95,7 @@ Project Folder: {workbook.get('projectName')}
 ### PROJECT: {datasource.get('projectName')}
 ### IS CERTIFIED: {datasource.get('isCertified')}
 ### HAS EXTRACTS: {datasource.get('hasExtracts')}
-
-## FIELDS:
-| Name | Description | Is Hidden | Folder Name |
-| --- | --- | --- | --- |
 """
-                for field in datasource.get('fields', []):
-                    summary += f"| {field.get('name')} | {field.get('description') or 'N/A'} | {field.get('isHidden')} | {field.get('folderName') or 'N/A'} |\n"
-
                 summary += "\n## DOWNSTREAM METRIC DEFINITIONS:\n"
                 if datasource.get('downstreamMetricDefinitions'):
                     summary += "| Name | ID | LUID | Fields |\n| --- | --- | --- | --- |\n"
@@ -111,6 +104,14 @@ Project Folder: {workbook.get('projectName')}
                         summary += f"| {metric.get('name')} | {metric.get('id')} | {metric.get('luid')} | {fields} |\n"
                 else:
                     summary += "No downstream metric definitions\n"
+
+                summary += """
+## FIELDS:
+| Name | Description | Is Hidden | Folder Name |
+| --- | --- | --- | --- |
+"""
+                for field in datasource.get('fields', []):
+                    summary += f"| {field.get('name')} | {field.get('description') or 'N/A'} | {field.get('isHidden')} | {field.get('folderName') or 'N/A'} |\n"
         else:
             summary += "No upstream datasources\n"
 
