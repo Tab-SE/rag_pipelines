@@ -71,7 +71,7 @@ def catalog_corpus(catalog):
     os.makedirs(output_dir, exist_ok=True)
 
     # Define the file path for workbooks metadata file
-    meta_path = os.path.join(output_dir, 'workbooks.md')
+    meta_path = 'data/catalog/workbooks.md'
     # Write the markdown content to the file
     with open(meta_path, 'w', encoding='utf-8') as file:
         file.write(catalog['meta'])
