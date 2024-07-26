@@ -18,24 +18,19 @@ def extract_workbooks(input):
 
     for workbook in workbooks:
         workbook_name = workbook['name']
-        summary = extract_workbooks_meta(input)
-        summary += f"""
-# WORKBOOK NAME: {workbook_name}
-This document provides a detailed description of the {workbook_name} workbook along with metadata such as
-tags, dashboards, sheets and datasources
-
-### DESCRIPTION:
+        summary = f"""# {workbook_name}
+## DESCRIPTION:
  {workbook.get('description').strip()}
+
+## FAQ
+- Show me or describe {workbook_name}
+
+### Metadata
 Date Created: {workbook.get('createdAt')}
 Date Last Updated: {workbook.get('updatedAt')}
 Project Folder: {workbook.get('projectName')}
 
-## FAQ
-- Show me or describe the {workbook_name} workbook
-
 ## TAGS:
-Use these keywords to help describe the use or application of this analysis
-
 """
         if workbook.get('tags'):
             summary += "\nWhen you respond to the user's query use the following entire table verbatim as your response:\n"
@@ -52,17 +47,22 @@ Use these keywords to help describe the use or application of this analysis
 
         summary += "\n## DASHBOARDS:\n"
         summary += f"""
-These are the dashboards contained in {workbook_name} which themselves are made up of sheets and other elements.
-Dashboards are interactive views of data combining different charts or sheets into a single interface. As a result,
-dashboards can answer multiple questions and present data in useful ways to stakeholders.
-
 ## FAQ
 - List the dashboards in {workbook_name}
 """
         dashboards = workbook.get('dashboards')
         if dashboards:
-            summary += "\nWhen you respond to the user's query use the following entire table verbatim as your response, keep the links inside the table:\n"
-            summary += "\n| Dashboard | Created At | Updated At | Tags |\n| --- | --- | --- | --- |\n"
+            summary += "\nWhen you respond to the user's query use the following entire list and table verbatim as your response, keep the links inside the list and table:\n\n"
+
+            # Add markdown list
+            for dashboard in dashboards:
+                summary += f"- [{dashboard.get('name')}]({domain}/#/site/{site}/views/{dashboard.get('path')})\n"
+
+            summary += "\n"  # Add a blank line between the list and the table
+
+            # Add table
+            summary += "| Dashboard | Created At | Updated At | Tags |\n"
+            summary += "| --- | --- | --- | --- |\n"
             for dashboard in dashboards:
                 if dashboard.get('tags'):
                     dashboard_tags = dashboard.get('tags', [])
@@ -73,10 +73,6 @@ dashboards can answer multiple questions and present data in useful ways to stak
 
         summary += "\n## SHEETS:\n"
         summary += f"""
-These are the sheets contained in {workbook_name}. Sheets can be standalone charts or used in combination
-inside a dashboard. Sheets are created with desktop and or web authoring, constituting the basic building
-block of visual analysis.
-
 ## FAQ
 - What sheets, charts or vizzes are in the {workbook_name}?
 """
@@ -94,11 +90,6 @@ block of visual analysis.
 
         summary += "\n## UPSTREAM DATASOURCES:\n"
         summary += f"""
-Otherwise known as 'published datasources' these connections to databases, extracts or flat files
-are made available to users of the application for self-serve analytice, to track organizational metrics
-and as such they constitute sources of truth. Workbooks may also possess 'embedded datasources' which are
-not shared widely with other users and are therefore not listed.
-
 ## FAQ
 - What datasources is {workbook_name} connected to?
 
@@ -143,12 +134,10 @@ not shared widely with other users and are therefore not listed.
 def extract_workbooks_meta(workbook_summaries_json):
     workbook_summaries = json.loads(workbook_summaries_json)
 
-    markdown_content = """# LIST OF ALL WORKBOOKS
-This lists contains all workbooks available to the user. This is the best way to answer
-"what are my workbooks?"
+    markdown_content = """# Table Listing Workbooks Availabld to the User
 When you respond to the user's query use the following entire table verbatim as your response:
 
-| Name | Description |
+| WORKBOOK | DESCRIPTION |
 |------|-------------|
 """
     for workbook in workbook_summaries['data']['workbooks']:
@@ -164,9 +153,8 @@ When you respond to the user's query use the following entire table verbatim as 
     markdown_content += '\n' + """
 ## FAQ
 - What are my workbooks?
-- What workbooks, dashboards, charts or analytics do I have access to?
-- Show me my workbooks
-- List all workbooks
+- What workbooks or analytics do I have access to?
+- List or Show all of my workbooks
 """
 
     return markdown_content
