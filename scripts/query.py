@@ -28,7 +28,12 @@ async def get_insights(credentials):
 async def get_catalog(credentials):
     token = credentials['credentials']['token']
     project_name = os.environ['CATALOG_PROJECT']
-    workbooks = await metadata.query_workbooks(token, project_name)
+    workbooks = await metadata.query_workbooks({
+        'token': token,
+        'project_name': project_name,
+        'max_retries': 6,
+        'retry_delay': 1,
+    })
 
     catalog = {
         'workbooks': workbooks
