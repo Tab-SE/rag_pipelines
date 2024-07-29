@@ -1,83 +1,3 @@
-# from utils import gql
-
-# async def query_workbooks(token, project_name):
-#     project_workbook_query = f"""
-# query Workbooks {{
-#     workbooks(filter: {{ projectName: "{project_name}" }}) {{
-#         name
-#         description
-#         createdAt
-#         projectName
-#         createdAt
-#         updatedAt
-#         tags {{
-#             name
-#         }}
-#         dashboards {{
-#             name
-#             path
-#             createdAt
-#             updatedAt
-#             tags {{
-#                 name
-#             }}
-#         }}
-#         sheets {{
-#             name
-#             path
-#             createdAt
-#             updatedAt
-#             tags {{
-#                 name
-#             }}
-#         }}
-#         upstreamDatasources {{
-#             name
-#             isCertified
-#             description
-#             projectName
-#             hasExtracts
-#             extractLastRefreshTime
-#             extractLastIncrementalUpdateTime
-#             extractLastUpdateTime
-#             fields(filter: {{ isHidden: false }}) {{
-#                 name
-#                 description
-#                 folderName
-#             }}
-#             datasourceFilters {{
-#                 field {{
-#                     id
-#                 }}
-#             }}
-#             parameters {{
-#                 name
-#             }}
-#             hasActiveWarning
-#             labels {{
-#                 value
-#                 category
-#                 message
-#             }}
-#             downstreamMetricDefinitions {{
-#                 name
-#                 id
-#                 luid
-#                 fields {{
-#                     name
-#                     description
-#                 }}
-#             }}
-#         }}
-#     }}
-# }}"""
-#     workbooks = await gql.query(query=project_workbook_query, token=token)
-#     # Errors:
-#     # {"errors":[{"message":"Execution canceled because timeout of 30000 millis was reached","locations":[]}],"data":null}
-#     # {"errors":[{"message":"One or more of the attributes used in your filter contain sensitive data so your results have been automatically filtered to contain only the results you have permissions to see","extensions":{"severity":"WARNING","code":"PERMISSIONS_MODE_SWITCHED","properties":{"workbooks":["projectName"]}}}],"data":{"workbooks":[]}}
-#     print(f'Workbooks metadata received')
-#     return workbooks
-
 import asyncio, json
 from utils import gql
 
@@ -172,14 +92,12 @@ async def query_workbooks(params):
                 elif "One or more of the attributes used in your filter contain sensitive data" in error_message:
                     print(f'Workbooks metadata received')
                     print("Warning: Results filtered due to permissions.")
-                    print('******* WORKBOOKS GQL\n', workbooks_json)
                     return workbooks_json
                 else:
                     print(f"Unhandled error: {error_message}")
                     break
             else:
                 print(f'Workbooks metadata received')
-                print('******* WORKBOOKS GQL\n', workbooks_json)
                 return workbooks_json
 
         except Exception as e:

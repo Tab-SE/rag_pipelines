@@ -1,7 +1,6 @@
-import os, json
+import os
 
 def resources(catalog):
-    print('****** CATALOG ******\n', catalog)
     workbooks = {
         'files': extract_workbooks(catalog['workbooks']),
         'meta': extract_workbooks_meta(catalog['workbooks'])
