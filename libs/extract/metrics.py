@@ -16,6 +16,16 @@ def bundles(bundles):
         # extract semantic data from metric insights
         insights_bundle = bundle.get('insights')
         insights = extractInsights(insights_bundle=insights_bundle, metric=metric)
+
+        print('insights', insights.keys())
+
+        print('breakdown', insights['breakdown'])
+        print('follow up', insights['followup'])
+
+        if len(insights['followup']) > 0:
+            # remove the "breakdown" insights group as it is a subset of "followup" containing duplicates
+            insights.pop("breakdown", None)
+
         # set of documents for each metric
         documents = {
             'metadata': metadata,
@@ -141,21 +151,21 @@ def extractInsights(insights_bundle, metric):
         for insight_group in insight_groups:
             # extract facts about the metric's current value
             if insight_group.get('type') == 'ban':
-                result = insight_groups[0].get('insights')
-                print('ban', len(result))
-                ban = extractBan(result=result, metric=metric)
+                ban_insights = insight_groups[0].get('insights')
+                print('ban', len(ban_insights))
+                ban = extractBan(ban_insights=ban_insights, metric=metric)
                 metric_insights['ban'] = ban
             #  extract current trend and unusual change
             elif insight_group.get('type') == 'anchor':
-                insights_array = insight_group.get('insights')
-                print('anchor', len(insights_array))
-                anchor = extractAnchor(insights_array=insights_array, metric=metric)
+                anchor_insights = insight_group.get('insights')
+                print('anchor', len(anchor_insights))
+                anchor = extractAnchor(anchor_insights=anchor_insights, metric=metric)
                 metric_insights['anchor'] = anchor
             # extract all top down contributors
             elif insight_group.get('type') == 'breakdown':
-                breakdown_bundles = insight_group.get('insights')
-                print('breakdown', len(breakdown_bundles))
-                breakdown = extractOthers(other_bundles=breakdown_bundles, metric=metric)
+                breakdown_insights = insight_group.get('insights')
+                print('breakdown', len(breakdown_insights))
+                breakdown = extractOthers(other_bundles=breakdown_insights, metric=metric)
                 metric_insights['breakdown'] = breakdown
             # extract all top drivers
             elif insight_group.get('type') == 'followup':
@@ -166,8 +176,8 @@ def extractInsights(insights_bundle, metric):
 
     return metric_insights
 
-def extractBan(result, metric):
-    result_data = result[0].get('result')
+def extractBan(ban_insights, metric):
+    result_data = ban_insights[0].get('result')
 
     score = result_data.get('score')
     question = result_data.get('question')
@@ -245,9 +255,9 @@ In absolute terms the change was {absolute_formatted_difference} ({absolute_raw_
     ban = [current_metric_value, period_over_period_change]
     return ban
 
-def extractAnchor(insights_array, metric):
+def extractAnchor(anchor_insights, metric):
     anchor = []
-    for result in insights_array:
+    for result in anchor_insights:
         if result.get('error'):
             print(result.get('error'))
             continue
@@ -543,4 +553,3 @@ rate of change, direction, and fluctuations for the metric value
         """
     }
 }
-
