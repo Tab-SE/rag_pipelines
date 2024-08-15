@@ -1,8 +1,11 @@
+import os
+
 from jsonpath_ng import jsonpath, parse
 
 from utils import http
 
-async def metrics(domain, credentials):
+async def metrics(credentials):
+    domain = os.environ['TABLEAU_DOMAIN']
     token = credentials['credentials']['token']
     user = credentials['credentials']['user']['id']
 

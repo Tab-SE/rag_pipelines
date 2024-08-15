@@ -19,7 +19,7 @@ def load_index(directory_path, index_name):
         return False
 
 def gather_documents(path):
-    print(f'Gathering documents from {path}')
+    print(f'Gathering documents from {path}...')
     # Create an instance of SimpleDirectoryReader
     reader = SimpleDirectoryReader(
         input_dir=path,
