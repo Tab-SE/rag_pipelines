@@ -113,7 +113,8 @@ def extractMetricMetadata(metric, definition):
 
 ## Can you describe the {metric['name']} metric?
 It is described as '{metric['description']}'
-This metric considers change in value as: {metric['representation_options']['sentiment_type']}
+Up or down trends can be either positive or negative. This metric considers change in value as:
+{metric['representation_options']['sentiment_type']}
 It is represented as: {metric['representation_options']['type']}
 It is measured by these units:
 Singular: {metric['representation_options']['number_units']['singular_noun']}
@@ -200,42 +201,47 @@ def extractBan(ban_insights, metric):
 
 ## What is the value of the {metric.get('name')} metric?
 The metric {metric.get('name')} has a value of {current_formatted_value} or {current_raw_value} in raw numbers
+Similar Questions: ["what is my current {metric.get('name')}?", "current value of {metric.get('name')}"]
 
 ## When was the current value of {metric.get('name')} generated?
 The current value was recorded on {current_time_period} during a time range of {current_time_range} and is
 measured every {current_time_granularity}
+Similar Questions: ["when was {metric.get('name')} measured?", "was {metric.get('name')} measured recently?"]
 
-## What was the previous value of {metric.get('name')}?
+## What was the previous value of the {metric.get('name')} metric?
 The previous value for this metric was {previous_formatted_value} or {previous_raw_value} in raw numbers
+Similar Questions: ["my previous {metric.get('name')}?", "last value of {metric.get('name')}?"]
 
 ## When was the previous value of {metric.get('name')} generated?
 The previous value was recorded on {previous_time_period} during a time range of {previous_time_range} and is
 measured every {previous_time_granularity}
+Similar Questions: ["when was {metric.get('name')} previously measured?"]
 
 ## How is the {metric.get('name')} metric doing?
 This is considered {sentiment} since the metric is defined as
 {metric.get('representation_options').get('sentiment_type')}
 and the direction is trending {direction}
+Similar Questions: ["are {metric.get('name')} ok?", "status of the {metric.get('name')} metric"]
 
 ## What is the trend of {metric.get('name')}?
 The metric value is currently trending {direction}
+Similar Questions: ["how is the {metric.get('name')} metric trending?", "is {metric.get('name')} going up or down?"]
     """
 
     period_over_period_change = f"""
-# {insight_types.get('popc').get('name')} for {metric.get('name')}
-
-## _Question_: {question}
+# _Question for {metric.get('name')}_: {question}
+Similar Questions: ["what is new with {metric.get('name')}?", "update on the {metric.get('name')} metric"]
+{insight_types.get('popc').get('name')} for {metric.get('name')}
 _Answer_: {answer}
-
-## What is {insight_types.get('popc').get('name')}?
+What is {insight_types.get('popc').get('name')}?
 _Description_: {insight_types.get('popc').get('description')}
-
-## What is the score for {insight_types.get('popc').get('name')} calculated for {metric.get('name')}?
+What is the score for {insight_types.get('popc').get('name')} calculated for {metric.get('name')}?
 The insight has a score of: {score}
 
-## How has the {metric.get('name')} metric changed?
+How has the {metric.get('name')} metric changed?
 The metric had a relative change of {relative_formatted_difference} ({relative_raw_difference} in raw value)
 In absolute terms the change was {absolute_formatted_difference} ({absolute_raw_difference} in raw value)
+Similar Questions: ["how much has {metric.get('name')} changed?", "what is the delta on the {metric.get('name')} metric?"]
     """
     ban = [current_metric_value, period_over_period_change]
     return ban
@@ -271,24 +277,20 @@ def extractAnchor(anchor_insights, metric):
                 direction = facts.get('difference', {}).get('direction')
 
                 unusual_change = f"""
-# {insight_types.get('unusualchange').get('name')} for {metric.get('name')}
-
-## _Question_: {question}
+# _Question for {metric.get('name')}_: {question}
+Any {insight_types.get('unusualchange').get('name')} for {metric.get('name')}?
 _Answer_: {answer}
-
-## What is {insight_types.get('unusualchange').get('name')}?
+What is {insight_types.get('unusualchange').get('name')}?
 _Description_: {insight_types.get('unusualchange').get('description')}
-
-## Any {insight_types.get('unusualchange').get('name')} for {metric.get('name')}?
-
-## What is the score for {insight_types.get('unusualchange').get('name')} calculated for {metric.get('name')}?
+What is the score for {insight_types.get('unusualchange').get('name')} calculated for {metric.get('name')}?
 The insight has a score of: {score}
 
 ## Is there anything unusual or interesting about {metric.get('name')}?
 The metric is doing {sentiment} and the direction is {direction}
 The AI model expected a value of {expected_change_formatted_value} or {expected_change_raw_value} in raw numbers
-The data displays a relative change of {relative_change_formatted_value} or {relative_change_raw_value} in raw numbers
 In absolute terms the change was {absolute_change_formatted_value} or {absolute_change_raw_value} in raw numbers
+If the AI model expectation was surpassed by the absolute change then this would be unusual.
+The data displays a relative change of {relative_change_formatted_value} or {relative_change_raw_value} in raw numbers
 
 ## When was unusual change detected?
 {period_label}. Short term change was monitored throughout {period_range} which is currently trending {direction}
@@ -305,18 +307,14 @@ The insight has a score of: {score}
                 answer = result['result'].get('markup')
 
                 current_trend = f"""
-# {insight_types.get('currenttrend').get('name')} for {metric.get('name')}
-
-## _Question_: {question}
+# _Question for {metric.get('name')}_: {question}
+What is the {insight_types.get('currenttrend').get('name')} for {metric.get('name')}?
 _Answer_: {answer}
-
-## What is {insight_types.get('currenttrend').get('name')}?
+What is {insight_types.get('currenttrend').get('name')}?
 _Description_: {insight_types.get('currenttrend').get('description')}
-
-## What is the {insight_types.get('currenttrend').get('name')} for {metric.get('name')}?
-
-## What is the score for {insight_types.get('currenttrend').get('name')} calculated for {metric.get('name')}?
+What is the score for {insight_types.get('currenttrend').get('name')} calculated for {metric.get('name')}?
 The insight has a score of: {score}
+
                 """
                 anchor.append(current_trend)
             elif insight_type == 'newtrend':
@@ -325,18 +323,14 @@ The insight has a score of: {score}
                 answer = result['result'].get('markup')
 
                 new_trend = f"""
-# {insight_types.get('newtrend').get('name')} for {metric.get('name')}
-
-## _Question_: {question}
+# _Question for {metric.get('name')}_: {question}
+What is the {insight_types.get('newtrend').get('name')} for {metric.get('name')}?
 _Answer_: {answer}
-
-## What is {insight_types.get('newtrend').get('name')}?
+What is {insight_types.get('newtrend').get('name')}?
 _Description_: {insight_types.get('newtrend').get('description')}
-
-## What is the {insight_types.get('newtrend').get('name')} for {metric.get('name')}?
-
-## What is the score for {insight_types.get('newtrend').get('name')} calculated for {metric.get('name')}?
+What is the score for {insight_types.get('newtrend').get('name')} calculated for {metric.get('name')}?
 The insight has a score of: {score}
+
                 """
                 anchor.append(new_trend)
 
@@ -359,45 +353,34 @@ def extractOthers(other_bundles, metric):
                 direction = facts.get('direction')
             if type == 'top-contributors':
                 top_contributors = f"""
-# {insight_types.get('top-contributors').get('name')} for {metric.get('name')}
-
-## _Question_: {question}
+# _Question for {metric.get('name')}_: {question}
+What is the {insight_types.get('top-contributors').get('name')} for {metric.get('name')}?
 _Answer_: {answer}
-
-## What is {insight_types.get('top-contributors').get('name')}?
+What is {insight_types.get('top-contributors').get('name')}?
 _Description_: {insight_types.get('top-contributors').get('description')}
-
-## What is the {insight_types.get('top-contributors').get('name')} for {metric.get('name')}?
-
-## What is the score for {insight_types.get('top-contributors').get('name')} calculated for {metric.get('name')}?
+What is the score for {insight_types.get('top-contributors').get('name')} calculated for {metric.get('name')}?
 The insight has a score of: {score}
 
-
 {f"""
-## How is the dimension trending?
-The dimension is {dimension} and is trending {direction}
+## How is the {dimension} dimension for the {metric.get('name')} metric trending?
+The dimension is trending {direction}
 """ if facts else ''}
                 """
                 other_insights.append(top_contributors)
 
             elif type == 'bottom-contributors':
                 bottom_contributors = f"""
-# {insight_types.get('bottom-contributors').get('name')} for {metric.get('name')}
-
-## _Question_: {question}
+# _Question for {metric.get('name')}_: {question}
+What is the {insight_types.get('bottom-contributors').get('name')} for {metric.get('name')}?
 _Answer_: {answer}
-
-## What is {insight_types.get('bottom-contributors').get('name')}?
+What is {insight_types.get('bottom-contributors').get('name')}?
 _Description_: {insight_types.get('bottom-contributors').get('description')}
-
-## What is the {insight_types.get('bottom-contributors').get('name')} for {metric.get('name')}?
-
-## What is the score for {insight_types.get('bottom-contributors').get('name')} calculated for {metric.get('name')}?
+What is the score for {insight_types.get('bottom-contributors').get('name')} calculated for {metric.get('name')}?
 The insight has a score of: {score}
 
 {f"""
-## How is the dimension trending?
-The dimension is {dimension} and is trending {direction}
+## How is the {dimension} dimension for the {metric.get('name')} metric trending?
+The dimension is trending {direction}
 """
 if facts else ''}
                 """
@@ -405,50 +388,35 @@ if facts else ''}
 
             elif type == 'top-detractors':
                 top_detractors = f"""
-# {insight_types.get('top-detractors').get('name')} for {metric.get('name')}
-
-## _Question_: {question}
+# _Question for {metric.get('name')}_: {question}
+What is the {insight_types.get('top-detractors').get('name')} for {metric.get('name')}?
 _Answer_: {answer}
-
-## What is {insight_types.get('top-detractors').get('name')}?
+What is {insight_types.get('top-detractors').get('name')}?
 _Description_: {insight_types.get('top-detractors').get('description')}
-
-## What is the {insight_types.get('top-detractors').get('name')} for {metric.get('name')}?
-
-## What is the score for {insight_types.get('top-detractors').get('name')} calculated for {metric.get('name')}?
+What is the score for {insight_types.get('top-detractors').get('name')} calculated for {metric.get('name')}?
 The insight has a score of: {score}
                 """
                 other_insights.append(top_detractors)
 
             elif type == 'riskmo':
                 riskmo = f"""
-# {insight_types.get('riskmo').get('name')} for {metric.get('name')}
-
-## _Question_: {question}
+# _Question for {metric.get('name')}_: {question}
+What is the {insight_types.get('riskmo').get('name')} for {metric.get('name')}?
 _Answer_: {answer}
-
-## What is {insight_types.get('riskmo').get('name')}?
+What is {insight_types.get('riskmo').get('name')}?
 _Description_: {insight_types.get('riskmo').get('description')}
-
-## What is the {insight_types.get('riskmo').get('name')} for {metric.get('name')}?
-
-## What is the score for {insight_types.get('riskmo').get('name')} calculated for {metric.get('name')}?
+What is the score for {insight_types.get('riskmo').get('name')} calculated for {metric.get('name')}?
 The insight has a score of: {score}
                 """
                 other_insights.append(riskmo)
             elif type == 'top-drivers':
                 top_drivers = f"""
-# {insight_types.get('top-drivers').get('name')} for {metric.get('name')}
-
-## _Question_: {question}
+# _Question for {metric.get('name')}_: {question}
+What is the {insight_types.get('top-drivers').get('name')} for {metric.get('name')}?
 _Answer_: {answer}
-
-## What is {insight_types.get('top-drivers').get('name')}?
+What is {insight_types.get('top-drivers').get('name')}?
 _Description_: {insight_types.get('top-drivers').get('description')}
-
-## What is the {insight_types.get('top-drivers').get('name')} for {metric.get('name')}?
-
-## What is the score for {insight_types.get('top-drivers').get('name')} calculated for {metric.get('name')}?
+What is the score for {insight_types.get('top-drivers').get('name')} calculated for {metric.get('name')}?
 The insight has a score of: {score}
                 """
                 other_insights.append(top_drivers)
@@ -458,80 +426,47 @@ The insight has a score of: {score}
 insight_types = {
     'popc': {
         'name': 'Period over Period Change',
-        'description': """Shows how a metric has changed between two periods. Highlights the change between a metric value for a
-recent time range compared to an equivalent time range in a prior period or the past
+        'description': """Shows how a metric has changed between two periods. Highlights the change between a metric value for a recent time range compared to an equivalent time range in a prior period or the past
         """
     },
     'riskmo': {
         'name': 'Risky Monopoly',
-        'description': """Shows when a small number of dimension members make up a majority (50% or more) of the contribution
-to a metric. Shows dimensions with a concentration of very high values
+        'description': """Shows when a small number of dimension members make up a majority (50% or more) of the contribution to a metric. Shows dimensions with a concentration of very high values
         """
     },
     'top-contributors': {
         'name': 'Top Contributors',
-        'description': """Shows the highest values in a dimension for a metric within a given time range. A top contributor
-is a dimension member that ranks in the top N in contribution to the scoped metric's value, aggregated on a specified
-time range.
-or
-Shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member
-that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
+        'description': """Shows the highest values in a dimension for a metric within a given time range. A top contributor is a dimension member that ranks in the top N in contribution to the scoped metric's value, aggregated on a specified time range or shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
         """
     },
     'bottom-contributors': {
         'name': 'Bottom Contributors',
-        'description': """Shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is
-a dimension membercthat ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified
-time range.
+        'description': """Shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
         """
     },
     'top-drivers': {
         'name': 'Top Drivers',
-        'description': """Shows values for dimension members that changed the most in the same direction as the observed change
-in the metric. Shows the values for a metric that increased the most across a specified time offset
-
-A top driver is a dimension member that ranks in the top N in driving a change in a metric value between two separate
-but equivalent time ranges
-
-Top drivers are analyzed using metric values from two separate but equivalent time ranges (such as Sales for day of
-October 2 versus Sales for day of October 3) to look for changes to the contributions in the same direction of the change
-made by dimension members
+        'description': """Shows values for dimension members that changed the most in the same direction as the observed change in the metric. Shows the values for a metric that increased the most across a specified time offset. A top driver is a dimension member that ranks in the top N in driving a change in a metric value between two separate but equivalent time ranges Top drivers are analyzed using metric values from two separate but equivalent time ranges (such as Sales for day of October 2 versus Sales for day of October 3) to look for changes to the contributions in the same direction of the change made by dimension members
         """
     },
     'top-detractors': {
         'name': 'Top Detractors',
-        'description': """Shows values for dimension members that changed the most in the opposite direction to the observed change
-in the metric. Shows values for a metric that are most opposed to top drivers decreased the most across a specified time offset
-
-A top detractor is a dimension member that ranks in the bottom N in driving a change in a metric value between two separate
-but equivalent time ranges. This insight's values oppose the observed change the most
-
-Top detractors are analyzed using metric values from two separate but equivalent time ranges (such as Sales for day of
-October 2 versus Sales for day of October 3) to look for changes to the contributions in the same direction of the change
-made by dimension members
+        'description': """Shows values for dimension members that changed the most in the opposite direction to the observed change in the metric. Shows values for a metric that are most opposed to top drivers decreased the most across a specified time offset. A top detractor is a dimension member that ranks in the bottom N in driving a change in a metric value between two separate but equivalent time ranges. This insight's values oppose the observed change the most. Top detractors are analyzed using metric values from two separate but equivalent time ranges (such as Sales for day of October 2 versus Sales for day of October 3) to look for changes to the contributions in the same direction of the change made by dimension members
         """
     },
     'unusualchange': {
         'name': 'Unusually High/Low Metric value',
-        'description': """Shows unexpected changes in a metric value
-
-Shows when the value of a metric for a given time range is higher or lower than the expected range based on historic
-observations of the metric.
-
-This insight highlights when the value of a metric for a given time range is higher or lower than the expected range
-based on historic observations of the metric.
+        'description': """Shows unexpected changes in a metric value. Shows when the value of a metric for a given time range is higher or lower than the expected range based on historic observations of the metric. This insight highlights when the value of a metric for a given time range is higher or lower than the expected range based on historic observations of the metric.
         """
     },
     'newtrend': {
         'name': 'New Trend Detected',
-        'description': """Shows new trends that vary significantly from the current trend. This insight communicates the
-rate of change, direction, and fluctuations for the metric value
+        'description': """Shows new trends that vary significantly from the current trend. This insight communicates the rate of change, direction, and fluctuations for the metric value
         """
     },
     'currenttrend': {
         'name': 'Current Trend',
-        'description': """The current trend of a metric. For instance, that overall sales are tending to increase by
-10% year over year
+        'description': """The current trend of a metric. For instance, that overall sales are tending to increase by 10% year over year
         """
     }
 }
