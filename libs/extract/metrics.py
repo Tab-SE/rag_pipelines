@@ -19,9 +19,6 @@ def bundles(bundles):
 
         print('insights', insights.keys())
 
-        print('breakdown', insights['breakdown'])
-        print('follow up', insights['followup'])
-
         if len(insights['followup']) > 0:
             # remove the "breakdown" insights group as it is a subset of "followup" containing duplicates
             insights.pop("breakdown", None)
@@ -338,10 +335,12 @@ The insight has a score of: {score}
 
 def extractOthers(other_bundles, metric):
     other_insights = []
+    print('***** total insights ******', len(other_bundles))
     for bundle in other_bundles:
         result = bundle.get('result')
 
         if result:
+            # print(f"""***** RESULTS FOR {metric.get('name')} *****\n""", result)
             type = result.get('type')
             score = result.get('score')
             question = result.get('question')
@@ -421,6 +420,7 @@ The insight has a score of: {score}
                 """
                 other_insights.append(top_drivers)
 
+        print(metric['name'],'other_insights', other_insights)
         return other_insights
 
 insight_types = {

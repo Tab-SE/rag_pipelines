@@ -53,11 +53,13 @@ def insights_corpus(insights):
         try:
             for i, insight in enumerate(metric_insights['breakdown']):
                 breakdown_path = os.path.join(insights_folder_path, f'breakdown_{i}.md')
+                print('***** breakdown_path *****\n', breakdown_path)
                 with open(breakdown_path, 'w') as f:
                     f.write(insight)
         except Exception as e:
             print(f"An error occurred while processing 'breakdown' for key '{key}': {e}")
 
+        print("***** metric_insights['followup'] *****\n", metric_insights.keys())
         try:
             for i, insight in enumerate(metric_insights['followup']):
                 followup_path = os.path.join(insights_folder_path, f'followup_{i}.md')
