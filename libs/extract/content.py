@@ -164,9 +164,16 @@ HAS EXTRACTS: {datasource.get('hasExtracts')}
 #     return markdown_content
 
 def extract_workbooks_meta(workbook_payload):
-    markdown_content = """## What are my workbooks?
-## What reports or analytics do I have access to?
-## List or show all of my workbooks
+    markdown_content = """# What are my workbooks?
+Related Questions: ["What reports or analytics do I have access to?", "List or show all of my workbooks"]
+
+This document provides a summary of all Tableau workbooks that the given user has access to. The most important
+data is the description provided to the analyst since it helps users find workbooks that answer their questions
+or display information related to topics of interest.
+
+This also helps provide users with information related to dashboards contained inside these workbooks.
+Please include the "Path" in all of your responses:
+
 """
     for index, workbook in enumerate(workbook_payload['data']['workbooks']):
         name = workbook['name']
