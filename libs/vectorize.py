@@ -1,6 +1,6 @@
 import os
 
-from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, StorageContext
+from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, StorageContext, ServiceContext
 from llama_index.vector_stores.pinecone import PineconeVectorStore
 from pinecone import Pinecone, ServerlessSpec
 
@@ -12,7 +12,7 @@ def load_index(directory_path, index_name):
         # construct pinecone client for target index
         index = initialize_index(index_name)
         # build vector store, index and upsert to Pinecone
-        vectorize(index=index, documents=documents)
+        vectorize(index=index, documents=documents, chunk_size=2048, chunk_overlap=50)
         return True
     except Exception as e:
         print(f"Error loading data from {directory_path}:", e)
@@ -70,12 +70,17 @@ def initialize_index(pinecone_index):
     index = pc.Index(index_name)
     return index
 
-def vectorize(index, documents):
+def vectorize(index, documents, chunk_size=1024, chunk_overlap=20):
     # construct vector store
     vector_store = PineconeVectorStore(pinecone_index=index)
+    # create a service context with the specified chunk size and overlap
+    service_context = ServiceContext.from_defaults(
+        chunk_size=chunk_size,
+        chunk_overlap=chunk_overlap
+    )
     # specifies location, environment and index for storage
     storage_context = StorageContext.from_defaults(vector_store=vector_store)
     # build index
     index = VectorStoreIndex.from_documents(
-        documents, storage_context=storage_context
+        documents, storage_context=storage_context, service_context=service_context
     )

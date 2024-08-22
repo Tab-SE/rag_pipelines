@@ -83,16 +83,16 @@ def catalog_corpus(catalog):
     print(f"Markdown metadata file written: {meta_path}")
 
     # similar logic but loops through summaries in list
-    # for index, summary in enumerate(catalog['files']):
-    #     for key, markdown_content in summary.items():
-    #         folder_name = f"{index}_{key.replace(' ', '_')}"
-    #         folder_path = os.path.join(output_dir, folder_name)
-    #         os.makedirs(folder_path, exist_ok=True)
+    for index, summary in enumerate(catalog['files']):
+        for key, markdown_content in summary.items():
+            folder_name = f"{index}_{key.replace(' ', '_')}"
+            folder_path = os.path.join(output_dir, folder_name)
+            os.makedirs(folder_path, exist_ok=True)
 
-    #         files_path = os.path.join(folder_path, f"{folder_name}.md")
+            files_path = os.path.join(folder_path, f"{folder_name}.md")
 
-    #         # Write the markdown content to the file
-    #         with open(files_path, 'w', encoding='utf-8') as file:
-    #             file.write(markdown_content)
+            # Write the markdown content to the file
+            with open(files_path, 'w', encoding='utf-8') as file:
+                file.write(markdown_content)
 
-    #         print(f"Markdown file written: {files_path}")
+            print(f"Markdown file written: {files_path}")
