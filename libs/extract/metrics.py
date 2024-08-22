@@ -147,15 +147,16 @@ def extractInsights(insights_bundle, metric):
                 metric_insights['anchor'] = anchor
             # extract all top down contributors
             elif insight_group.get('type') == 'breakdown':
-                breakdown_insights = insight_group.get('insights')
-                print('breakdown', len(breakdown_insights))
-                breakdown = extractOthers(other_bundles=breakdown_insights, metric=metric)
-                metric_insights['breakdown'] = breakdown
+                pass
+                # breakdown_insights = insight_group.get('insights')
+                # print('breakdown', len(breakdown_insights))
+                # breakdown = extractOthers(other_bundles=breakdown_insights, metric=metric)
+                # metric_insights['breakdown'] = breakdown
             # extract all top drivers
             elif insight_group.get('type') == 'followup':
-                followup_bundles = insight_group.get('insights')
-                print('followup', len(followup_bundles))
-                followup = extractOthers(other_bundles=followup_bundles, metric=metric)
+                followup_insights = insight_group.get('insights')
+                print('followup', len(followup_insights))
+                followup = extractFollowup(followup_insights=followup_insights, metric=metric)
                 metric_insights['followup'] = followup
 
     return metric_insights
@@ -333,14 +334,13 @@ The insight has a score of: {score}
 
     return anchor
 
-def extractOthers(other_bundles, metric):
+def extractFollowup(followup_insights, metric):
     other_insights = []
-    print('***** total insights ******', len(other_bundles))
-    for bundle in other_bundles:
+    print('***** total insights ******', len(followup_insights))
+    for bundle in followup_insights:
         result = bundle.get('result')
 
         if result:
-            # print(f"""***** RESULTS FOR {metric.get('name')} *****\n""", result)
             type = result.get('type')
             score = result.get('score')
             question = result.get('question')
@@ -420,8 +420,7 @@ The insight has a score of: {score}
                 """
                 other_insights.append(top_drivers)
 
-        print(metric['name'],'other_insights', other_insights)
-        return other_insights
+    return other_insights
 
 insight_types = {
     'popc': {
