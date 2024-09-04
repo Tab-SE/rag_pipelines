@@ -49,7 +49,10 @@ Project Folder: {workbook.get('projectName')}
 
             # Add markdown list
             for dashboard in dashboards:
-                summary += f"- [{dashboard.get('name')}]({domain}/#/site/{site}/views/{dashboard.get('path')})\n"
+                url = f"{domain}/#/site/{site}/views/{dashboard.get('path')}"
+                summary += f"- {dashboard.get('name')}: {url}\n"
+                summary += f"**Question**: What is the URL or link for {dashboard.get('name')} in {workbook_name}?\n"
+                summary += f"{url}\n"
 
             summary += "\n"  # Add a blank line between the list and the table
         else:
