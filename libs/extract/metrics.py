@@ -73,19 +73,21 @@ def extractMetricsSummary(bundles, time_options):
                     facts = result_data.get('facts', {})
                     sentiment = facts.get('sentiment')
                     current_formatted_value = facts.get('target_period_value', {}).get('formatted')
-                    # difference = facts.get('difference', {})
+                    difference = facts.get('difference', {})
                     # direction = difference.get('direction')
                     # absolute_raw_difference = difference.get('absolute', {}).get('raw')
-                    # absolute_formatted_difference = difference.get('absolute', {}).get('formatted')
+                    absolute_formatted_difference = difference.get('absolute', {}).get('formatted')
                     # relative_raw_difference = difference.get('relative', {}).get('raw')
-                    # relative_formatted_difference = difference.get('relative', {}).get('formatted')
+                    relative_formatted_difference = difference.get('relative', {}).get('formatted')
                     bundles[bundle]['metric']['value'] = current_formatted_value
                     bundles[bundle]['metric']['sentiment'] = sentiment
+                    bundles[bundle]['metric']['change'] = absolute_formatted_difference
+                    bundles[bundle]['metric']['relative'] = relative_formatted_difference
 
     # High level details for all metrics in a table format
-    metrics_table_header = "| *Metric Name* | *Value* | *Units* | *Sentiment* |\n|--------------|-------------|-------------|-------------|\n"
+    metrics_table_header = "| *Metric Name* | *Value* | *Change* | *Sentiment* |\n|--------------|-------------|-------------|-------------|\n"
     metrics_table_rows = '\n'.join(
-        f"| **{bundles[bundle]['metric']['name']}** | {bundles[bundle]['metric']['value']} | {bundles[bundle]['metric']['representation_options']['number_units']['plural_noun']} | {bundles[bundle]['metric']['sentiment']} |"
+        f"| **{bundles[bundle]['metric']['name']}** | {bundles[bundle]['metric']['value']} | {bundles[bundle]['metric']['change']} ({bundles[bundle]['metric']['relative']}) | {bundles[bundle]['metric']['sentiment']} |"
         for bundle in bundles
     )
     metrics_table = metrics_table_header + metrics_table_rows
