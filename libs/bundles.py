@@ -1,4 +1,4 @@
-import os
+import os, json
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from tzlocal import get_localzone
@@ -40,7 +40,13 @@ async def insights(credentials, metrics):
             "time_options": time_options,
         }
 
+    # Write insights_bundles to a JSON file
+    with open("sample_input.json", 'w') as json_file:
+        json.dump(insights_bundles, json_file, indent=4)
+
     return insights_bundles
+
+
 
 async def queryInsights(endpoint, headers, metric, time_options):
     # request body needed to generate insights

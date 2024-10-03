@@ -62,3 +62,11 @@ _Related Questions_ = ['What steps can reduce Call Volume?', 'How do we lower ca
 Q: *What non-Tableau content can help me understand FCR?*
 A: monthly_performance_summary: A monthly summary report of FCR performance metrics, showing trends and key insights
 fcr_issue_resolution_times_by_channel: A dataset that breaks down FCR by communication channel (phone, chat, email) to compare resolution times.
+
+Q: *What are the predictive factors for attach rate?*
+A: +4.3% | Product mix includes Phone, Internet, and TV bundle and customer satisfaction is above 80%
++3.9% | Tenure is 4+ years and 0 service outages in the past 6 months
+-4.8% | Recent service upgrade and usage dropped by 30% over 3 months
+Q: *How can I improve attach rate?*
+A: +5.4% | Offer a bundle upgrade and discount for customers with a single service
++3.3% | Launch proactive outreach to customers with unresolved complaints lasting more than 1 week
