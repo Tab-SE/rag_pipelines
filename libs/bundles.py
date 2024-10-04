@@ -41,8 +41,8 @@ async def insights(credentials, metrics):
         }
 
     # Write insights_bundles to a JSON file
-    with open("sample_input.json", 'w') as json_file:
-        json.dump(insights_bundles, json_file, indent=4)
+    # with open("sample_input.json", 'w') as json_file:
+    #     json.dump(insights_bundles, json_file, indent=4)
 
     return insights_bundles
 
