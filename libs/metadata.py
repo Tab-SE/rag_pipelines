@@ -1,86 +1,23 @@
 import asyncio, json
 from utils import gql
 
-async def query_workbooks(params):
+async def query_metadata(params):
     token = params.get('token')
     project_name = params.get('project_name')
     max_retries = params.get('max_retries', 6)
     retry_delay = params.get('retry_delay', 3)
+    asset = params['asset']
 
-    project_workbook_query = f"""
-    query Workbooks {{
-        workbooks(filter: {{ projectName: "{project_name}" }}) {{
-            name
-            description
-            createdAt
-            projectName
-            createdAt
-            updatedAt
-            tags {{
-                name
-            }}
-            dashboards {{
-                name
-                path
-                createdAt
-                updatedAt
-                tags {{
-                    name
-                }}
-            }}
-            sheets {{
-                name
-                path
-                createdAt
-                updatedAt
-                tags {{
-                    name
-                }}
-            }}
-            upstreamDatasources {{
-                name
-                isCertified
-                description
-                projectName
-                hasExtracts
-                extractLastRefreshTime
-                extractLastIncrementalUpdateTime
-                extractLastUpdateTime
-                fields(filter: {{ isHidden: false }}) {{
-                    name
-                    description
-                    folderName
-                }}
-                datasourceFilters {{
-                    field {{
-                        id
-                    }}
-                }}
-                parameters {{
-                    name
-                }}
-                hasActiveWarning
-                labels {{
-                    value
-                    category
-                    message
-                }}
-                downstreamMetricDefinitions {{
-                    name
-                    id
-                    luid
-                    fields {{
-                        name
-                        description
-                    }}
-                }}
-            }}
-        }}
-    }}"""
+    if asset == 'workbooks':
+        query = project_workbooks_query(project_name)
+    elif asset == 'dashboards':
+        query = project_dashboards_query(project_name)
+    elif asset == 'datasources':
+        pass
 
     for attempt in range(max_retries):
         try:
-            workbooks = await gql.query(query=project_workbook_query, token=token)
+            workbooks = await gql.query(query=query, token=token)
             workbooks_json = json.loads(workbooks)
 
             if "errors" in workbooks_json:
@@ -110,3 +47,147 @@ async def query_workbooks(params):
                 raise
 
     return None
+
+def project_workbooks_query(project_name):
+    return f"""
+query Workbooks {{
+    workbooks(filter: {{ projectName: "{project_name}" }}) {{
+        name
+        description
+        createdAt
+        projectName
+        createdAt
+        updatedAt
+        tags {{
+            name
+        }}
+        dashboards {{
+            name
+            path
+            createdAt
+            updatedAt
+            tags {{
+                name
+            }}
+        }}
+        sheets {{
+            name
+            path
+            createdAt
+            updatedAt
+            tags {{
+                name
+            }}
+        }}
+        upstreamDatasources {{
+            name
+            isCertified
+            description
+            projectName
+            hasExtracts
+            extractLastRefreshTime
+            extractLastIncrementalUpdateTime
+            extractLastUpdateTime
+            fields(filter: {{ isHidden: false }}) {{
+                name
+                description
+                folderName
+            }}
+            datasourceFilters {{
+                field {{
+                    id
+                }}
+            }}
+            parameters {{
+                name
+            }}
+            hasActiveWarning
+            labels {{
+                value
+                category
+                message
+            }}
+            downstreamMetricDefinitions {{
+                name
+                id
+                luid
+                fields {{
+                    name
+                    description
+                }}
+            }}
+        }}
+    }}
+}}"""
+
+def project_dashboards_query(project_name):
+    return f"""
+query Workbooks {{
+    workbooks(filter: {{ projectName: "{project_name}" }}) {{
+        name
+        description
+        createdAt
+        projectName
+        createdAt
+        updatedAt
+        tags {{
+            name
+        }}
+        dashboards {{
+            name
+            path
+            createdAt
+            updatedAt
+            tags {{
+                name
+            }}
+        }}
+        sheets {{
+            name
+            path
+            createdAt
+            updatedAt
+            tags {{
+                name
+            }}
+        }}
+        upstreamDatasources {{
+            name
+            isCertified
+            description
+            projectName
+            hasExtracts
+            extractLastRefreshTime
+            extractLastIncrementalUpdateTime
+            extractLastUpdateTime
+            fields(filter: {{ isHidden: false }}) {{
+                name
+                description
+                folderName
+            }}
+            datasourceFilters {{
+                field {{
+                    id
+                }}
+            }}
+            parameters {{
+                name
+            }}
+            hasActiveWarning
+            labels {{
+                value
+                category
+                message
+            }}
+            downstreamMetricDefinitions {{
+                name
+                id
+                luid
+                fields {{
+                    name
+                    description
+                }}
+            }}
+        }}
+    }}
+}}"""

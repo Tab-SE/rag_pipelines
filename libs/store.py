@@ -53,11 +53,13 @@ def insights_corpus(insights):
         try:
             for i, insight in enumerate(metric_insights['breakdown']):
                 breakdown_path = os.path.join(insights_folder_path, f'breakdown_{i}.md')
+                print('***** breakdown_path *****\n', breakdown_path)
                 with open(breakdown_path, 'w') as f:
                     f.write(insight)
         except Exception as e:
             print(f"An error occurred while processing 'breakdown' for key '{key}': {e}")
 
+        print("***** metric_insights['followup'] *****\n", metric_insights.keys())
         try:
             for i, insight in enumerate(metric_insights['followup']):
                 followup_path = os.path.join(insights_folder_path, f'followup_{i}.md')
@@ -81,16 +83,16 @@ def catalog_corpus(catalog):
     print(f"Markdown metadata file written: {meta_path}")
 
     # similar logic but loops through summaries in list
-    # for index, summary in enumerate(catalog['files']):
-    #     for key, markdown_content in summary.items():
-    #         folder_name = f"{index}_{key.replace(' ', '_')}"
-    #         folder_path = os.path.join(output_dir, folder_name)
-    #         os.makedirs(folder_path, exist_ok=True)
+    for index, summary in enumerate(catalog['files']):
+        for key, markdown_content in summary.items():
+            folder_name = f"{index}_{key.replace(' ', '_')}"
+            folder_path = os.path.join(output_dir, folder_name)
+            os.makedirs(folder_path, exist_ok=True)
 
-    #         files_path = os.path.join(folder_path, f"{folder_name}.md")
+            files_path = os.path.join(folder_path, f"{folder_name}.md")
 
-    #         # Write the markdown content to the file
-    #         with open(files_path, 'w', encoding='utf-8') as file:
-    #             file.write(markdown_content)
+            # Write the markdown content to the file
+            with open(files_path, 'w', encoding='utf-8') as file:
+                file.write(markdown_content)
 
-    #         print(f"Markdown file written: {files_path}")
+            print(f"Markdown file written: {files_path}")
