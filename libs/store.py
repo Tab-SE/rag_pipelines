@@ -79,30 +79,70 @@ def insights_corpus(params):
 
     return True
 
-def catalog_corpus(catalog):
+# def catalog_corpus(catalog):
+#     output_dir = 'data/analytics/catalog/workbooks'
+#     # Ensure the output directory exists
+#     os.makedirs(output_dir, exist_ok=True)
+
+#     # Define the file path for workbooks metadata file
+#     meta_path = 'data/analytics/catalog/workbooks_meta.md'
+#     # Write the markdown content to the file
+#     with open(meta_path, 'w', encoding='utf-8') as file:
+#         file.write(catalog['meta'])
+
+#     print(f"Markdown metadata file written: {meta_path}")
+
+#     # similar logic but loops through summaries in list
+#     for index, summary in enumerate(catalog['files']):
+#         for key, markdown_content in summary.items():
+#             folder_name = f"{index}_{key.replace(' ', '_')}"
+#             folder_path = os.path.join(output_dir, folder_name)
+#             os.makedirs(folder_path, exist_ok=True)
+
+#             files_path = os.path.join(folder_path, f"{folder_name}.md")
+
+#             # Write the markdown content to the file
+#             with open(files_path, 'w', encoding='utf-8') as file:
+#                 file.write(markdown_content)
+
+#             print(f"Markdown file written: {files_path}")
+
+def catalog_corpus(params):
+    # Extract catalog and mode from params
+    catalog = params.get('catalog')
+    mode = params.get('mode')
+
+    # Validate mode
+    if mode not in ['md', 'txt']:
+        raise ValueError("Mode must be either 'md' or 'txt'.")
+
+    # Set file extension based on mode
+    file_extension = f'.{mode}'
+
     output_dir = 'data/analytics/catalog/workbooks'
     # Ensure the output directory exists
     os.makedirs(output_dir, exist_ok=True)
 
     # Define the file path for workbooks metadata file
-    meta_path = 'data/analytics/catalog/workbooks_meta.md'
-    # Write the markdown content to the file
+    meta_path = f'data/analytics/catalog/workbooks_meta{file_extension}'
+
+    # Write the metadata content to the file
     with open(meta_path, 'w', encoding='utf-8') as file:
         file.write(catalog['meta'])
 
-    print(f"Markdown metadata file written: {meta_path}")
+    print(f"Metadata file written: {meta_path}")
 
-    # similar logic but loops through summaries in list
+    # Loop through summaries in the catalog
     for index, summary in enumerate(catalog['files']):
         for key, markdown_content in summary.items():
             folder_name = f"{index}_{key.replace(' ', '_')}"
             folder_path = os.path.join(output_dir, folder_name)
             os.makedirs(folder_path, exist_ok=True)
 
-            files_path = os.path.join(folder_path, f"{folder_name}.md")
+            files_path = os.path.join(folder_path, f"{folder_name}{file_extension}")
 
-            # Write the markdown content to the file
+            # Write the content to the file
             with open(files_path, 'w', encoding='utf-8') as file:
                 file.write(markdown_content)
 
-            print(f"Markdown file written: {files_path}")
+            print(f"File written: {files_path}")

@@ -14,11 +14,11 @@ def metric_insights(input):
         print('No new metric insights data received, skipping write step...')
 
 def catalog(input):
-    catalog = content.resources(input)
+    catalog = content.resources(input['catalog'])
     if catalog:
         print('Storing catalog data to the file system...')
         delete_contents('data/analytics/catalog')
-        store.catalog_corpus(catalog)
+        store.catalog_corpus({ "catalog": catalog, "mode": input['mode'] })
     else:
         print('No new catalog data received, skipping write step...')
 
