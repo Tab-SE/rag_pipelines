@@ -9,7 +9,7 @@ def load_bucket():
     region_name = os.environ['AWS_DEFAULT_REGION']
     )
 
-    local_directory = './data/insights'
+    local_directory = './data/analytics'
     bucket_name = os.environ['AWS_S3_BUCKET']
 
     # os.walk recursively iterates through files and directories
