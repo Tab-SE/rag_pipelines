@@ -1,0 +1,31 @@
+
+# Current Value
+
+## What is the value of the Orders metric?
+The metric Orders has a value of 10.3K or 10310.0 in raw numbers
+Similar Questions: ["what is my current Orders?", "current value of Orders"]
+
+## When was the current value of Orders generated?
+The current value was recorded on 2024 during a time range of Jan 1–Nov 19, 2024 and is
+measured every year
+Similar Questions: ["when was Orders measured?", "was Orders measured recently?"]
+
+## What was the previous value of the Orders metric?
+The previous value for this metric was 7.2K or 7222.0 in raw numbers
+Similar Questions: ["my previous Orders?", "last value of Orders?"]
+
+## When was the previous value of Orders generated?
+The previous value was recorded on 2023 during a time range of Jan 1–Nov 19, 2023 and is
+measured every year
+Similar Questions: ["when was Orders previously measured?"]
+
+## How is the Orders metric doing?
+This is considered positive since the metric is defined as
+SENTIMENT_TYPE_UP_IS_GOOD
+and the direction is trending up
+Similar Questions: ["are Orders ok?", "status of the Orders metric"]
+
+## What is the trend of Orders?
+The metric value is currently trending up
+Similar Questions: ["how is the Orders metric trending?", "is Orders going up or down?"]
+    

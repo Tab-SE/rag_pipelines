@@ -1,0 +1,15 @@
+
+# _Question for Orders_: Which Customer - Age Category had high Orders?
+What is the Top Contributors for Orders?
+_Answer_: Top contributors by Customer - Age Category are: 35 - 44 (1.9K orders), 25 - 34 (1.7K orders), and 45 - 54 (1.5K orders).
+What is Top Contributors?
+_Description_: Shows the highest values in a dimension for a metric within a given time range. A top contributor is a dimension member that ranks in the top N in contribution to the scoped metric's value, aggregated on a specified time range or shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
+        
+What is the score for Top Contributors calculated for Orders?
+The insight has a score of: 0.3300448672452762
+
+
+## How is the Customer - Age Category dimension for the Orders metric trending?
+The dimension is trending top
+
+                

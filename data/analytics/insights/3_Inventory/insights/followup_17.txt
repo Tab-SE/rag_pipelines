@@ -1,0 +1,10 @@
+
+# _Question for Inventory_: Which Product Name had very high Inventory?
+What is the Risky Monopoly for Inventory?
+_Answer_: Just 3 members in Product Name make up the majority (50.4%) of Inventory: VOLT X4 with 850.1K units (16.9%), VOLT X2 with 844.8K units (16.8%), and VOLT X1 with 833.8K units (16.6%). 13 others contributed 2.5M units (49.6%).
+What is Risky Monopoly?
+_Description_: Shows when a small number of dimension members make up a majority (50% or more) of the contribution to a metric. Shows dimensions with a concentration of very high values
+        
+What is the score for Risky Monopoly calculated for Inventory?
+The insight has a score of: 0.5679032077829286
+                

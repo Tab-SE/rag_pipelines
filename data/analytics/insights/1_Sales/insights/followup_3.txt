@@ -1,0 +1,15 @@
+
+# _Question for Sales_: Which Product Type had high Sales?
+What is the Top Contributors for Sales?
+_Answer_: Top contributors by Product Type are: Beginner with $259.5M (41.8%), Racer with $227.0M (36.5%), and Enthusiast with $134.6M (21.7%).
+What is Top Contributors?
+_Description_: Shows the highest values in a dimension for a metric within a given time range. A top contributor is a dimension member that ranks in the top N in contribution to the scoped metric's value, aggregated on a specified time range or shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
+        
+What is the score for Top Contributors calculated for Sales?
+The insight has a score of: 0.36734111309416473
+
+
+## How is the Product Type dimension for the Sales metric trending?
+The dimension is trending top
+
+                

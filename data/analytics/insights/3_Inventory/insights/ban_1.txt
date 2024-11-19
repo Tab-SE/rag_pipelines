@@ -1,0 +1,16 @@
+
+# _Question for Inventory_: 
+Similar Questions: ["what is new with Inventory?", "update on the Inventory metric"]
+Period over Period Change for Inventory
+_Answer_: 
+What is Period over Period Change?
+_Description_: Shows how a metric has changed between two periods. Highlights the change between a metric value for a recent time range compared to an equivalent time range in a prior period or the past
+        
+What is the score for Period over Period Change calculated for Inventory?
+The insight has a score of: 0.0
+
+How has the Inventory metric changed?
+The metric had a relative change of 43.1% (0.4310908262681305 in raw value)
+In absolute terms the change was 1.5M (1512283.0 in raw value)
+Similar Questions: ["how much has Inventory changed?", "what is the delta on the Inventory metric?"]
+    

@@ -1,0 +1,15 @@
+
+# _Question for Inventory_: Which City had low Inventory?
+What is the Bottom Contributors for Inventory?
+_Answer_: Bottom contributors by City are: College Park with 10 units (0.0%), Rutland with 18 units (0.0%), and Kokomo with 33 units (0.0%).
+What is Bottom Contributors?
+_Description_: Shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
+        
+What is the score for Bottom Contributors calculated for Inventory?
+The insight has a score of: 0.2325468750313956
+
+
+## How is the City dimension for the Inventory metric trending?
+The dimension is trending bottom
+
+                

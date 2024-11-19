@@ -1,0 +1,10 @@
+
+# _Question for Inventory_: Which City decreased the most?
+What is the Top Detractors for Inventory?
+_Answer_: Compared to last year, Inventory increased by 1.5M units. Out of the 1.1K members of City, 311 decreased. Modesto, Kenner, and Decatur decreased the most.
+What is Top Detractors?
+_Description_: Shows values for dimension members that changed the most in the opposite direction to the observed change in the metric. Shows values for a metric that are most opposed to top drivers decreased the most across a specified time offset. A top detractor is a dimension member that ranks in the bottom N in driving a change in a metric value between two separate but equivalent time ranges. This insight's values oppose the observed change the most. Top detractors are analyzed using metric values from two separate but equivalent time ranges (such as Sales for day of October 2 versus Sales for day of October 3) to look for changes to the contributions in the same direction of the change made by dimension members
+        
+What is the score for Top Detractors calculated for Inventory?
+The insight has a score of: 0.4037173474563637
+                

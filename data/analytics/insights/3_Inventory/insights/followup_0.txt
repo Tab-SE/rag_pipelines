@@ -1,0 +1,15 @@
+
+# _Question for Inventory_: Which Customer - Age Category had high Inventory?
+What is the Top Contributors for Inventory?
+_Answer_: Top contributors by Customer - Age Category are: 35 - 44 with 921.2K units (18.3%), 25 - 34 with 830.3K units (16.5%), and 45 - 54 with 734.0K units (14.6%).
+What is Top Contributors?
+_Description_: Shows the highest values in a dimension for a metric within a given time range. A top contributor is a dimension member that ranks in the top N in contribution to the scoped metric's value, aggregated on a specified time range or shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
+        
+What is the score for Top Contributors calculated for Inventory?
+The insight has a score of: 0.3293810445014276
+
+
+## How is the Customer - Age Category dimension for the Inventory metric trending?
+The dimension is trending top
+
+                

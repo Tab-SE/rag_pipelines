@@ -1,0 +1,25 @@
+
+# _Question for Orders_: Is this change unexpected?
+Any Unusually High/Low Metric value for Orders?
+_Answer_: Orders in October 2024, the last month with complete data, was 959 orders and was within the expected range of 442.4 orders to 1.1K orders considering seasonal patterns.
+What is Unusually High/Low Metric value?
+_Description_: Shows unexpected changes in a metric value. Shows when the value of a metric for a given time range is higher or lower than the expected range based on historic observations of the metric. This insight highlights when the value of a metric for a given time range is higher or lower than the expected range based on historic observations of the metric.
+        
+What is the score for Unusually High/Low Metric value calculated for Orders?
+The insight has a score of: 0.4333333333333333
+
+## Is there anything unusual or interesting about Orders?
+The metric is doing positive and the direction is None
+The AI model expected a value of -83.2 or -83.23392708556275 in raw numbers
+In absolute terms the change was 102 or 102.0 in raw numbers
+If the AI model expectation was surpassed by the absolute change then this would be unusual.
+The data displays a relative change of 11.9% or 0.11901983663943991 in raw numbers
+
+## When was unusual change detected?
+Oct 2024. Short term change was monitored throughout Oct 2024 which is currently trending None
+Observation ran between 2024-10-01T00:00:00Z and 2024-11-01T00:00:00Z with a granularity of month
+The value during the observation period is 959 (959.0 in raw value)
+
+## What is the score for Unusually High/Low Metric value calculated for Orders?
+The insight has a score of: 0.4333333333333333
+                

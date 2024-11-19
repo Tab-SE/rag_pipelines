@@ -1,0 +1,15 @@
+
+# _Question for Orders_: Which State had high Orders?
+What is the Top Contributors for Orders?
+_Answer_: Top contributors by State are: California (1.4K orders), Texas (1.0K orders), and Florida (802 orders).
+What is Top Contributors?
+_Description_: Shows the highest values in a dimension for a metric within a given time range. A top contributor is a dimension member that ranks in the top N in contribution to the scoped metric's value, aggregated on a specified time range or shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
+        
+What is the score for Top Contributors calculated for Orders?
+The insight has a score of: 0.35347917775485505
+
+
+## How is the State dimension for the Orders metric trending?
+The dimension is trending top
+
+                

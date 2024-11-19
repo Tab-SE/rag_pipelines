@@ -1,0 +1,15 @@
+
+# _Question for Sales_: Which Product Name had low Sales?
+What is the Bottom Contributors for Sales?
+_Answer_: Bottom contributors by Product Name are: VOLT X1 with $19.3M (3.1%), VOLT X2 with $21.3M (3.4%), and VOLT X3 with $28.5M (4.6%).
+What is Bottom Contributors?
+_Description_: Shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
+        
+What is the score for Bottom Contributors calculated for Sales?
+The insight has a score of: 0.19857842387425673
+
+
+## How is the Product Name dimension for the Sales metric trending?
+The dimension is trending bottom
+
+                

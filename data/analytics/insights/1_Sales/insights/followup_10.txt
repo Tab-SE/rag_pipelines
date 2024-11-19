@@ -1,0 +1,15 @@
+
+# _Question for Sales_: Which Loyalty Status had high Sales?
+What is the Top Contributors for Sales?
+_Answer_: Top contributors by Loyalty Status are: Non-Premium with $392.8M (63.2%) and Premium with $228.3M (36.8%).
+What is Top Contributors?
+_Description_: Shows the highest values in a dimension for a metric within a given time range. A top contributor is a dimension member that ranks in the top N in contribution to the scoped metric's value, aggregated on a specified time range or shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
+        
+What is the score for Top Contributors calculated for Sales?
+The insight has a score of: 0.3673139822180653
+
+
+## How is the Loyalty Status dimension for the Sales metric trending?
+The dimension is trending top
+
+                

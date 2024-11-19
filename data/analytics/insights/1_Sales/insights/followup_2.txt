@@ -1,0 +1,15 @@
+
+# _Question for Sales_: Which Carrier had high Sales?
+What is the Top Contributors for Sales?
+_Answer_: Top contributors by Carrier are: FedEx with $299.3M (48.2%), FasTrac with $163.5M (26.3%), and UPS with $158.3M (25.5%).
+What is Top Contributors?
+_Description_: Shows the highest values in a dimension for a metric within a given time range. A top contributor is a dimension member that ranks in the top N in contribution to the scoped metric's value, aggregated on a specified time range or shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
+        
+What is the score for Top Contributors calculated for Sales?
+The insight has a score of: 0.36775654609102243
+
+
+## How is the Carrier dimension for the Sales metric trending?
+The dimension is trending top
+
+                

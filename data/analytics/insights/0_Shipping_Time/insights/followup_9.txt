@@ -1,0 +1,15 @@
+
+# _Question for Shipping Time_: Which City had low Shipping Time?
+What is the Bottom Contributors for Shipping Time?
+_Answer_: Bottom contributors by City are: Splendora (0.50 days), Van Buren (0.70 days), and Pontiac (0.80 days).
+What is Bottom Contributors?
+_Description_: Shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
+        
+What is the score for Bottom Contributors calculated for Shipping Time?
+The insight has a score of: 0.23275071387808344
+
+
+## How is the City dimension for the Shipping Time metric trending?
+The dimension is trending bottom
+
+                

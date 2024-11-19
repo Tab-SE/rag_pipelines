@@ -1,0 +1,25 @@
+
+# _Question for Inventory_: Is this change unexpected?
+Any Unusually High/Low Metric value for Inventory?
+_Answer_: Inventory in October 2024, the last month with complete data, was 471.5K units and was within the expected range of 209.9K units to 544.0K units considering seasonal patterns.
+What is Unusually High/Low Metric value?
+_Description_: Shows unexpected changes in a metric value. Shows when the value of a metric for a given time range is higher or lower than the expected range based on historic observations of the metric. This insight highlights when the value of a metric for a given time range is higher or lower than the expected range based on historic observations of the metric.
+        
+What is the score for Unusually High/Low Metric value calculated for Inventory?
+The insight has a score of: 0.4333333333333333
+
+## Is there anything unusual or interesting about Inventory?
+The metric is doing negative and the direction is None
+The AI model expected a value of -58.8K or -58779.51760591392 in raw numbers
+In absolute terms the change was 35.8K or 35810.0 in raw numbers
+If the AI model expectation was surpassed by the absolute change then this would be unusual.
+The data displays a relative change of 8.2% or 0.08218637326521573 in raw numbers
+
+## When was unusual change detected?
+Oct 2024. Short term change was monitored throughout Oct 2024 which is currently trending None
+Observation ran between 2024-10-01T00:00:00Z and 2024-11-01T00:00:00Z with a granularity of month
+The value during the observation period is 471.5K (471527.0 in raw value)
+
+## What is the score for Unusually High/Low Metric value calculated for Inventory?
+The insight has a score of: 0.4333333333333333
+                

@@ -1,0 +1,10 @@
+
+# _Question for Orders_: Which City increased the most?
+What is the Top Drivers for Orders?
+_Answer_: Compared to last year, Orders increased by 3.1K orders. Out of the 1.1K members of City, 736 increased. San Antonio, Kansas City, and Chicago increased the most.
+What is Top Drivers?
+_Description_: Shows values for dimension members that changed the most in the same direction as the observed change in the metric. Shows the values for a metric that increased the most across a specified time offset. A top driver is a dimension member that ranks in the top N in driving a change in a metric value between two separate but equivalent time ranges Top drivers are analyzed using metric values from two separate but equivalent time ranges (such as Sales for day of October 2 versus Sales for day of October 3) to look for changes to the contributions in the same direction of the change made by dimension members
+        
+What is the score for Top Drivers calculated for Orders?
+The insight has a score of: 0.4130947288946783
+                

@@ -1,0 +1,16 @@
+
+# _Question for Shipping Time_: 
+Similar Questions: ["what is new with Shipping Time?", "update on the Shipping Time metric"]
+Period over Period Change for Shipping Time
+_Answer_: 
+What is Period over Period Change?
+_Description_: Shows how a metric has changed between two periods. Highlights the change between a metric value for a recent time range compared to an equivalent time range in a prior period or the past
+        
+What is the score for Period over Period Change calculated for Shipping Time?
+The insight has a score of: 0.0
+
+How has the Shipping Time metric changed?
+The metric had a relative change of 0.0% (0.0 in raw value)
+In absolute terms the change was 0 (0.0 in raw value)
+Similar Questions: ["how much has Shipping Time changed?", "what is the delta on the Shipping Time metric?"]
+    

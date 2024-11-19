@@ -1,0 +1,15 @@
+
+# _Question for Orders_: Which Product Name had low Orders?
+What is the Bottom Contributors for Orders?
+_Answer_: Bottom contributors by Product Name are: ELECTRA X2 (2.0K orders), FUSE X4 (2.1K orders), and FUSE X3 (2.1K orders).
+What is Bottom Contributors?
+_Description_: Shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
+        
+What is the score for Bottom Contributors calculated for Orders?
+The insight has a score of: 0.22833950810221787
+
+
+## How is the Product Name dimension for the Orders metric trending?
+The dimension is trending bottom
+
+                

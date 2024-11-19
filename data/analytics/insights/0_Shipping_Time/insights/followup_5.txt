@@ -1,0 +1,15 @@
+
+# _Question for Shipping Time_: Which State had high Shipping Time?
+What is the Top Contributors for Shipping Time?
+_Answer_: Top contributors by State are: Maine (4 days), New Hampshire (3.3 days), and Iowa (3.2 days).
+What is Top Contributors?
+_Description_: Shows the highest values in a dimension for a metric within a given time range. A top contributor is a dimension member that ranks in the top N in contribution to the scoped metric's value, aggregated on a specified time range or shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
+        
+What is the score for Top Contributors calculated for Shipping Time?
+The insight has a score of: 0.3677687506256354
+
+
+## How is the State dimension for the Shipping Time metric trending?
+The dimension is trending top
+
+                

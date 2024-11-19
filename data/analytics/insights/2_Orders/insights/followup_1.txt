@@ -1,0 +1,15 @@
+
+# _Question for Orders_: Which Product Name had high Orders?
+What is the Top Contributors for Orders?
+_Answer_: Top contributors by Product Name are: VOLT X1 (2.2K orders), VOLT X3 (2.2K orders), and VOLT X4 (2.1K orders).
+What is Top Contributors?
+_Description_: Shows the highest values in a dimension for a metric within a given time range. A top contributor is a dimension member that ranks in the top N in contribution to the scoped metric's value, aggregated on a specified time range or shows the lowest values in a dimension for a metric within a given time range. A bottom contributor is a dimension member that ranks in the bottom N in contribution to the scoped metricâ€™s value, aggregated on a specified time range.
+        
+What is the score for Top Contributors calculated for Orders?
+The insight has a score of: 0.38388990322448796
+
+
+## How is the Product Name dimension for the Orders metric trending?
+The dimension is trending top
+
+                
