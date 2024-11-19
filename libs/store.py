@@ -13,12 +13,12 @@ def insights_corpus(params):
     file_extension = f'.{mode}'
 
     try:
-        # Create 'data/insights/' folder if it doesn't exist
-        corpus_path = os.path.join('data', 'insights')
-        os.makedirs(corpus_path, exist_ok=True)
+        # Create 'data/analytics/metrics/' folder if it doesn't exist
+        metrics_path = os.path.join('data', 'analytics', 'metrics')
+        os.makedirs(metrics_path, exist_ok=True)
 
         # Metadata file in root of insights/
-        corpus_metadata_path = os.path.join(corpus_path, f'insights_metadata{file_extension}')
+        corpus_metadata_path = os.path.join(metrics_path, f'insights_metadata{file_extension}')
         with open(corpus_metadata_path, 'w') as f:
             f.write(insights['corpus_metadata'])
     except Exception as e:
@@ -27,10 +27,10 @@ def insights_corpus(params):
     # Loop through key-value pairs in insights dict
     for index, (key, metric) in enumerate(insights['corpus'].items()):
         folder_name = f"{key.replace(' ', '_')}"
-        folder_path = os.path.join(corpus_path, folder_name)
+        folder_path = os.path.join(metrics_path, folder_name)
 
         try:
-            # Create 'data/insights/{folder_name}' folder if it doesn't exist
+            # Create 'data/analytics/metrics/{folder_name}' folder if it doesn't exist
             os.makedirs(folder_path, exist_ok=True)
             # Write metadata file to parent folder
             metadata_path = os.path.join(folder_path, f'{folder_name}{file_extension}')
@@ -39,7 +39,7 @@ def insights_corpus(params):
         except Exception as e:
             print(f"An error occurred while processing 'metadata' for key '{key}': {e}")
 
-        # Create 'data/insights/{folder_name}/insights' child folder if it doesn't exist
+        # Create 'data/analytics/metrics/{folder_name}/insights' child folder if it doesn't exist
         insights_folder_path = os.path.join(folder_path, 'insights')
         os.makedirs(insights_folder_path, exist_ok=True)
 
@@ -80,12 +80,12 @@ def insights_corpus(params):
     return True
 
 def catalog_corpus(catalog):
-    output_dir = 'data/catalog/workbooks'
+    output_dir = 'data/analytics/catalog/workbooks'
     # Ensure the output directory exists
     os.makedirs(output_dir, exist_ok=True)
 
     # Define the file path for workbooks metadata file
-    meta_path = 'data/catalog/workbooks_meta.md'
+    meta_path = 'data/analytics/catalog/workbooks_meta.md'
     # Write the markdown content to the file
     with open(meta_path, 'w', encoding='utf-8') as file:
         file.write(catalog['meta'])

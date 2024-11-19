@@ -8,7 +8,7 @@ def metric_insights(input):
     insights = metrics.bundles(input['metrics'])
     if insights:
         print('Storing metric insights data to the file system...')
-        delete_contents('data/insights')
+        delete_contents('data/analytics/insights')
         store.insights_corpus({ "insights": insights, "mode": input['mode'] })
     else:
         print('No new metric insights data received, skipping write step...')
@@ -17,7 +17,7 @@ def catalog(input):
     catalog = content.resources(input)
     if catalog:
         print('Storing catalog data to the file system...')
-        delete_contents('data/catalog')
+        delete_contents('data/analytics/catalog')
         store.catalog_corpus(catalog)
     else:
         print('No new catalog data received, skipping write step...')
