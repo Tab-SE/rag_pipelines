@@ -1,6 +1,0 @@
-# Content in dynamic folders is not pushed to git
-analytics/*
-
-# But keep .gitkeep & .gitignore
-!.gitkeep
-!.gitignore
