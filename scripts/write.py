@@ -5,11 +5,11 @@ from libs.extract import metrics, content
 
 
 def metric_insights(input):
-    insights = metrics.bundles(input)
+    insights = metrics.bundles(input['metrics'])
     if insights:
         print('Storing metric insights data to the file system...')
         delete_contents('data/insights')
-        store.insights_corpus(insights)
+        store.insights_corpus({ "insights": insights, "mode": input['mode'] })
     else:
         print('No new metric insights data received, skipping write step...')
 

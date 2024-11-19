@@ -1,42 +1,53 @@
 import os
 
-def insights_corpus(insights):
+def insights_corpus(params):
+    # Extract insights and mode from params
+    insights = params.get('insights')
+    mode = params.get('mode')
+
+    # Validate mode
+    if mode not in ['md', 'txt']:
+        raise ValueError("Mode must be either 'md' or 'txt'.")
+
+    # Set file extension based on mode
+    file_extension = f'.{mode}'
+
     try:
-        # create 'data/insights/' folder if it doesn't exist
+        # Create 'data/insights/' folder if it doesn't exist
         corpus_path = os.path.join('data', 'insights')
         os.makedirs(corpus_path, exist_ok=True)
-        #
-        corpus_metadata_path = os.path.join('data', 'insights', 'insights_metadata.md')
-        # metadata file in root of insights/
+
+        # Metadata file in root of insights/
+        corpus_metadata_path = os.path.join(corpus_path, f'insights_metadata{file_extension}')
         with open(corpus_metadata_path, 'w') as f:
             f.write(insights['corpus_metadata'])
     except Exception as e:
         print(f"An error occurred while processing metadata: {e}")
 
-    # loop through key-value pairs in insights dict
+    # Loop through key-value pairs in insights dict
     for index, (key, metric) in enumerate(insights['corpus'].items()):
         folder_name = f"{key.replace(' ', '_')}"
-        folder_path = os.path.join('data', 'insights', folder_name)
+        folder_path = os.path.join(corpus_path, folder_name)
 
         try:
-            # create 'data/insights/{folder_name}' folder if it doesn't exist
+            # Create 'data/insights/{folder_name}' folder if it doesn't exist
             os.makedirs(folder_path, exist_ok=True)
-            # write metadata file to parent folder
-            metadata_path = os.path.join(folder_path, f'{folder_name}.md')
+            # Write metadata file to parent folder
+            metadata_path = os.path.join(folder_path, f'{folder_name}{file_extension}')
             with open(metadata_path, 'w') as f:
                 f.write(metric['metadata'])
         except Exception as e:
             print(f"An error occurred while processing 'metadata' for key '{key}': {e}")
 
-        # create 'data/insights/{folder_name}/insights' child folder if it doesn't exist
+        # Create 'data/insights/{folder_name}/insights' child folder if it doesn't exist
         insights_folder_path = os.path.join(folder_path, 'insights')
         os.makedirs(insights_folder_path, exist_ok=True)
 
         try:
-            # write insight summary files
+            # Write insight summary files
             metric_insights = metric['insights']
             for i, insight in enumerate(metric_insights['ban']):
-                ban_path = os.path.join(insights_folder_path, f'ban_{i}.md')
+                ban_path = os.path.join(insights_folder_path, f'ban_{i}{file_extension}')
                 with open(ban_path, 'w') as f:
                     f.write(insight)
         except Exception as e:
@@ -44,7 +55,7 @@ def insights_corpus(insights):
 
         try:
             for i, insight in enumerate(metric_insights['anchor']):
-                anchor_path = os.path.join(insights_folder_path, f'anchor_{i}.md')
+                anchor_path = os.path.join(insights_folder_path, f'anchor_{i}{file_extension}')
                 with open(anchor_path, 'w') as f:
                     f.write(insight)
         except Exception as e:
@@ -52,21 +63,20 @@ def insights_corpus(insights):
 
         try:
             for i, insight in enumerate(metric_insights['breakdown']):
-                breakdown_path = os.path.join(insights_folder_path, f'breakdown_{i}.md')
-                print('***** breakdown_path *****\n', breakdown_path)
+                breakdown_path = os.path.join(insights_folder_path, f'breakdown_{i}{file_extension}')
                 with open(breakdown_path, 'w') as f:
                     f.write(insight)
         except Exception as e:
             print(f"An error occurred while processing 'breakdown' for key '{key}': {e}")
 
-        print("***** metric_insights['followup'] *****\n", metric_insights.keys())
         try:
             for i, insight in enumerate(metric_insights['followup']):
-                followup_path = os.path.join(insights_folder_path, f'followup_{i}.md')
+                followup_path = os.path.join(insights_folder_path, f'followup_{i}{file_extension}')
                 with open(followup_path, 'w') as f:
                     f.write(insight)
         except Exception as e:
             print(f"An error occurred while processing 'followup' for key '{key}': {e}")
+
     return True
 
 def catalog_corpus(catalog):
