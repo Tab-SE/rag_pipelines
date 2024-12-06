@@ -1,0 +1,10 @@
+python-dotenv
+pyjwt
+aiohttp
+tzlocal
+boto3
+jsonpath-ng
+pinecone-client==3.2.2
+llama-index==0.10.53
+llama-index-readers-json==0.1.5
+llama-index-vector-stores-pinecone==0.1.7
