@@ -11,7 +11,7 @@ dependencies:
   - pip=23.3.1
   - pip:
     - jsonpath-ng
-    - pinecone-client
-    - llama-index
-    - llama-index-readers-json
-    - llama-index-vector-stores-pinecone
+    - pinecone-client==3.2.2
+    - llama-index==0.10.53
+    - llama-index-readers-json==0.1.5
+    - llama-index-vector-stores-pinecone==0.1.7

@@ -5,20 +5,20 @@ from libs.extract import metrics, content
 
 
 def metric_insights(input):
-    insights = metrics.bundles(input)
+    insights = metrics.bundles(input['metrics'])
     if insights:
         print('Storing metric insights data to the file system...')
-        delete_contents('data/insights')
-        store.insights_corpus(insights)
+        delete_contents('data/analytics/insights')
+        store.insights_corpus({ "insights": insights, "mode": input['mode'] })
     else:
         print('No new metric insights data received, skipping write step...')
 
 def catalog(input):
-    catalog = content.resources(input)
+    catalog = content.resources(input['catalog'])
     if catalog:
         print('Storing catalog data to the file system...')
-        delete_contents('data/catalog')
-        store.catalog_corpus(catalog)
+        delete_contents('data/analytics/catalog')
+        store.catalog_corpus({ "catalog": catalog, "mode": input['mode'] })
     else:
         print('No new catalog data received, skipping write step...')
 

@@ -9,7 +9,7 @@ def load_bucket():
     region_name = os.environ['AWS_DEFAULT_REGION']
     )
 
-    local_directory = './data/insights'
+    local_directory = './data/analytics'
     bucket_name = os.environ['AWS_S3_BUCKET']
 
     # os.walk recursively iterates through files and directories
@@ -23,7 +23,7 @@ def load_bucket():
             try:
                 # pushes to S3 and can handle large file sizes
                 s3.upload_file(local_file_path, bucket_name, s3_file_path)
-                print(f"Uploaded {local_file_path} to {s3_file_path}")
+                # print(f"Uploaded {local_file_path} to {s3_file_path}")
             except Exception as e:
                 print(f"Error uploading {local_file_path}: {str(e)}")
 

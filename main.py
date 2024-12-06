@@ -18,8 +18,8 @@ async def main():
 
     # 2. Write natural language summaries
     print('Processing remote data...')
-    write.metric_insights(metrics)
-    write.catalog(catalog)
+    write.metric_insights({ 'metrics': metrics, 'mode': 'md' })
+    write.catalog({ 'catalog': catalog, 'mode': 'md'})
     print('Natural language summaries or raw data written to file system...')
 
     # 3. Load corpus to vector store and s3 bucket

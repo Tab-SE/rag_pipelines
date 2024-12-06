@@ -133,3 +133,6 @@ dmypy.json
 
 # Tableau Prep inputs with user secrets
 input.csv
+
+# Dynamic data
+data/analytics/

@@ -359,8 +359,14 @@ def extractFollowup(followup_insights, metric):
             characterization = result.get('characterization')
             facts = result.get('facts')
             if facts:
-                dimension = facts.get('dimensions')[0].get('label')
-                direction = facts.get('direction')
+                dimensions = facts.get('dimensions', [])
+                if dimensions:
+                    dimension = dimensions[0].get('label', 'Unknown Dimension')
+                    direction = facts.get('direction', 'Unknown Direction')
+                else:
+                    dimension = 'No Dimensions Available'
+                    direction = 'No Direction Available'
+                print('**** dimension *****', dimension, direction)
             if type == 'top-contributors':
                 top_contributors = f"""
 # _Question for {metric.get('name')}_: {question}
