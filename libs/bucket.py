@@ -23,7 +23,7 @@ def load_bucket():
             try:
                 # pushes to S3 and can handle large file sizes
                 s3.upload_file(local_file_path, bucket_name, s3_file_path)
-                print(f"Uploaded {local_file_path} to {s3_file_path}")
+                # print(f"Uploaded {local_file_path} to {s3_file_path}")
             except Exception as e:
                 print(f"Error uploading {local_file_path}: {str(e)}")
 
