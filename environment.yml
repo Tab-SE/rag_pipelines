@@ -3,6 +3,12 @@ channels:
   - defaults
 dependencies:
   - python=3.12.2
+  - langchain
+  - langchain-core
+  - langchain-text-splitters
+  - openai
+  - pandas
+  - pydantic
   - python-dotenv
   - pyjwt
   - aiohttp
@@ -12,6 +18,7 @@ dependencies:
   - pip:
     - jsonpath-ng
     - pinecone-client==3.2.2
-    - llama-index==0.10.53
-    - llama-index-readers-json==0.1.5
-    - llama-index-vector-stores-pinecone==0.1.7
+    - llama-index==0.12.17
+    - llama-index-readers-json==0.3.0
+    - llama-index-vector-stores-pinecone==0.4.4
+    - llama-index-embeddings-langchain==0.3.0

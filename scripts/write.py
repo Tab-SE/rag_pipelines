@@ -13,14 +13,14 @@ def metric_insights(input):
     else:
         print('No new metric insights data received, skipping write step...')
 
-def catalog(input):
-    catalog = content.resources(input['catalog'])
-    if catalog:
-        print('Storing catalog data to the file system...')
-        delete_contents('data/analytics/catalog')
-        store.catalog_corpus({ "catalog": catalog, "mode": input['mode'] })
+def workbooks(input):
+    workbooks = content.resources(input['workbooks'])
+    if workbooks:
+        print('Storing workbooks data to the file system...')
+        delete_contents('data/analytics/workbooks')
+        store.workbooks_corpus({ "workbooks": workbooks, "mode": input['mode'] })
     else:
-        print('No new catalog data received, skipping write step...')
+        print('No new workbooks data received, skipping write step...')
 
 def delete_contents(path):
     try:

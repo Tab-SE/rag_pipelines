@@ -80,9 +80,9 @@ def insights_corpus(params):
     return True
 
 
-def catalog_corpus(params):
-    # Extract catalog and mode from params
-    catalog = params.get('catalog')
+def workbooks_corpus(params):
+    # Extract workbooks and mode from params
+    workbooks = params.get('workbooks')
     mode = params.get('mode')
 
     # Validate mode
@@ -92,21 +92,21 @@ def catalog_corpus(params):
     # Set file extension based on mode
     file_extension = f'.{mode}'
 
-    output_dir = 'data/analytics/catalog/workbooks'
+    output_dir = 'data/analytics/workbooks'
     # Ensure the output directory exists
     os.makedirs(output_dir, exist_ok=True)
 
     # Define the file path for workbooks metadata file
-    meta_path = f'data/analytics/catalog/workbooks_meta{file_extension}'
+    meta_path = f'data/analytics/workbooks/workbooks_meta{file_extension}'
 
     # Write the metadata content to the file
     with open(meta_path, 'w', encoding='utf-8') as file:
-        file.write(catalog['meta'])
+        file.write(workbooks['meta'])
 
     print(f"Metadata file written: {meta_path}")
 
-    # Loop through summaries in the catalog
-    for index, summary in enumerate(catalog['files']):
+    # Loop through summaries in the workbooks
+    for index, summary in enumerate(workbooks['files']):
         for key, markdown_content in summary.items():
             folder_name = f"{index}_{key.replace(' ', '_')}"
             folder_path = os.path.join(output_dir, folder_name)

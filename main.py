@@ -10,16 +10,16 @@ async def main():
     user_session = await query.get_user_session()
     credentials = user_session['credentials']
 
-    print('Querying for Pulse Metric Insights...')
+    print('Querying Pulse Metrics for Insights...')
     metrics = await query.get_insights(credentials)
 
-    print('Querying the Data Catalog...')
-    catalog = await query.get_catalog(credentials)
+    print('Querying the Data Catalog for Workbooks...')
+    workbooks = await query.get_catalog(credentials)
 
     # 2. Write natural language summaries
     print('Processing remote data...')
     write.metric_insights({ 'metrics': metrics, 'mode': 'md' })
-    write.catalog({ 'catalog': catalog, 'mode': 'md'})
+    write.workbooks({ 'workbooks': workbooks, 'mode': 'md'})
     print('Natural language summaries or raw data written to file system...')
 
     # 3. Load corpus to vector store and s3 bucket
