@@ -1,7 +1,10 @@
 import os
 
-from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, StorageContext, ServiceContext
+from llama_index.core import Document, SimpleDirectoryReader, VectorStoreIndex, StorageContext, Settings
+from llama_index.embeddings.openai import OpenAIEmbedding
 from llama_index.vector_stores.pinecone import PineconeVectorStore
+
+
 from pinecone import Pinecone, ServerlessSpec
 
 from libs import clean
@@ -33,12 +36,13 @@ def gather_documents(path):
     return cleaned_docs
 
 def clean_docs(documents):
-    # remove emaining \n characters and broken, hyphenated words
+    # remove remaining \n characters and broken, hyphenated words
     cleaned_docs = []
     for d in documents:
         cleaned_text = clean.clean_up_text(d.text)
-        d.text = cleaned_text
-        cleaned_docs.append(d)
+        # Create a new Document object with the cleaned text
+        cleaned_doc = Document(text=cleaned_text, metadata=d.metadata)
+        cleaned_docs.append(cleaned_doc)
     return cleaned_docs
 
 def initialize_index(pinecone_index):
@@ -71,16 +75,26 @@ def initialize_index(pinecone_index):
     return index
 
 def vectorize(index, documents, chunk_size=1024, chunk_overlap=20):
-    # construct vector store
-    vector_store = PineconeVectorStore(pinecone_index=index)
-    # create a service context with the specified chunk size and overlap
-    service_context = ServiceContext.from_defaults(
-        chunk_size=chunk_size,
-        chunk_overlap=chunk_overlap
+    embed_model = OpenAIEmbedding(
+        model=os.environ['EMBEDDING_MODEL'],
+        embed_batch_size=100
     )
+
+    # configure global settings
+    Settings.embed_model = embed_model
+    Settings.chunk_size = chunk_size
+    Settings.chunk_overlap = chunk_overlap
+
+    # construct vector store
+    vector_store = PineconeVectorStore(
+        pinecone_index=index,
+        api_key=os.environ['PINECONE_API_KEY'],
+        environment=os.environ['PINECONE_ENVIRONMENT']
+    )
+
     # specifies location, environment and index for storage
     storage_context = StorageContext.from_defaults(vector_store=vector_store)
     # build index
     index = VectorStoreIndex.from_documents(
-        documents, storage_context=storage_context, service_context=service_context
+        documents, storage_context=storage_context, show_progress=True,
     )

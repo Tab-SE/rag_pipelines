@@ -16,10 +16,14 @@ async def authenticate():
         "sub": os.environ['TABLEAU_USER'],
         "scp": [
             "tableau:content:read",
+            "tableau:datasources:read",
+            "tableau:workbooks:read",
+            "tableau:projects:read",
             "tableau:insights:read",
+            "tableau:metric_subscriptions:read",
             "tableau:insight_definitions_metrics:read",
             "tableau:insight_metrics:read",
-            "tableau:metric_subscriptions:read",
+            "tableau:metrics:download",
         ]
         },
         os.environ['TABLEAU_REST_JWT_SECRET'],
