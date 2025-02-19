@@ -20,7 +20,7 @@ def load_index(directory_path, index_name):
         # construct pinecone client for target index
         index = initialize_index(index_name)
         # build vector store, index and upsert to Pinecone
-        vectorize(index=index, documents=documents, chunk_size=2048, chunk_overlap=50)
+        vectorize(index=index, documents=documents, chunk_size=2048, chunk_overlap=200)
 
         return True
     except Exception as e:
@@ -52,62 +52,64 @@ def clean_docs(documents):
     return cleaned_docs
 
 def initialize_index(pinecone_index):
-    pinecone_api = os.environ['PINECONE_API_KEY']
-    pinecone_environment = os.environ['PINECONE_ENVIRONMENT']
-    index_name = os.environ[pinecone_index]
     # initialize pinecone client
-    pc = PineconeClient(api_key=pinecone_api)
+    pc = PineconeClient(api_key=os.environ['PINECONE_API_KEY'])
 
     # check if index exists
     existing_indexes = pc.list_indexes()
     if existing_indexes:
         for index in existing_indexes:
-            if index.get('name') == index_name:
+            if index.get('name') == pinecone_index:
                 # Remove index to be replaced with updated data
-                pc.delete_index(index_name)
-                print(f"Previous vector state found! Deleting stale index: {index_name}")
+                pc.delete_index(pinecone_index)
+                print(f"Previous vector state found! Deleting stale index: {pinecone_index}")
     # create a new index to store updated data
     pc.create_index(
-        name=index_name,
+        name=pinecone_index,
         dimension=1536,
         metric="cosine",
         spec=ServerlessSpec(
             cloud="aws",
-            region="us-west-2"
+            region=os.environ['PINECONE_ENVIRONMENT']
         )
     )
     # client instance targets newly created index
-    index = pc.Index(index_name)
+    index = pc.Index(pinecone_index)
     return index
 
 def vectorize(index, documents, chunk_size=1024, chunk_overlap=20):
-    lc_embed_model = OpenAIEmbeddings(
-        model=os.environ['EMBEDDING_MODEL']
-    )
+    try:
+        lc_embed_model = OpenAIEmbeddings(
+            model=os.environ['EMBEDDING_MODEL']
+        )
 
-    embed_model = LangchainEmbedding(lc_embed_model)
+        embed_model = LangchainEmbedding(lc_embed_model)
 
-    # configure global settings
-    Settings.embed_model = embed_model
-    Settings.chunk_size = chunk_size
-    Settings.chunk_overlap = chunk_overlap
+        # configure global settings
+        Settings.embed_model = embed_model
+        Settings.chunk_size = chunk_size
+        Settings.chunk_overlap = chunk_overlap
 
-    # construct vector store
-    vector_store = PineconeVectorStore(
-        pinecone_index=index,
-        api_key=os.environ['PINECONE_API_KEY'],
-        environment=os.environ['PINECONE_ENVIRONMENT']
-    )
+        # construct vector store
+        vector_store = PineconeVectorStore(
+            pinecone_index=index,
+            api_key=os.environ['PINECONE_API_KEY'],
+            environment=os.environ['PINECONE_ENVIRONMENT']
+        )
 
-    # specifies location, environment and index for storage
-    storage_context = StorageContext.from_defaults(vector_store=vector_store)
-    # build index
-    index = VectorStoreIndex.from_documents(
-        documents, storage_context=storage_context, show_progress=True,
-    )
+        # specifies location, environment and index for storage
+        storage_context = StorageContext.from_defaults(vector_store=vector_store)
+        # build index
+        index = VectorStoreIndex.from_documents(
+            documents, storage_context=storage_context, show_progress=True,
+        )
+    except Exception as e:
+        raise(f"Error making embeddings of {index} due to: {e}")
 
 
 def langchain_vectorize(directory_path, index_name, chunk_size=1024, chunk_overlap=20):
+    print('*** chunk_size ***', chunk_size, '*** chunk_overlap ***', chunk_overlap)
+
     # Initialize Pinecone
     pc = PineconeClient(api_key=os.environ['PINECONE_API_KEY'])
 

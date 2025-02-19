@@ -9,11 +9,17 @@ def data(config):
 
 def vector_index():
     print('Loading data for indexing...')
-    monolith_loaded = vectorize.langchain_vectorize(directory_path='data/', index_name=os.environ['PINECONE_INDEX_NAME'], chunk_size=1024, chunk_overlap=20)
-    metrics_loaded = vectorize.langchain_vectorize(directory_path='data/analytics/metrics/', index_name=os.environ['METRICS_INDEX'], chunk_size=1024, chunk_overlap=20)
-    workbooks_loaded = vectorize.langchain_vectorize(directory_path='data/analytics/workbooks/', index_name=os.environ['WORKBOOKS_INDEX'], chunk_size=1024, chunk_overlap=20)
-    datasources_loaded = vectorize.langchain_vectorize(directory_path='data/analytics/datasources/', index_name=os.environ['DATASOURCES_INDEX'], chunk_size=1024, chunk_overlap=20)
-    literature_loaded = vectorize.langchain_vectorize(directory_path='data/literature/', index_name=os.environ['LITERATURE_INDEX'], chunk_size=1024, chunk_overlap=20)
+    monolith_loaded = vectorize.load_index(directory_path='data/', index_name=os.environ['PINECONE_INDEX_NAME'])
+    metrics_loaded = vectorize.load_index(directory_path='data/analytics/metrics/', index_name=os.environ['METRICS_INDEX'])
+    workbooks_loaded = vectorize.load_index(directory_path='data/analytics/workbooks/', index_name=os.environ['WORKBOOKS_INDEX'])
+    datasources_loaded = vectorize.load_index(directory_path='data/analytics/datasources/', index_name=os.environ['DATASOURCES_INDEX'])
+    literature_loaded = vectorize.load_index(directory_path='data/literature/', index_name=os.environ['LITERATURE_INDEX'])
+
+    # monolith_loaded = vectorize.langchain_vectorize(directory_path='data/', index_name=os.environ['PINECONE_INDEX_NAME'], chunk_size=2000, chunk_overlap=200)
+    # metrics_loaded = vectorize.langchain_vectorize(directory_path='data/analytics/metrics/', index_name=os.environ['METRICS_INDEX'], chunk_size=2000, chunk_overlap=200)
+    # workbooks_loaded = vectorize.langchain_vectorize(directory_path='data/analytics/workbooks/', index_name=os.environ['WORKBOOKS_INDEX'], chunk_size=2000, chunk_overlap=200)
+    # datasources_loaded = vectorize.langchain_vectorize(directory_path='data/analytics/datasources/', index_name=os.environ['DATASOURCES_INDEX'], chunk_size=2000, chunk_overlap=200)
+    # literature_loaded = vectorize.langchain_vectorize(directory_path='data/literature/', index_name=os.environ['LITERATURE_INDEX'], chunk_size=2000, chunk_overlap=200)
 
     print('Data upserted to vector index successfully!')
     return {
