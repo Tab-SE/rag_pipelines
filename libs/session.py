@@ -26,16 +26,16 @@ async def authenticate():
             "tableau:metrics:download",
         ]
         },
-        os.environ['TABLEAU_REST_JWT_SECRET'],
+        os.environ['TABLEAU_JWT_SECRET'],
         algorithm = "HS256",
         headers = {
-        'kid': os.environ['TABLEAU_REST_JWT_SECRET_ID'],
+        'kid': os.environ['TABLEAU_JWT_SECRET_ID'],
         'iss': os.environ['TABLEAU_JWT_CLIENT_ID']
         }
     )
 
     # authentication endpoint + request headers & payload
-    endpoint = f"{os.environ['TABLEAU_DOMAIN']}/api/{os.environ['TABLEAU_API']}/auth/signin"
+    endpoint = f"{os.environ['TABLEAU_DOMAIN']}/api/{os.environ['TABLEAU_API_VERSION']}/auth/signin"
 
     headers = {
         'Content-Type': 'application/json',
