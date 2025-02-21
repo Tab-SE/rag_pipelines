@@ -4,7 +4,6 @@ from llama_index.core import Document, SimpleDirectoryReader, VectorStoreIndex, 
 from llama_index.embeddings.langchain import LangchainEmbedding
 from llama_index.vector_stores.pinecone import PineconeVectorStore
 
-from langchain_openai import OpenAIEmbeddings
 from langchain_community.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_pinecone import Pinecone as LangchainPinecone
@@ -12,6 +11,7 @@ from langchain_pinecone import Pinecone as LangchainPinecone
 from pinecone import Pinecone as PineconeClient, ServerlessSpec
 
 from libs import clean
+from libs.models import select_embeddings
 
 
 def load_index(directory_path, index_name):
@@ -79,8 +79,9 @@ def initialize_index(pinecone_index):
 
 def vectorize(index, documents, chunk_size=1024, chunk_overlap=20):
     try:
-        lc_embed_model = OpenAIEmbeddings(
-            model=os.environ['EMBEDDING_MODEL']
+        lc_embed_model = select_embeddings(
+            provider=os.environ['MODEL_PROVIDER'],
+            model_name=os.environ['EMBEDDING_MODEL'],
         )
 
         embed_model = LangchainEmbedding(lc_embed_model)
@@ -136,9 +137,10 @@ def langchain_vectorize(directory_path, index_name, chunk_size=1024, chunk_overl
     )
     texts = text_splitter.split_documents(documents)
 
-    # Initialize the OpenAI embeddings
-    embeddings = OpenAIEmbeddings(
-        model=os.environ['EMBEDDING_MODEL']
+    # Initialize the embeddings
+    embeddings = select_embeddings(
+        provider=os.environ['MODEL_PROVIDER'],
+        model_name=os.environ['EMBEDDING_MODEL'],
     )
 
     # Create and populate the Pinecone index
